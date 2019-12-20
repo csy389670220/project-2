@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>iDeal-New配置</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" style="overflow:auto">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper ">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>iDeal-New配置
+                                <div class="page-title-subheading">
+                                    iDeal-New系统服务规划信息配置项
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        onclick="idealNew_back()" class="btn-shadow  btn btn-info">
+                                    返 回
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
+                    <li class="nav-item">
+                        <a role="tab" class="nav-link active" id="tab-0" data-toggle="tab" href="#tab-content-0">
+                            <span>新增</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a role="tab" class="nav-link" id="tab-1" data-toggle="tab" href="#tab-content-1">
+                            <span>修改</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="form-row">
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="serverApplication" class="">服务器用途</label>
+                                            <input name="serverApplication" id="serverApplication" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="dev" class="">本币DEV</label>
+                                            <textarea name="dev" id="dev" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="st1" class="">ST1</label>
+                                            <textarea name="st1" id="st1" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="st2" class="">ST2</label>
+                                            <textarea name="st2" id="st2" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="st3" class="">ST3</label>
+                                            <textarea name="st3" id="st3" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="st4" class="">ST4</label>
+                                            <textarea name="st4" id="st4" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="uat1" class="">UAT1</label>
+                                            <textarea name="uat1" id="uat1" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="uat2" class="">UAT2</label>
+                                            <textarea name="uat2" id="uat2" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="uat3" class="">UAT3</label>
+                                            <textarea name="uat3" id="uat3" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="uat4" class="">UAT4</label>
+                                            <textarea name="uat4" id="uat4" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="uat4" class="">UAT5</label>
+                                            <textarea name="uat4" id="uat5" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="uat6" class="">UAT6</label>
+                                            <textarea name="uat6" id="uat6" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="train" class="">培训环境</label>
+                                            <textarea name="train" id="train" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="mem1" class="">MEM1</label>
+                                            <textarea name="mem1" id="mem1" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="simulationDataA" class="">模拟数据迁移验证环境-A</label>
+                                            <textarea name="simulationDataA" id="simulationDataA" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="nationalSimulationExerciseN" class="">全国模拟演练(new)</label>
+                                            <textarea name="nationalSimulationExerciseN" id="nationalSimulationExerciseN" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="simulationExercise" class="">模拟演练环境</label>
+                                            <textarea name="simulationExercise" id="simulationExercise" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="simulationA" class="">模拟-A</label>
+                                            <textarea name="simulationA" id="simulationA" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="produce" class="">生产环境</label>
+                                            <textarea name="produce" id="produce" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="mt-2 btn btn-primary" onclick="idealNew_add()">确 定</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane tabs-animation fade" id="tab-content-1" role="tabpanel">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="form-row">
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="serverApplication_u" class="">服务器用途</label>
+                                            <input  type="hidden"  id="id_u" value="" />
+                                            <select type="select" name="serverApplication_u" id="serverApplication_u"  onchange="idealNew_select_change()" class="custom-select">
+                                                <option value=""></option>
+                                                <option value="即时通讯核心">即时通讯核心</option>
+                                                <option value="代理主机-内网">代理主机-内网</option>
+                                                <option value="代理主机-外网">代理主机-外网</option>
+                                                <option value="IMT主机">IMT主机</option>
+                                                <option value="Redis主机">Redis主机</option>
+                                                <option value="接入主机-外网">接入主机-外网</option>
+                                                <option value="接入主机-内网">接入主机-内网</option>
+                                                <option value="币内嵌版-外网">本币内嵌版-外网</option>
+                                                <option value="本币内嵌版-内网">本币内嵌版-内网</option>
+                                                <option value="外汇内嵌版-内网">外汇内嵌版-内网</option>
+                                                <option value="ORACLE数据库">ORACLE数据库</option>
+                                                <option value="mysql数据库">mysql数据库</option>
+                                                <option value="大蚂蚁核心(6.6)">大蚂蚁核心(6.6)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="dev_u" class="">本币DEV</label>
+                                            <textarea name="dev_u" id="dev_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="st1_u" class="">ST1</label>
+                                            <textarea name="st1_u" id="st1_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="st2_u" class="">ST2</label>
+                                            <textarea name="st2_u" id="st2_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="st3_u" class="">ST3</label>
+                                            <textarea name="st3_u" id="st3_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="st4_u" class="">ST4</label>
+                                            <textarea name="st4_u" id="st4_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="uat1_u" class="">UAT1</label>
+                                            <textarea name="uat1_u" id="uat1_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="uat2_u" class="">UAT2</label>
+                                            <textarea name="uat2_u" id="uat2_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="uat3_u" class="">UAT3</label>
+                                            <textarea name="uat3_u" id="uat3_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="uat4_u" class="">UAT4</label>
+                                            <textarea name="uat4_u" id="uat4_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="uat4_u" class="">UAT5</label>
+                                            <textarea name="uat4_u" id="uat5_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="uat6_u" class="">UAT6</label>
+                                            <textarea name="uat6_u" id="uat6_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="train_u" class="">培训环境</label>
+                                            <textarea name="train_u" id="train_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="mem1_u" class="">MEM1</label>
+                                            <textarea name="mem1_u" id="mem1_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="simulationDataA_u" class="">模拟数据迁移验证环境-A</label>
+                                            <textarea name="simulationDataA_u" id="simulationDataA_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="nationalSimulationExerciseN_u" class="">全国模拟演练(new)</label>
+                                            <textarea name="nationalSimulationExerciseN_u" id="nationalSimulationExerciseN_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="simulationExercise_u" class="">模拟演练环境</label>
+                                            <textarea name="simulationExercise_u" id="simulationExercise_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="simulationA_u" class="">模拟-A</label>
+                                            <textarea name="simulationA_u" id="simulationA_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="position-relative form-group">
+                                            <label for="produce_u" class="">生产环境</label>
+                                            <textarea name="produce_u" id="produce_u" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="mt-2 btn btn-primary" onclick="idealNew_update()">确 定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serverPlan_Menu", "iDealNew_Menu");
+    });
+
+    var iDealNew_info_add_list=["serverApplication","dev","st1","st2","st3","st4 ","uat1","uat2","uat3","uat4","uat5","uat6","train","mem1","simulationDataA","nationalSimulationExerciseN","simulationExercise","simulationA","produce"];
+    var  iDealNew_info_update_list=["serverApplication_u","dev_u","st1_u","st2_u","st3_u","st4_u","uat1_u","uat2_u","uat3_u","uat4_u","uat5_u","uat6_u","train_u","mem1_u","simulationDataA_u","nationalSimulationExerciseN_u","simulationExercise_u","simulationA_u","produce_u"];
+    //返回
+    function idealNew_back() {
+        ipsSystem.doGet("/serverPlan/iDealNew");
+    }
+
+    //iDeal新增
+    function idealNew_add() {
+        var serverApplication=$("#serverApplication").val();
+        if(serverApplication==null||serverApplication==""){
+            errorMsg("", "服务器用途字段必填");
+            return;
+        }
+        $.ajax({
+            url: "idealNewAdd",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: {
+                "serverApplication":$("#serverApplication").val(),
+                "dev":$("#dev").val(),
+                "st1":$("#st1").val(),
+                "st2":$("#st2").val(),
+                "st3":$("#st3").val(),
+                "st4":$("#st4").val(),
+                "uat1":$("#uat1").val(),
+                "uat2":$("#uat2").val(),
+                "uat3":$("#uat3").val(),
+                "uat4":$("#uat4").val(),
+                "uat5":$("#uat5").val(),
+                "uat6":$("#uat6").val(),
+                "train":$("#train").val(),
+                "mem1":$("#mem1").val(),
+                "simulationDataA":$("#simulationDataA").val(),
+                "nationalSimulationExerciseN":$("#nationalSimulationExerciseN").val(),
+                "simulationExercise":$("#simulationExercise").val(),
+                "simulationA":$("#simulationA").val(),
+                "produce":$("#produce").val()
+            },
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    successMsg(result.data);
+                    //清空输入框
+                    clearAdd();
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("新增iDdeal服务器规划信息系统错误");
+                console.log(err);
+            }
+        });
+
+    }
+
+    //iDeal更新
+    function idealNew_update() {
+
+        $.ajax({
+            url: "idealNewUpdate",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: {
+                "id":$("#id_u").val(),
+                "serverApplication":$("#serverApplication_u").val(),
+                "dev":$("#dev_u").val(),
+                "st1":$("#st1_u").val(),
+                "st2":$("#st2_u").val(),
+                "st3":$("#st3_u").val(),
+                "st4":$("#st4_u").val(),
+                "uat1":$("#uat1_u").val(),
+                "uat2":$("#uat2_u").val(),
+                "uat3":$("#uat3_u").val(),
+                "uat4":$("#uat4_u").val(),
+                "uat5":$("#uat5_u").val(),
+                "uat6":$("#uat6_u").val(),
+                "train":$("#train_u").val(),
+                "mem1":$("#mem1_u").val(),
+                "simulationDataA":$("#simulationDataA_u").val(),
+                "nationalSimulationExerciseN":$("#nationalSimulationExerciseN_u").val(),
+                "simulationExercise":$("#simulationExercise_u").val(),
+                "simulationA":$("#simulationA_u").val(),
+                "produce":$("#produce_u").val()
+            },
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("更新当前服务器用途信息错误");
+                console.log(err);
+            }
+        });
+
+    }
+
+    //服务器用途字段改变事件
+    function  idealNew_select_change(){
+        //清空输入框
+        clearUpdate();
+        //判断关键字是否有效
+        var keywords=$("#serverApplication_u").val()
+        if(keywords==null||keywords==""){
+          return;
+        }
+        $.ajax({
+            url: "idealNewUpdateChange",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: {
+                "serverApplication":$("#serverApplication_u").val()
+            },
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    //迭代遍历属性，渲染修改框
+                    jQuery.each(result.data, function(name, value) {
+                        $("#"+name+"_u").val(value);
+                    });
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("查询当前服务器用途信息错误");
+                console.log(err);
+            }
+        });
+    }
+
+    /**
+     * 清空新增面板输入框
+     */
+    function  clearAdd() {
+        for(var i=0;i<iDealNew_info_add_list.length;i++){
+            $("#"+iDealNew_info_add_list[i]).val("");
+        }
+    }
+
+    /**
+     * 清空更新面板输入框
+     */
+    function  clearUpdate() {
+        for(var i=1;i<iDealNew_info_update_list.length;i++){
+            $("#"+iDealNew_info_update_list[i]).val("");
+        }
+    }
+</script>
+</body>
+</html>

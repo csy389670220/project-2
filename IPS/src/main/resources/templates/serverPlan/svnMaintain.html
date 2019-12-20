@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>svn维护</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>svn维护
+                                <div class="page-title-subheading">
+                                    记录svn维护记录
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="main-card mb-3 card">
+                            <div class="card-body"><h5 class="card-title">公共用途记录</h5>
+                                <table class="mb-0 table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>网域</th>
+                                        <th>项目分类</th>
+                                        <th>目录/模块名</th>
+                                        <th>内容</th>
+                                        <th>地址</th>
+                                        <th>备注</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>内网</td>
+                                        <td>UT-stack</td>
+                                        <td>ctaf</td>
+                                        <td>交付物</td>
+                                        <td>http://svn.scm.cfets.com/svn/17_TAG/deliver/ctaf</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>内网</td>
+                                        <td>UT-stack</td>
+                                        <td>ctaf</td>
+                                        <td>交付物</td>
+                                        <td>http://svn.scm.cfets.com/svn/17_TAG/deliver/ctaf</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>内网</td>
+                                        <td>UT-stack</td>
+                                        <td>ctaf</td>
+                                        <td>交付物</td>
+                                        <td>http://svn.scm.cfets.com/svn/17_TAG/deliver/ctaf</td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serverPlan_Menu","svnMaintain_Menu");
+    });
+</script>
+</body>
+</html>

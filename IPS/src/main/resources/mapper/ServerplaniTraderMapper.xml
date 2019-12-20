@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ips.mapper.ServerplaniTraderMapper" >
+  <resultMap id="BaseResultMap" type="com.example.ips.model.ServerplaniTrader" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="ENV" property="env" jdbcType="VARCHAR" />
+    <result column="SERVER_NAME" property="serverName" jdbcType="VARCHAR" />
+    <result column="MACHINE_NAME" property="machineName" jdbcType="VARCHAR" />
+    <result column="MACHINE_IP_W" property="machineIpW" jdbcType="VARCHAR" />
+    <result column="VIRTUAL_IP" property="virtualIp" jdbcType="VARCHAR" />
+    <result column="MAPPING_IP" property="mappingIp" jdbcType="VARCHAR" />
+    <result column="PUBLIC_NET_IP" property="publicNetIp" jdbcType="VARCHAR" />
+    <result column="DEP_IP" property="depIp" jdbcType="VARCHAR" />
+    <result column="DSP" property="dsp" jdbcType="VARCHAR" />
+    <result column="MEMO" property="memo" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ENV, SERVER_NAME, MACHINE_NAME, MACHINE_IP_W, VIRTUAL_IP, MAPPING_IP, PUBLIC_NET_IP, 
+    DEP_IP, DSP, MEMO, CREATE_TIME, UPDATE_TIME, CREATE_USER, UPDATE_USER
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from serverplan_itrader
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from serverplan_itrader
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.ips.model.ServerplaniTrader" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into serverplan_itrader (ENV, SERVER_NAME, MACHINE_NAME, 
+      MACHINE_IP_W, VIRTUAL_IP, MAPPING_IP, 
+      PUBLIC_NET_IP, DEP_IP, DSP, 
+      MEMO, CREATE_TIME, UPDATE_TIME, 
+      CREATE_USER, UPDATE_USER)
+    values (#{env,jdbcType=VARCHAR}, #{serverName,jdbcType=VARCHAR}, #{machineName,jdbcType=VARCHAR}, 
+      #{machineIpW,jdbcType=VARCHAR}, #{virtualIp,jdbcType=VARCHAR}, #{mappingIp,jdbcType=VARCHAR}, 
+      #{publicNetIp,jdbcType=VARCHAR}, #{depIp,jdbcType=VARCHAR}, #{dsp,jdbcType=VARCHAR}, 
+      #{memo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=INTEGER}, #{updateUser,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.ips.model.ServerplaniTrader" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into serverplan_itrader
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="env != null" >
+        ENV,
+      </if>
+      <if test="serverName != null" >
+        SERVER_NAME,
+      </if>
+      <if test="machineName != null" >
+        MACHINE_NAME,
+      </if>
+      <if test="machineIpW != null" >
+        MACHINE_IP_W,
+      </if>
+      <if test="virtualIp != null" >
+        VIRTUAL_IP,
+      </if>
+      <if test="mappingIp != null" >
+        MAPPING_IP,
+      </if>
+      <if test="publicNetIp != null" >
+        PUBLIC_NET_IP,
+      </if>
+      <if test="depIp != null" >
+        DEP_IP,
+      </if>
+      <if test="dsp != null" >
+        DSP,
+      </if>
+      <if test="memo != null" >
+        MEMO,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="env != null" >
+        #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="serverName != null" >
+        #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="machineName != null" >
+        #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="machineIpW != null" >
+        #{machineIpW,jdbcType=VARCHAR},
+      </if>
+      <if test="virtualIp != null" >
+        #{virtualIp,jdbcType=VARCHAR},
+      </if>
+      <if test="mappingIp != null" >
+        #{mappingIp,jdbcType=VARCHAR},
+      </if>
+      <if test="publicNetIp != null" >
+        #{publicNetIp,jdbcType=VARCHAR},
+      </if>
+      <if test="depIp != null" >
+        #{depIp,jdbcType=VARCHAR},
+      </if>
+      <if test="dsp != null" >
+        #{dsp,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.ips.model.ServerplaniTrader" >
+    update serverplan_itrader
+    <set >
+      <if test="env != null" >
+        ENV = #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="serverName != null" >
+        SERVER_NAME = #{serverName,jdbcType=VARCHAR},
+      </if>
+      <if test="machineName != null" >
+        MACHINE_NAME = #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="machineIpW != null" >
+        MACHINE_IP_W = #{machineIpW,jdbcType=VARCHAR},
+      </if>
+      <if test="virtualIp != null" >
+        VIRTUAL_IP = #{virtualIp,jdbcType=VARCHAR},
+      </if>
+      <if test="mappingIp != null" >
+        MAPPING_IP = #{mappingIp,jdbcType=VARCHAR},
+      </if>
+      <if test="publicNetIp != null" >
+        PUBLIC_NET_IP = #{publicNetIp,jdbcType=VARCHAR},
+      </if>
+      <if test="depIp != null" >
+        DEP_IP = #{depIp,jdbcType=VARCHAR},
+      </if>
+      <if test="dsp != null" >
+        DSP = #{dsp,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.ips.model.ServerplaniTrader" >
+    update serverplan_itrader
+    set ENV = #{env,jdbcType=VARCHAR},
+      SERVER_NAME = #{serverName,jdbcType=VARCHAR},
+      MACHINE_NAME = #{machineName,jdbcType=VARCHAR},
+      MACHINE_IP_W = #{machineIpW,jdbcType=VARCHAR},
+      VIRTUAL_IP = #{virtualIp,jdbcType=VARCHAR},
+      MAPPING_IP = #{mappingIp,jdbcType=VARCHAR},
+      PUBLIC_NET_IP = #{publicNetIp,jdbcType=VARCHAR},
+      DEP_IP = #{depIp,jdbcType=VARCHAR},
+      DSP = #{dsp,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=INTEGER},
+      UPDATE_USER = #{updateUser,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAlliTrader" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from serverplan_itrader
+  </select>
+
+</mapper>

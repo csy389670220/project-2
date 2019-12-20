@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ips.mapper.ServerplanCtafMapper" >
+  <resultMap id="BaseResultMap" type="com.example.ips.model.ServerplanCtaf" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SERVER_USE" property="serverUse" jdbcType="VARCHAR" />
+    <result column="DEV" property="dev" jdbcType="VARCHAR" />
+    <result column="ST" property="st" jdbcType="VARCHAR" />
+    <result column="NET_N" property="netN" jdbcType="VARCHAR" />
+    <result column="NET_W" property="netW" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SERVER_USE, DEV, ST, NET_N, NET_W, CREATE_TIME, UPDATE_TIME, CREATE_USER, UPDATE_USER
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from serverplan_ctaf
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from serverplan_ctaf
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.ips.model.ServerplanCtaf" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into serverplan_ctaf (SERVER_USE, DEV, ST, 
+      NET_N, NET_W, CREATE_TIME, 
+      UPDATE_TIME, CREATE_USER, UPDATE_USER
+      )
+    values (#{serverUse,jdbcType=VARCHAR}, #{dev,jdbcType=VARCHAR}, #{st,jdbcType=VARCHAR}, 
+      #{netN,jdbcType=VARCHAR}, #{netW,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
+      #{updateTime,jdbcType=DATE}, #{createUser,jdbcType=INTEGER}, #{updateUser,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.ips.model.ServerplanCtaf" >
+    insert into serverplan_ctaf
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serverUse != null" >
+        SERVER_USE,
+      </if>
+      <if test="dev != null" >
+        DEV,
+      </if>
+      <if test="st != null" >
+        ST,
+      </if>
+      <if test="netN != null" >
+        NET_N,
+      </if>
+      <if test="netW != null" >
+        NET_W,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serverUse != null" >
+        #{serverUse,jdbcType=VARCHAR},
+      </if>
+      <if test="dev != null" >
+        #{dev,jdbcType=VARCHAR},
+      </if>
+      <if test="st != null" >
+        #{st,jdbcType=VARCHAR},
+      </if>
+      <if test="netN != null" >
+        #{netN,jdbcType=VARCHAR},
+      </if>
+      <if test="netW != null" >
+        #{netW,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.ips.model.ServerplanCtaf" >
+    update serverplan_ctaf
+    <set >
+      <if test="serverUse != null" >
+        SERVER_USE = #{serverUse,jdbcType=VARCHAR},
+      </if>
+      <if test="dev != null" >
+        DEV = #{dev,jdbcType=VARCHAR},
+      </if>
+      <if test="st != null" >
+        ST = #{st,jdbcType=VARCHAR},
+      </if>
+      <if test="netN != null" >
+        NET_N = #{netN,jdbcType=VARCHAR},
+      </if>
+      <if test="netW != null" >
+        NET_W = #{netW,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.ips.model.ServerplanCtaf" >
+    update serverplan_ctaf
+    set SERVER_USE = #{serverUse,jdbcType=VARCHAR},
+      DEV = #{dev,jdbcType=VARCHAR},
+      ST = #{st,jdbcType=VARCHAR},
+      NET_N = #{netN,jdbcType=VARCHAR},
+      NET_W = #{netW,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=INTEGER},
+      UPDATE_USER = #{updateUser,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllCtaf" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from serverplan_ctaf
+  </select>
+</mapper>

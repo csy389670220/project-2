@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>CTAF</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" style="overflow:auto">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>iTrader
+                                <div class="page-title-subheading">
+                                    CTAF系统服务规划
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <shiro:hasRole name="admin">
+                                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            onclick="CTAF_add()" class="btn-shadow  btn btn-info">
+                                        新 增
+                                    </button>
+                                </shiro:hasRole>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <table class="mb-0 table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>服务器用途</th>
+                                    <th>DEV</th>
+                                    <th>ST</th>
+                                    <th>内网</th>
+                                    <th>外网</th>
+                                    <shiro:hasRole name="admin">
+                                        <th>操作</th>
+                                    </shiro:hasRole>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <!--<tr class="gradeU" th:each="iDealNew:${iDealNewlist}">-->
+                                <!--<td th:text="${iDealNew.serverApplication}"></td>-->
+                                <!--</tr>-->
+                                <tr class="gradeU" th:each="CTAF:${list}">
+                                    <td th:text="${CTAF.serverUse}"></td>
+                                    <td th:text="${CTAF.dev}"></td>
+                                    <td th:text="${CTAF.st}"></td>
+                                    <td th:text="${CTAF.netN}"></td>
+                                    <td th:text="${CTAF.netW}"></td>
+                                    <shiro:hasRole name="admin">
+                                        <td>
+                                            <button  class="btn btn-info" th:onclick="CTAF_update([[${CTAF.id}]])">修改</button>
+                                        </td>
+                                    </shiro:hasRole>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serverPlan_Menu", "CTAF_Menu");
+        showTableP();
+    });
+
+    //跳转新增页面
+    function CTAF_add() {
+        ipsSystem.doPost("/serverPlan/CTAFConfig",{"type":"A","id":null})
+    }
+
+    //跳转更新页面
+    function CTAF_update(id) {
+        ipsSystem.doPost("/serverPlan/CTAFConfig",{"type":"U","id":id})
+    }
+
+    //内容显示换行符
+    function showTableP(){
+        replaceBr(5);
+    }
+
+</script>
+<style>
+    p{
+        margin-bottom: 1px !important;
+    }
+</style>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ips.mapper.ServerPlanIDealNewMapper" >
+  <resultMap id="BaseResultMap" type="com.example.ips.model.ServerPlanIDealNew" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SERVER_APPLICATION" property="serverApplication" jdbcType="VARCHAR" />
+    <result column="DEV" property="dev" jdbcType="VARCHAR" />
+    <result column="ST1" property="st1" jdbcType="VARCHAR" />
+    <result column="ST2" property="st2" jdbcType="VARCHAR" />
+    <result column="ST3" property="st3" jdbcType="VARCHAR" />
+    <result column="ST4" property="st4" jdbcType="VARCHAR" />
+    <result column="UAT1" property="uat1" jdbcType="VARCHAR" />
+    <result column="UAT2" property="uat2" jdbcType="VARCHAR" />
+    <result column="UAT3" property="uat3" jdbcType="VARCHAR" />
+    <result column="UAT4" property="uat4" jdbcType="VARCHAR" />
+    <result column="UAT5" property="uat5" jdbcType="VARCHAR" />
+    <result column="UAT6" property="uat6" jdbcType="VARCHAR" />
+    <result column="TRAIN" property="train" jdbcType="VARCHAR" />
+    <result column="MEM1" property="mem1" jdbcType="VARCHAR" />
+    <result column="SIMULATION_DATA_A" property="simulationDataA" jdbcType="VARCHAR" />
+    <result column="NATIONAL_SIMULATION_EXERCISE_N" property="nationalSimulationExerciseN" jdbcType="VARCHAR" />
+    <result column="SIMULATION_EXERCISE" property="simulationExercise" jdbcType="VARCHAR" />
+    <result column="SIMULATION_A" property="simulationA" jdbcType="VARCHAR" />
+    <result column="PRODUCE" property="produce" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SERVER_APPLICATION, DEV, ST1, ST2, ST3, ST4, UAT1, UAT2, UAT3, UAT4, UAT5, UAT6, 
+    TRAIN, MEM1, SIMULATION_DATA_A, NATIONAL_SIMULATION_EXERCISE_N, SIMULATION_EXERCISE, 
+    SIMULATION_A, PRODUCE, CREATE_TIME, UPDATE_TIME, CREATE_USER, UPDATE_USER
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from serverplan_idealnew
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from serverplan_idealnew
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.ips.model.ServerPlanIDealNew" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into serverplan_idealnew (SERVER_APPLICATION, DEV, ST1, 
+      ST2, ST3, ST4, UAT1, 
+      UAT2, UAT3, UAT4, UAT5, 
+      UAT6, TRAIN, MEM1, 
+      SIMULATION_DATA_A, NATIONAL_SIMULATION_EXERCISE_N, 
+      SIMULATION_EXERCISE, SIMULATION_A, PRODUCE, 
+      CREATE_TIME, UPDATE_TIME, CREATE_USER, 
+      UPDATE_USER)
+    values (#{serverApplication,jdbcType=VARCHAR}, #{dev,jdbcType=VARCHAR}, #{st1,jdbcType=VARCHAR}, 
+      #{st2,jdbcType=VARCHAR}, #{st3,jdbcType=VARCHAR}, #{st4,jdbcType=VARCHAR}, #{uat1,jdbcType=VARCHAR}, 
+      #{uat2,jdbcType=VARCHAR}, #{uat3,jdbcType=VARCHAR}, #{uat4,jdbcType=VARCHAR}, #{uat5,jdbcType=VARCHAR}, 
+      #{uat6,jdbcType=VARCHAR}, #{train,jdbcType=VARCHAR}, #{mem1,jdbcType=VARCHAR}, 
+      #{simulationDataA,jdbcType=VARCHAR}, #{nationalSimulationExerciseN,jdbcType=VARCHAR}, 
+      #{simulationExercise,jdbcType=VARCHAR}, #{simulationA,jdbcType=VARCHAR}, #{produce,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=INTEGER}, 
+      #{updateUser,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.ips.model.ServerPlanIDealNew" useGeneratedKeys="true" keyProperty="id">
+    insert into serverplan_idealnew
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serverApplication != null" >
+        SERVER_APPLICATION,
+      </if>
+      <if test="dev != null" >
+        DEV,
+      </if>
+      <if test="st1 != null" >
+        ST1,
+      </if>
+      <if test="st2 != null" >
+        ST2,
+      </if>
+      <if test="st3 != null" >
+        ST3,
+      </if>
+      <if test="st4 != null" >
+        ST4,
+      </if>
+      <if test="uat1 != null" >
+        UAT1,
+      </if>
+      <if test="uat2 != null" >
+        UAT2,
+      </if>
+      <if test="uat3 != null" >
+        UAT3,
+      </if>
+      <if test="uat4 != null" >
+        UAT4,
+      </if>
+      <if test="uat5 != null" >
+        UAT5,
+      </if>
+      <if test="uat6 != null" >
+        UAT6,
+      </if>
+      <if test="train != null" >
+        TRAIN,
+      </if>
+      <if test="mem1 != null" >
+        MEM1,
+      </if>
+      <if test="simulationDataA != null" >
+        SIMULATION_DATA_A,
+      </if>
+      <if test="nationalSimulationExerciseN != null" >
+        NATIONAL_SIMULATION_EXERCISE_N,
+      </if>
+      <if test="simulationExercise != null" >
+        SIMULATION_EXERCISE,
+      </if>
+      <if test="simulationA != null" >
+        SIMULATION_A,
+      </if>
+      <if test="produce != null" >
+        PRODUCE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serverApplication != null" >
+        #{serverApplication,jdbcType=VARCHAR},
+      </if>
+      <if test="dev != null" >
+        #{dev,jdbcType=VARCHAR},
+      </if>
+      <if test="st1 != null" >
+        #{st1,jdbcType=VARCHAR},
+      </if>
+      <if test="st2 != null" >
+        #{st2,jdbcType=VARCHAR},
+      </if>
+      <if test="st3 != null" >
+        #{st3,jdbcType=VARCHAR},
+      </if>
+      <if test="st4 != null" >
+        #{st4,jdbcType=VARCHAR},
+      </if>
+      <if test="uat1 != null" >
+        #{uat1,jdbcType=VARCHAR},
+      </if>
+      <if test="uat2 != null" >
+        #{uat2,jdbcType=VARCHAR},
+      </if>
+      <if test="uat3 != null" >
+        #{uat3,jdbcType=VARCHAR},
+      </if>
+      <if test="uat4 != null" >
+        #{uat4,jdbcType=VARCHAR},
+      </if>
+      <if test="uat5 != null" >
+        #{uat5,jdbcType=VARCHAR},
+      </if>
+      <if test="uat6 != null" >
+        #{uat6,jdbcType=VARCHAR},
+      </if>
+      <if test="train != null" >
+        #{train,jdbcType=VARCHAR},
+      </if>
+      <if test="mem1 != null" >
+        #{mem1,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationDataA != null" >
+        #{simulationDataA,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalSimulationExerciseN != null" >
+        #{nationalSimulationExerciseN,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationExercise != null" >
+        #{simulationExercise,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationA != null" >
+        #{simulationA,jdbcType=VARCHAR},
+      </if>
+      <if test="produce != null" >
+        #{produce,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.ips.model.ServerPlanIDealNew" >
+    update serverplan_idealnew
+    <set >
+      <if test="serverApplication != null" >
+        SERVER_APPLICATION = #{serverApplication,jdbcType=VARCHAR},
+      </if>
+      <if test="dev != null" >
+        DEV = #{dev,jdbcType=VARCHAR},
+      </if>
+      <if test="st1 != null" >
+        ST1 = #{st1,jdbcType=VARCHAR},
+      </if>
+      <if test="st2 != null" >
+        ST2 = #{st2,jdbcType=VARCHAR},
+      </if>
+      <if test="st3 != null" >
+        ST3 = #{st3,jdbcType=VARCHAR},
+      </if>
+      <if test="st4 != null" >
+        ST4 = #{st4,jdbcType=VARCHAR},
+      </if>
+      <if test="uat1 != null" >
+        UAT1 = #{uat1,jdbcType=VARCHAR},
+      </if>
+      <if test="uat2 != null" >
+        UAT2 = #{uat2,jdbcType=VARCHAR},
+      </if>
+      <if test="uat3 != null" >
+        UAT3 = #{uat3,jdbcType=VARCHAR},
+      </if>
+      <if test="uat4 != null" >
+        UAT4 = #{uat4,jdbcType=VARCHAR},
+      </if>
+      <if test="uat5 != null" >
+        UAT5 = #{uat5,jdbcType=VARCHAR},
+      </if>
+      <if test="uat6 != null" >
+        UAT6 = #{uat6,jdbcType=VARCHAR},
+      </if>
+      <if test="train != null" >
+        TRAIN = #{train,jdbcType=VARCHAR},
+      </if>
+      <if test="mem1 != null" >
+        MEM1 = #{mem1,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationDataA != null" >
+        SIMULATION_DATA_A = #{simulationDataA,jdbcType=VARCHAR},
+      </if>
+      <if test="nationalSimulationExerciseN != null" >
+        NATIONAL_SIMULATION_EXERCISE_N = #{nationalSimulationExerciseN,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationExercise != null" >
+        SIMULATION_EXERCISE = #{simulationExercise,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationA != null" >
+        SIMULATION_A = #{simulationA,jdbcType=VARCHAR},
+      </if>
+      <if test="produce != null" >
+        PRODUCE = #{produce,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.ips.model.ServerPlanIDealNew" >
+    update serverplan_idealnew
+    set SERVER_APPLICATION = #{serverApplication,jdbcType=VARCHAR},
+      DEV = #{dev,jdbcType=VARCHAR},
+      ST1 = #{st1,jdbcType=VARCHAR},
+      ST2 = #{st2,jdbcType=VARCHAR},
+      ST3 = #{st3,jdbcType=VARCHAR},
+      ST4 = #{st4,jdbcType=VARCHAR},
+      UAT1 = #{uat1,jdbcType=VARCHAR},
+      UAT2 = #{uat2,jdbcType=VARCHAR},
+      UAT3 = #{uat3,jdbcType=VARCHAR},
+      UAT4 = #{uat4,jdbcType=VARCHAR},
+      UAT5 = #{uat5,jdbcType=VARCHAR},
+      UAT6 = #{uat6,jdbcType=VARCHAR},
+      TRAIN = #{train,jdbcType=VARCHAR},
+      MEM1 = #{mem1,jdbcType=VARCHAR},
+      SIMULATION_DATA_A = #{simulationDataA,jdbcType=VARCHAR},
+      NATIONAL_SIMULATION_EXERCISE_N = #{nationalSimulationExerciseN,jdbcType=VARCHAR},
+      SIMULATION_EXERCISE = #{simulationExercise,jdbcType=VARCHAR},
+      SIMULATION_A = #{simulationA,jdbcType=VARCHAR},
+      PRODUCE = #{produce,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=INTEGER},
+      UPDATE_USER = #{updateUser,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByApplication" resultMap="BaseResultMap" parameterType="string" >
+    select
+    <include refid="Base_Column_List" />
+    from serverplan_idealnew
+    where SERVER_APPLICATION = #{serverApplication,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from serverplan_idealnew
+  </select>
+
+</mapper>
