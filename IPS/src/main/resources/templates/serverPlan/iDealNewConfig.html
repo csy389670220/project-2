@@ -202,7 +202,7 @@
                                                 <option value="Redis主机">Redis主机</option>
                                                 <option value="接入主机-外网">接入主机-外网</option>
                                                 <option value="接入主机-内网">接入主机-内网</option>
-                                                <option value="币内嵌版-外网">本币内嵌版-外网</option>
+                                                <option value="本币内嵌版-外网">本币内嵌版-外网</option>
                                                 <option value="本币内嵌版-内网">本币内嵌版-内网</option>
                                                 <option value="外汇内嵌版-内网">外汇内嵌版-内网</option>
                                                 <option value="ORACLE数据库">ORACLE数据库</option>
@@ -353,6 +353,10 @@
 
     //iDeal新增
     function idealNew_add() {
+        var check=checkEmpty(iDealNew_info_add_list);
+        if(!check){
+            return;
+        }
         var serverApplication=$("#serverApplication").val();
         if(serverApplication==null||serverApplication==""){
             errorMsg("", "服务器用途字段必填");
@@ -404,7 +408,10 @@
 
     //iDeal更新
     function idealNew_update() {
-
+        var check=checkEmpty(iDealNew_info_update_list);
+        if(!check){
+            return;
+        }
         $.ajax({
             url: "idealNewUpdate",
             type: "post",    //不区分大小写
@@ -500,6 +507,7 @@
             $("#"+iDealNew_info_update_list[i]).val("");
         }
     }
+    
 </script>
 </body>
 </html>

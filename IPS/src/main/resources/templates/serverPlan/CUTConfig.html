@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>CUT配置</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" style="overflow:auto">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper ">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>CUT配置-<span th:text="${type=='A'?'新增':'修改'}"></span>
+                                <div class="page-title-subheading">
+                                    CUT系统服务规划信息配置项
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        onclick="CUT_back()" class="btn-shadow  btn btn-info">
+                                    返 回
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--新增模块-->
+                <div id="addProject" th:hidden="${type=='A'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="serverUse" class="">服务器用途</label>
+                                                <input name="serverUse" id="serverUse" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="dev" class="">DEV</label>
+                                                <textarea name="dev" id="dev" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="stA" class="">ST-A(闲置)</label>
+                                                <textarea name="stA" id="stA" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="stB" class="">ST-B</label>
+                                                <textarea name="stB" id="stB" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="stC" class="">ST-C</label>
+                                                <textarea name="stC" id="stC" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="uatA" class="">UAT-A(闲置)</label>
+                                                <textarea name="uatA" id="uatA" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="uatB" class="">UAT-B</label>
+                                                <textarea name="uatB" id="uatB" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="uatCToA" class="">原UAT-C更改为UAT-A</label>
+                                                <textarea name="uatCToA" id="uatCToA" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="mem1" class="">MEM1</label>
+                                                <textarea name="mem1" id="mem1" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="mem2" class="">MEM2</label>
+                                                <textarea name="mem2" id="mem2" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="train" class="">培训</label>
+                                                <textarea name="train" id="train" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="simulationDataMigrationA" class="">模拟数据迁移验证环境-A</label>
+                                                <textarea name="simulationDataMigrationA" id="simulationDataMigrationA" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="simulationDataMigrationB" class="">模拟数据迁移验证环境-B</label>
+                                                <textarea name="simulationDataMigrationB" id="simulationDataMigrationB" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="simulationReliability" class="">模拟可靠性验证环境</label>
+                                                <textarea name="simulationReliability" id="simulationReliability" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="simulationA" class="">模拟-A性能测试</label>
+                                                <textarea name="simulationA" id="simulationA" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="simulationB" class="">模拟-B(废弃)功能测试</label>
+                                                <textarea name="simulationB" id="simulationB" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="produce" class="">生产</label>
+                                                <textarea name="produce" id="produce" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="disasterRecoveryBeijinhg" class="">北京灾备</label>
+                                                <textarea name="disasterRecoveryBeijinhg" id="disasterRecoveryBeijinhg" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="CUT_add()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--更新模块-->
+                <div id="updateProject" th:hidden="${type=='U'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="serverUse_u" class="">服务器用途</label>
+                                                <input type="hidden" id="id_u" th:value="${CUT.id}">
+                                                <input th:value="${CUT.serverUse}" name="serverUse_u" id="serverUse_u"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="dev_u" class="">DEV</label>
+                                                <textarea th:text="${CUT.dev}" name="dev_u" id="dev_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="stA_u" class="">ST-A(闲置)</label>
+                                                <textarea th:text="${CUT.stA}" name="stA_u" id="stA_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="stB_u" class="">ST-B</label>
+                                                <textarea th:text="${CUT.stB}" name="stB_u" id="stB_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="stC_u" class="">ST-C</label>
+                                                <textarea th:text="${CUT.stC}"  name="stC_u" id="stC_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="uatA_u" class="">UAT-A(闲置)</label>
+                                                <textarea th:text="${CUT.uatA}" name="uatA_u" id="uatA_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="uatB_u" class="">UAT-B</label>
+                                                <textarea th:text="${CUT.uatB}" name="uatB_u" id="uatB_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="uatCToA_u" class="">原UAT-C更改为UAT-A</label>
+                                                <textarea th:text="${CUT.uatCToA}" name="uatCToA_u" id="uatCToA_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="mem1_u" class="">MEM1</label>
+                                                <textarea th:text="${CUT.mem1}" name="mem1_u" id="mem1_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="mem2_u" class="">MEM2</label>
+                                                <textarea th:text="${CUT.mem2}" name="mem2_u" id="mem2_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="train_u" class="">培训</label>
+                                                <textarea th:text="${CUT.train}" name="train_u" id="train_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="simulationDataMigrationA_u" class="">模拟数据迁移验证环境-A</label>
+                                                <textarea th:text="${CUT.simulationDataMigrationA}" name="simulationDataMigrationA_u" id="simulationDataMigrationA_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="simulationDataMigrationB_u" class="">模拟数据迁移验证环境-B</label>
+                                                <textarea th:text="${CUT.simulationDataMigrationB}" name="simulationDataMigrationB_u" id="simulationDataMigrationB_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="simulationReliability_u" class="">模拟可靠性验证环境</label>
+                                                <textarea th:text="${CUT.simulationReliability}"  name="simulationReliability_u" id="simulationReliability_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="simulationA_u" class="">模拟-A性能测试</label>
+                                                <textarea th:text="${CUT.simulationA}"  name="simulationA_u" id="simulationA_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="simulationB_u" class="">模拟-B(废弃)功能测试</label>
+                                                <textarea th:text="${CUT.simulationB}"  name="simulationB_u" id="simulationB_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="produce_u" class="">生产</label>
+                                                <textarea th:text="${CUT.produce}"   name="produce_u" id="produce_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="disasterRecoveryBeijinhg_u" class="">北京灾备</label>
+                                                <textarea th:text="${CUT.disasterRecoveryBeijinhg}"  name="disasterRecoveryBeijinhg_u" id="disasterRecoveryBeijinhg_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="CUT_update()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serverPlan_Menu", "CUT_Menu");
+        getHtmlValue();
+    });
+
+    //新增模块，更新模块字段key集合
+    var CUT_add_list = ["id","serverUse","dev","stA","stB","stC","uatA","uatB","uatCToA","mem1","mem2","train","simulationDataMigrationA","simulationDataMigrationB","simulationReliability","simulationA","simulationB","produce","disasterRecoveryBeijinhg"];
+    var CUT_update_list = ["id_u","serverUse_u","dev_u","stA_u","stB_u","stC_u","uatA_u","uatB_u","uatCToA_u","mem1_u","mem2_u","train_u","simulationDataMigrationA_u","simulationDataMigrationB_u","simulationReliability_u","simulationA_u","simulationB_u","produce_u","disasterRecoveryBeijinhg_u"];
+
+    //返回
+    function CUT_back() {
+        ipsSystem.doGet("/serverPlan/CUT");
+    }
+
+
+    //iTrader新增
+    function CUT_add() {
+        var check=checkEmpty(CUT_add_list);
+        if(!check){
+            return;
+        }
+        //组装请求数据json
+        var param = bilidParam(CUT_add_list, CUT_add_list);
+        $.ajax({
+            url: "CUTAdd",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    clearAdd();
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("新增系统错误");
+                console.log(err);
+            }
+        });
+    }
+
+    //iTrader更新
+    function CUT_update() {
+        var check=checkEmpty(CUT_update_list);
+        if(!check){
+            return;
+        }
+        //组装请求数据json
+        var param = bilidParam(CUT_add_list, CUT_update_list);
+        console.log(param);
+        $.ajax({
+            url: "CUTUpdate",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("更新系统错误");
+                console.log(err);
+            }
+        });
+
+    }
+
+
+    /**
+     * 清空新增面板输入框
+     */
+    function clearAdd() {
+        for (var i = 0; i < CUT_add_list.length; i++) {
+            $("#" + CUT_add_list[i]).val("");
+        }
+    }
+
+    /**
+     * 查询页面全部字段值返回集合
+     */
+    function getHtmlValue() {
+        var str="";
+        for (var i = 0; i < CUT_update_list.length; i++) {
+            if($("#" + CUT_update_list[i]).val()!=null) {
+                str += $("#" + CUT_update_list[i]).val();
+            }
+        }
+        console.log(">>>>>>>"+str+"<<<<<<<<<");
+        return str;
+    }
+
+</script>
+</body>
+</html>

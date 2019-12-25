@@ -3,9 +3,9 @@ package com.example.ips.service.impl;
 import com.example.ips.export.ResultMapUtil;
 import com.example.ips.export.error.BusinessException;
 import com.example.ips.export.error.EmBusinessCode;
-import com.example.ips.mapper.ServerPlanIDealNewMapper;
-import com.example.ips.model.ServerPlanIDealNew;
-import com.example.ips.service.ServerPlanIDealNewService;
+import com.example.ips.mapper.ServerplanIDealNewMapper;
+import com.example.ips.model.ServerplanIDealNew;
+import com.example.ips.service.ServerplanIDealNewService;
 import com.example.ips.util.ExcelUtils;
 import com.example.ips.util.ModelUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -23,33 +23,34 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 @Service
-public class ServerPlanIDealNewServiceImpl implements ServerPlanIDealNewService {
-    private static final Logger logger = LoggerFactory.getLogger(ServerPlanIDealNewService.class);
+public class ServerplanIDealNewServiceImpl implements ServerplanIDealNewService {
+    private static final Logger logger = LoggerFactory.getLogger(ServerplanIDealNewService.class);
 
     @Autowired
-    ServerPlanIDealNewMapper serverPlanIDealNewMapper;
+    ServerplanIDealNewMapper serverplanIDealNewMapper;
 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Map<String, Object> addIDealNew(ServerPlanIDealNew iDealNew) throws Exception {
+    public Map<String, Object> addIDealNew(ServerplanIDealNew iDealNew) throws Exception {
         Map<String, Object> resultMap;
         //系统当前时间
         Date now = new Date();
         // 从session获取操作用户ID，sysId
         Integer sysId= (Integer) SecurityUtils.getSubject().getSession().getAttribute("sysId");
         //创建2个实体类，用来接收源数据
-        ServerPlanIDealNew first=new ServerPlanIDealNew();
-        ServerPlanIDealNew last=new ServerPlanIDealNew();
+        ServerplanIDealNew first=new ServerplanIDealNew();
+        ServerplanIDealNew last=new ServerplanIDealNew();
         //拆分数据
         ModelUtil.modelHalf(iDealNew,first,last);
         //1.新增第一部分数据
         first.setCreateTime(now);
         first.setUpdateTime(now);
         first.setCreateUser(sysId);
-        int result= serverPlanIDealNewMapper.insertSelective(first);
+        int result= serverplanIDealNewMapper.insertSelective(first);
+        logger.info("iDealNew-insert-first");
         if(result<1){
-            logger.error("iDealNew新增失败-insert");
+            logger.info("iDealNew新增失败-insert");
             throw new BusinessException(EmBusinessCode.SERVERPLAN_IDEALNEW_ADD_ERROR);
         }
         
@@ -59,9 +60,10 @@ public class ServerPlanIDealNewServiceImpl implements ServerPlanIDealNewService 
         last.setCreateTime(now);
         last.setUpdateTime(now);
         last.setCreateUser(sysId);
-        int resultUpdate=serverPlanIDealNewMapper.updateByPrimaryKeySelective(last);
+        int resultUpdate=serverplanIDealNewMapper.updateByPrimaryKeySelective(last);
+        logger.info("iDealNew-insert-last");
         if(resultUpdate<1){
-            logger.error("iDealNew新增失败-update");
+            logger.info("iDealNew新增失败-update");
             throw new BusinessException(EmBusinessCode.SERVERPLAN_IDEALNEW_ADD_ERROR);
         }
 
@@ -72,10 +74,10 @@ public class ServerPlanIDealNewServiceImpl implements ServerPlanIDealNewService 
     }
 
     @Override
-    public Map<String, Object> selectByApplication(ServerPlanIDealNew iDealNew) {
+    public Map<String, Object> selectByApplication(ServerplanIDealNew iDealNew) {
         Map<String, Object> resultMap;
         try {
-            ServerPlanIDealNew iDealNewResult= serverPlanIDealNewMapper.
+            ServerplanIDealNew iDealNewResult= serverplanIDealNewMapper.
                               selectByApplication(iDealNew.getServerApplication());
             resultMap=ResultMapUtil.success(iDealNewResult);
         }catch (Exception e){
@@ -86,7 +88,7 @@ public class ServerPlanIDealNewServiceImpl implements ServerPlanIDealNewService 
     }
 
     @Override
-    public Map<String, Object> idealNewAddUpdate(ServerPlanIDealNew iDealNew) {
+    public Map<String, Object> idealNewAddUpdate(ServerplanIDealNew iDealNew) {
         Map<String, Object> resultMap;
         //系统当前时间
         Date now = new Date();
@@ -96,8 +98,8 @@ public class ServerPlanIDealNewServiceImpl implements ServerPlanIDealNewService 
         try {
             //更新数据文本过大，需要将数据源切割成2个数据分配更新
             //创建2个实体类，用来接收源数据
-            ServerPlanIDealNew first=new ServerPlanIDealNew();
-            ServerPlanIDealNew last=new ServerPlanIDealNew();
+            ServerplanIDealNew first=new ServerplanIDealNew();
+            ServerplanIDealNew last=new ServerplanIDealNew();
             //拆分数据
             ModelUtil.modelHalf(iDealNew,first,last);
             last.setId(first.getId());
@@ -106,12 +108,15 @@ public class ServerPlanIDealNewServiceImpl implements ServerPlanIDealNewService 
             last.setUpdateUser(sysId);
             first.setUpdateTime(now);
             last.setUpdateTime(now);
-            int num=serverPlanIDealNewMapper.updateByPrimaryKeySelective(first);
-            int numLast=serverPlanIDealNewMapper.updateByPrimaryKeySelective(last);
+            int num=serverplanIDealNewMapper.updateByPrimaryKeySelective(first);
+            logger.info("idealNewAddUpdate-first");
+            int numLast=serverplanIDealNewMapper.updateByPrimaryKeySelective(last);
+            logger.info("idealNewAddUpdate-last");
             if(num>0&&numLast>0){
                 resultMap=ResultMapUtil.success(EmBusinessCode.SYSTEM_UPDATE_SUCCESS.getErrMsg());
+                logger.info("idealNewAddUpdate更新成功");
             }else {
-                logger.error("idealNewAddUpdate更新失败");
+                logger.info("idealNewAddUpdate更新失败");
                 resultMap=ResultMapUtil.fail(EmBusinessCode.SYSTEM_UPDATE_ERROR.getErrMsg());
             }
 
@@ -123,8 +128,8 @@ public class ServerPlanIDealNewServiceImpl implements ServerPlanIDealNewService 
     }
 
     @Override
-    public List<ServerPlanIDealNew> selectAll() {
-        List<ServerPlanIDealNew> list= serverPlanIDealNewMapper.selectAll();
+    public List<ServerplanIDealNew> selectAll() {
+        List<ServerplanIDealNew> list= serverplanIDealNewMapper.selectAll();
         return list;
     }
 
@@ -144,8 +149,8 @@ public class ServerPlanIDealNewServiceImpl implements ServerPlanIDealNewService 
                     "模拟数据迁移验证环境-A#simulationDataA,全国模拟演练(new)#nationalSimulationExerciseN," +
                     "模拟演练环境#simulationExercise,模拟-A#simulationA,生产#produce";
             String[] excelHeader = export.split(",");
-            List<ServerPlanIDealNew> iDealNewList =serverPlanIDealNewMapper.selectAll();
-            HSSFWorkbook wb= ExcelUtils.exportBlackboardPlans(fileName, excelHeader, iDealNewList);
+            List<ServerplanIDealNew> iDealNewList =serverplanIDealNewMapper.selectAll();
+            HSSFWorkbook wb= ExcelUtils.exportIDealNew(fileName, excelHeader, iDealNewList);
             outputStream = response.getOutputStream();// 打开流
             wb.write(outputStream);// HSSFWorkbook写入流
         }catch (Exception e){

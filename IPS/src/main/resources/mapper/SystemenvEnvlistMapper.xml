@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ips.mapper.SystemenvEnvlistMapper" >
+  <resultMap id="BaseResultMap" type="com.example.ips.model.SystemenvEnvlist" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SYSTEM" property="system" jdbcType="VARCHAR" />
+    <result column="CLASSIFICATION" property="classification" jdbcType="VARCHAR" />
+    <result column="ENV" property="env" jdbcType="VARCHAR" />
+    <result column="BELONGING_FRONT" property="belongingFront" jdbcType="VARCHAR" />
+    <result column="FOREIGN_EXCHANGE" property="foreignExchange" jdbcType="VARCHAR" />
+    <result column="RMB_NEW" property="rmbNew" jdbcType="VARCHAR" />
+    <result column="RMB_OLD" property="rmbOld" jdbcType="VARCHAR" />
+    <result column="DEP" property="dep" jdbcType="VARCHAR" />
+    <result column="DSP" property="dsp" jdbcType="VARCHAR" />
+    <result column="I_HUB" property="iHub" jdbcType="VARCHAR" />
+    <result column="MEMO" property="memo" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SYSTEM, CLASSIFICATION, ENV, BELONGING_FRONT, FOREIGN_EXCHANGE, RMB_NEW, RMB_OLD, 
+    DEP, DSP, I_HUB, MEMO, CREATE_TIME, UPDATE_TIME, CREATE_USER, UPDATE_USER
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from systemenv_envlist
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from systemenv_envlist
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.ips.model.SystemenvEnvlist" >
+    insert into systemenv_envlist (SYSTEM, CLASSIFICATION, ENV,
+      BELONGING_FRONT, FOREIGN_EXCHANGE, RMB_NEW, 
+      RMB_OLD, DEP, DSP, I_HUB, 
+      MEMO, CREATE_TIME, UPDATE_TIME, 
+      CREATE_USER, UPDATE_USER)
+    values (#{system,jdbcType=VARCHAR}, #{classification,jdbcType=VARCHAR}, #{env,jdbcType=VARCHAR}, 
+      #{belongingFront,jdbcType=VARCHAR}, #{foreignExchange,jdbcType=VARCHAR}, #{rmbNew,jdbcType=VARCHAR}, 
+      #{rmbOld,jdbcType=VARCHAR}, #{dep,jdbcType=VARCHAR}, #{dsp,jdbcType=VARCHAR}, #{iHub,jdbcType=VARCHAR}, 
+      #{memo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=INTEGER}, #{updateUser,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.ips.model.SystemenvEnvlist" >
+    insert into systemenv_envlist
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="system != null" >
+        SYSTEM,
+      </if>
+      <if test="classification != null" >
+        CLASSIFICATION,
+      </if>
+      <if test="env != null" >
+        ENV,
+      </if>
+      <if test="belongingFront != null" >
+        BELONGING_FRONT,
+      </if>
+      <if test="foreignExchange != null" >
+        FOREIGN_EXCHANGE,
+      </if>
+      <if test="rmbNew != null" >
+        RMB_NEW,
+      </if>
+      <if test="rmbOld != null" >
+        RMB_OLD,
+      </if>
+      <if test="dep != null" >
+        DEP,
+      </if>
+      <if test="dsp != null" >
+        DSP,
+      </if>
+      <if test="iHub != null" >
+        I_HUB,
+      </if>
+      <if test="memo != null" >
+        MEMO,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="system != null" >
+        #{system,jdbcType=VARCHAR},
+      </if>
+      <if test="classification != null" >
+        #{classification,jdbcType=VARCHAR},
+      </if>
+      <if test="env != null" >
+        #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="belongingFront != null" >
+        #{belongingFront,jdbcType=VARCHAR},
+      </if>
+      <if test="foreignExchange != null" >
+        #{foreignExchange,jdbcType=VARCHAR},
+      </if>
+      <if test="rmbNew != null" >
+        #{rmbNew,jdbcType=VARCHAR},
+      </if>
+      <if test="rmbOld != null" >
+        #{rmbOld,jdbcType=VARCHAR},
+      </if>
+      <if test="dep != null" >
+        #{dep,jdbcType=VARCHAR},
+      </if>
+      <if test="dsp != null" >
+        #{dsp,jdbcType=VARCHAR},
+      </if>
+      <if test="iHub != null" >
+        #{iHub,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.ips.model.SystemenvEnvlist" >
+    update systemenv_envlist
+    <set >
+      <if test="system != null" >
+        SYSTEM = #{system,jdbcType=VARCHAR},
+      </if>
+      <if test="classification != null" >
+        CLASSIFICATION = #{classification,jdbcType=VARCHAR},
+      </if>
+      <if test="env != null" >
+        ENV = #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="belongingFront != null" >
+        BELONGING_FRONT = #{belongingFront,jdbcType=VARCHAR},
+      </if>
+      <if test="foreignExchange != null" >
+        FOREIGN_EXCHANGE = #{foreignExchange,jdbcType=VARCHAR},
+      </if>
+      <if test="rmbNew != null" >
+        RMB_NEW = #{rmbNew,jdbcType=VARCHAR},
+      </if>
+      <if test="rmbOld != null" >
+        RMB_OLD = #{rmbOld,jdbcType=VARCHAR},
+      </if>
+      <if test="dep != null" >
+        DEP = #{dep,jdbcType=VARCHAR},
+      </if>
+      <if test="dsp != null" >
+        DSP = #{dsp,jdbcType=VARCHAR},
+      </if>
+      <if test="iHub != null" >
+        I_HUB = #{iHub,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.ips.model.SystemenvEnvlist" >
+    update systemenv_envlist
+    set SYSTEM = #{system,jdbcType=VARCHAR},
+      CLASSIFICATION = #{classification,jdbcType=VARCHAR},
+      ENV = #{env,jdbcType=VARCHAR},
+      BELONGING_FRONT = #{belongingFront,jdbcType=VARCHAR},
+      FOREIGN_EXCHANGE = #{foreignExchange,jdbcType=VARCHAR},
+      RMB_NEW = #{rmbNew,jdbcType=VARCHAR},
+      RMB_OLD = #{rmbOld,jdbcType=VARCHAR},
+      DEP = #{dep,jdbcType=VARCHAR},
+      DSP = #{dsp,jdbcType=VARCHAR},
+      I_HUB = #{iHub,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=INTEGER},
+      UPDATE_USER = #{updateUser,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAllEnvList" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from systemenv_envlist
+  </select>
+</mapper>

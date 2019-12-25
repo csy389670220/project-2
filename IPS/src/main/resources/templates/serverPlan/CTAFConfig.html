@@ -29,7 +29,7 @@
                             </div>
                             <div>CTAF配置-<span th:text="${type=='A'?'新增':'修改'}"></span>
                                 <div class="page-title-subheading">
-                                    iTrader系统服务规划信息配置项
+                                    CTAF系统服务规划信息配置项
                                 </div>
                             </div>
                         </div>
@@ -163,8 +163,12 @@
     }
 
 
-    //iTrader新增
+    //CTAF新增
     function CTAF_add() {
+        var check=checkEmpty(CTAF_add_list);
+        if(!check){
+            return;
+        }
         //组装请求数据json
         var param=bilidParam(CTAF_add_list,CTAF_add_list);
         $.ajax({
@@ -189,8 +193,12 @@
         });
     }
 
-    //iTrader更新
+    //CTAF更新
     function CTAF_update() {
+        var check=checkEmpty(CTAF_update_list);
+        if(!check){
+            return;
+        }
         //组装请求数据json
         var param=bilidParam(CTAF_add_list,CTAF_update_list);
         console.log(param);

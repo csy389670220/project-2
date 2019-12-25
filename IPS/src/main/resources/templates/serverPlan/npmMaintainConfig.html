@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>npmMaintain配置</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" style="overflow:auto">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper ">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>npm维护配置-<span th:text="${type=='A1'||type=='A2'?'新增':'修改'}"></span>
+                                <div class="page-title-subheading">
+                                    npm维护系统服务规划信息配置项
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        onclick="npmMaintain_back()" class="btn-shadow  btn btn-info">
+                                    返 回
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--新增模块1-->
+                <div id="addProject1"  th:hidden="${type=='A1'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <h5 class="card-title">表1新增</h5>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="storehouseUse" class="">npm仓库用途</label>
+                                                <input name="storehouseUse" id="storehouseUse" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="develop" class="">开发</label>
+                                                <input name="develop" id="develop" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="construct" class="">构建</label>
+                                                <input name="construct" id="construct" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="releaseW" class="">外汇release</label>
+                                                <input name="releaseW" id="releaseW" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="releaseB" class="">本币release</label>
+                                                <input name="releaseB" id="releaseB" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="mappinfAddress" class="">映射地址</label>
+                                                <input name="mappinfAddress" id="mappinfAddress" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="proxy" class="">proxy</label>
+                                                <input name="proxy" id="proxy" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="npmMaintain1_add()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--更新模块1-->
+                <div id="updateProject1" th:hidden="${type=='U1'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <h5 class="card-title">表1更新</h5>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="storehouseUse_u" class="">npm仓库用途</label>
+                                                <input  th:value="${npmMaintain1.id}" type="hidden" id="id_u">
+                                                <input th:value="${npmMaintain1.storehouseUse}"  name="storehouseUse_u" id="storehouseUse_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="develop_u" class="">开发</label>
+                                                <input th:value="${npmMaintain1.develop}"  name="develop_u" id="develop_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="construct_u" class="">构建</label>
+                                                <input th:value="${npmMaintain1.construct}"  name="construct_u" id="construct_u" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="releaseW_u" class="">外汇release</label>
+                                                <input th:value="${npmMaintain1.releaseW}"  name="releaseW_u" id="releaseW_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="releaseB_u" class="">本币release</label>
+                                                <input th:value="${npmMaintain1.releaseB}"  name="releaseB_u" id="releaseB_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="mappinfAddress_u" class="">映射地址</label>
+                                                <input th:value="${npmMaintain1.mappinfAddress}"  name="mappinfAddress_u" id="mappinfAddress_u" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="proxy_u" class="">proxy</label>
+                                                <input th:value="${npmMaintain1.proxy}"  name="proxy_u" id="proxy_u" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="npmMaintain1_update()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--新增模块2-->
+                <div id="addProject2"  th:hidden="${type=='A2'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-2" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <h5 class="card-title">表2新增</h5>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="storehouseUse2" class="">npm仓库用途</label>
+                                                <input name="storehouseUse2" id="storehouseUse2" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="releaseTimely2" class="">即时通讯release</label>
+                                                <input name="releaseTimely2" id="releaseTimely2" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="mappinfAddress2" class="">映射地址</label>
+                                                <input name="mappinfAddress2" id="mappinfAddress2" class="form-control">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="proxyTimely2" class="">即时通讯proxy</label>
+                                                <input name="proxyTimely2" id="proxyTimely2" class="form-control">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="npmMaintain2_add()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--更新模块2-->
+                <div id="updateProject2" th:hidden="${type=='U2'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-3" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <h5 class="card-title">表2更新</h5>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="storehouseUse2_u" class="">npm仓库用途</label>
+                                                <input th:value="${npmMaintain2.id}" id="id2_u" type="hidden">
+                                                <input th:value="${npmMaintain2.storehouseUse}"  name="storehouseUse2_u" id="storehouseUse2_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="releaseTimely2_u" class="">即时通讯release</label>
+                                                <input th:value="${npmMaintain2.releaseTimely}"  name="releaseTimely2_u" id="releaseTimely2_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="mappinfAddress2_u" class="">映射地址</label>
+                                                <input th:value="${npmMaintain2.mappinfAddress}"  name="mappinfAddress2_u" id="mappinfAddress2_u" class="form-control">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="proxyTimely2_u" class="">即时通讯proxy</label>
+                                                <input th:value="${npmMaintain2.proxyTimely}"  name="proxyTimely2_u" id="proxyTimely2_u" class="form-control">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="npmMaintain2_update()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serverPlan_Menu", "npmMaintain_Menu");
+    });
+
+    //新增模块，更新模块字段key集合
+    var npmMaintain1_add_list=["id","storehouseUse","develop","construct","releaseW","releaseB","mappinfAddress","proxy"];
+    var npmMaintain1_update_list=["id_u","storehouseUse_u","develop_u","construct_u","releaseW_u","releaseB_u","mappinfAddress_u","proxy_u"];
+
+    var npmMaintain2_key_list=["id","storehouseUse","releaseTimely","mappinfAddress","proxyTimely"];
+    var npmMaintain2_add_list=["id2","storehouseUse2","releaseTimely2","mappinfAddress2","proxyTimely2"];
+    var npmMaintain2_update_list=["id2_u","storehouseUse2_u","releaseTimely2_u","mappinfAddress2_u","proxyTimely2_u"];
+    //返回
+    function npmMaintain_back() {
+        ipsSystem.doGet("/serverPlan/npmMaintain");
+    }
+
+
+    //npmMaintain1新增
+    function npmMaintain1_add() {
+        var check=checkEmpty(npmMaintain1_add_list);
+        if(!check){
+            return;
+        }
+        //组装请求数据json
+        var param=bilidParam(npmMaintain1_add_list,npmMaintain1_add_list);
+        $.ajax({
+            url: "npmMaintain1Add",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    clearAdd1();
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("新增系统错误");
+                console.log(err);
+            }
+        });
+    }
+
+    //npmMaintain1更新
+    function npmMaintain1_update() {
+        var check=checkEmpty(npmMaintain1_update_list);
+        if(!check){
+            return;
+        }
+        //组装请求数据json
+        var param=bilidParam(npmMaintain1_add_list,npmMaintain1_update_list);
+        console.log(param);
+        $.ajax({
+            url: "npmMaintain1Update",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("更新系统错误");
+                console.log(err);
+            }
+        });
+
+    }
+
+    //npmMaintain2新增
+    function npmMaintain2_add() {
+        var check=checkEmpty(npmMaintain2_add_list);
+        if(!check){
+            return;
+        }
+        //组装请求数据json
+        var param=bilidParam(npmMaintain2_key_list,npmMaintain2_add_list);
+        $.ajax({
+            url: "npmMaintain2Add",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    clearAdd2();
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("新增系统错误");
+                console.log(err);
+            }
+        });
+    }
+
+    //npmMaintain2更新
+    function npmMaintain2_update() {
+        var check=checkEmpty(npmMaintain2_update_list);
+        if(!check){
+            return;
+        }
+        //组装请求数据json
+        var param=bilidParam(npmMaintain2_key_list,npmMaintain2_update_list);
+        console.log(param);
+        $.ajax({
+            url: "npmMaintain2Update",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("更新系统错误");
+                console.log(err);
+            }
+        });
+
+    }
+
+    /**
+     * 清空新增1面板输入框
+     */
+    function  clearAdd1() {
+        for(var i=0;i<npmMaintain1_add_list.length;i++){
+            $("#"+npmMaintain1_add_list[i]).val("");
+        }
+    }
+
+    /**
+     * 清空新增2面板输入框
+     */
+    function  clearAdd2() {
+        for(var i=0;i<npmMaintain2_add_list.length;i++){
+            $("#"+npmMaintain2_add_list[i]).val("");
+        }
+    }
+
+</script>
+</body>
+</html>

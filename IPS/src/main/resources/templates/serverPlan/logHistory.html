@@ -8,6 +8,7 @@
     <title>变更日志</title>
     <meta name="msapplication-tap-highlight" content="no">
     <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/css/common.css}"/>
 </head>
 
 <body>
@@ -33,47 +34,51 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <shiro:hasRole name="admin">
+                                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            onclick="logHistory_add()" class="btn-shadow  btn btn-info">
+                                        新 增
+                                    </button>
+                                </shiro:hasRole>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="main-card mb-3 card">
-                            <div class="card-body"><h5 class="card-title">变更日志记录</h5>
-                                <table class="mb-0 table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>版本</th>
-                                        <th>日期</th>
-                                        <th>修改人</th>
-                                        <th>内容</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td scope="row">v1.01</td>
-                                        <td>2019/1/31</td>
-                                        <td>潘元庆</td>
-                                        <td>
-                                            更新TAG服务器信息<br/>
-                                            增加iDeal及iTrader服务器信息<br/>
-                                            更新支持服务部公共用途服务器信息<br/>
-                                            更新svn、git维护信息
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">v1.02</td>
-                                        <td>2019/3/20</td>
-                                        <td>潘元庆</td>
-                                        <td>整理iDeal服务器信息</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td>Larry</td>
-                                        <td>the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+                                <div id="box">
+                                    <table class="mb-0 table table-bordered" id="tab">
+                                        <thead>
+                                        <tr>
+                                            <th>版本</th>
+                                            <th>日期</th>
+                                            <th>修改人</th>
+                                            <th>内容</th>
+                                            <shiro:hasRole name="admin">
+                                                <th>操作</th>
+                                            </shiro:hasRole>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="gradeU" th:each="logHistory:${list}">
+                                            <td th:text="${logHistory.version}"></td>
+                                            <td th:text="${logHistory.time}"></td>
+                                            <td th:text="${logHistory.updater}"></td>
+                                            <td th:text="${logHistory.content}"></td>
+                                            <shiro:hasRole name="admin">
+                                                <td>
+                                                    <button  class="btn btn-info" th:onclick="logHistory_update([[${logHistory.id}]])">修改</button>
+                                                </td>
+                                            </shiro:hasRole>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -88,7 +93,24 @@
     $(document).ready(function () {
         //选中菜单栏
         ipsSystem.menu.active("serverPlan_Menu","logHistory_Menu");
+        scroll("tab","box",1);
+        showTableP();
     });
+
+    //跳转新增页面
+    function logHistory_add() {
+        ipsSystem.doPost("/serverPlan/logHistoryConfig",{"type":"A","id":null})
+    }
+
+    //跳转更新页面
+    function logHistory_update(id) {
+        ipsSystem.doPost("/serverPlan/logHistoryConfig",{"type":"U","id":id})
+    }
+
+    //内容显示换行符
+    function showTableP(){
+        replaceBr(4);
+    }
 </script>
 </body>
 </html>

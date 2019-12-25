@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>环境列表配置</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" style="overflow:auto">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper ">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>环境列表配置-<span th:text="${type=='A'?'新增':'修改'}"></span>
+                                <div class="page-title-subheading">
+                                    环境列表信息配置项
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        onclick="envlist_back()" class="btn-shadow  btn btn-info">
+                                    返 回
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--新增模块-->
+                <div id="addProject"  th:hidden="${type=='A'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="system" class="">系统</label>
+                                                <select type="select" name="system" id="system"  class="custom-select">
+                                                    <option value=""></option>
+                                                    <option value="iDeal">iDeal</option>
+                                                    <option value="构件">构件</option>
+                                                    <option value="ITrader">ITrader</option>
+                                                    <option value="CUT(外汇)">CUT(外汇)</option>
+                                                    <option value="微客服">微客服</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="classification" class="">类别</label>
+                                                <select type="select" name="classification" id="classification"  class="custom-select">
+                                                    <option value=""></option>
+                                                    <option value="开发">开发</option>
+                                                    <option value="ST">ST</option>
+                                                    <option value="系统测试">系统测试</option>
+                                                    <option value="验收测试">验收测试</option>
+                                                    <option value="模拟">模拟</option>
+                                                    <option value="生产">生产</option>
+                                                    <option value="其他">其他</option>
+                                                    <option value="特定">特定</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="env" class="">环境</label>
+                                                <input name="env" id="env" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="belongingFront" class="">所属战线</label>
+                                                <input name="belongingFront" id="belongingFront" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="foreignExchange" class="">外汇</label>
+                                                <input name="foreignExchange" id="foreignExchange" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="rmbNew" class="">新本币</label>
+                                                <input name="rmbNew" id="rmbNew" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="rmbOld" class="">老本币</label>
+                                                <input name="rmbOld" id="rmbOld" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="dep" class="">DEP</label>
+                                                <input name="dep" id="dep" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="dsp" class="">DSP</label>
+                                                <input name="dsp" id="dsp" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="iHub" class="">iHUB</label>
+                                                <input name="iHub" id="iHub" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="memo" class="">备注</label>
+                                                <textarea name="memo" id="memo" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="envlist_add()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--更新模块-->
+                <div id="updateProject" th:hidden="${type=='U'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="system_u" class="">系统</label>
+                                                <input id="id_u" type="hidden" th:value="${envlist.id }">
+                                                <select th:value="${envlist.system }" type="select" name="system_u" id="system_u"  class="custom-select">
+                                                    <option value=""></option>
+                                                    <option th:selected="${envlist.system eq 'iDeal'}" value="iDeal">iDeal</option>
+                                                    <option th:selected="${envlist.system eq '构件'}" value="构件">构件</option>
+                                                    <option th:selected="${envlist.system eq 'ITrader'}" value="ITrader">ITrader</option>
+                                                    <option th:selected="${envlist.system eq 'CUT(外汇)'}" value="CUT(外汇)">CUT(外汇)</option>
+                                                    <option th:selected="${envlist.system eq '微客服'}" value="微客服">微客服</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="classification_u" class="">类别</label>
+                                                <select th:value="${envlist.classification}" type="select" name="classification_u" id="classification_u"  class="custom-select">
+                                                    <option value=""></option>
+                                                    <option th:selected="${envlist.classification eq '开发'}" value="开发">开发</option>
+                                                    <option th:selected="${envlist.classification eq 'ST'}" value="ST">ST</option>
+                                                    <option th:selected="${envlist.classification eq '系统测试'}" value="系统测试">系统测试</option>
+                                                    <option th:selected="${envlist.classification eq '验收测试'}" value="验收测试">验收测试</option>
+                                                    <option th:selected="${envlist.classification eq '模拟'}" value="模拟">模拟</option>
+                                                    <option th:selected="${envlist.classification eq '生产'}" value="生产">生产</option>
+                                                    <option th:selected="${envlist.classification eq '其他'}" value="其他">其他</option>
+                                                    <option th:selected="${envlist.classification eq '特定'}" value="特定">特定</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="env_u" class="">环境</label>
+                                                <input th:value="${envlist.env }" name="env_u" id="env_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="belongingFront_u" class="">所属战线</label>
+                                                <input th:value="${envlist.belongingFront }" name="belongingFront_u" id="belongingFront_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="foreignExchange_u" class="">外汇</label>
+                                                <input th:value="${envlist.foreignExchange }" name="foreignExchange_u" id="foreignExchange_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="rmbNew_u" class="">新本币</label>
+                                                <input th:value="${envlist.rmbNew }" name="rmbNew_u" id="rmbNew_u" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="rmbOld_u" class="">老本币</label>
+                                                <input th:value="${envlist.rmbOld }" name="rmbOld_u" id="rmbOld_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="dep_u" class="">DEP</label>
+                                                <input th:value="${envlist.dep }" name="dep_u" id="dep_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="dsp_u" class="">DSP</label>
+                                                <input th:value="${envlist.dsp }" name="dsp_u" id="dsp_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="iHub_u" class="">iHUB</label>
+                                                <input th:value="${envlist.iHub }" name="iHub_u" id="iHub_u" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="memo_u" class="">备注</label>
+                                                <textarea th:text="${envlist.memo }" name="memo_u" id="memo_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="envlist_update()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("systemEnv_Menu", "envlist_Menu");
+    });
+
+    //新增模块，更新模块字段key集合
+    var envlist_add_list=["id","system","classification","env","belongingFront","foreignExchange","rmbNew","rmbOld","dep","dsp","iHub","memo"];
+    var envlist_update_list=["id_u","system_u","classification_u","env_u","belongingFront_u","foreignExchange_u","rmbNew_u","rmbOld_u","dep_u","dsp_u","iHub_u","memo_u"];
+
+    //返回
+    function envlist_back() {
+        ipsSystem.doGet("/systemenv/envlist");
+    }
+
+
+    //envlist新增
+    function envlist_add() {
+        var check=checkEmpty(envlist_add_list);
+        if(!check){
+            return;
+        }
+        //组装请求数据json
+        var param=bilidParam(envlist_add_list,envlist_add_list);
+        $.ajax({
+            url: "envlistAdd",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    clearAdd();
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("新增系统错误");
+                console.log(err);
+            }
+        });
+    }
+
+    //envlist更新
+    function envlist_update() {
+        var check=checkEmpty(envlist_update_list);
+        if(!check){
+            return;
+        }
+        //组装请求数据json
+        var param=bilidParam(envlist_add_list,envlist_update_list);
+        console.log(param);
+        $.ajax({
+            url: "envlistUpdate",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("更新系统错误");
+                console.log(err);
+            }
+        });
+
+    }
+
+
+    /**
+     * 清空新增面板输入框
+     */
+    function  clearAdd() {
+        for(var i=3;i<envlist_add_list.length;i++){
+            $("#"+envlist_add_list[i]).val("");
+        }
+    }
+
+</script>
+</body>
+</html>

@@ -1,7 +1,6 @@
 package com.example.ips.service;
 
 import com.example.ips.model.ServerplanCtaf;
-import com.example.ips.model.ServerplaniTrader;
 
 import java.util.List;
 import java.util.Map;
@@ -11,8 +10,7 @@ import java.util.Map;
  * @description: ServerPlanCtafService:服务器规划-CTAF业务类接口
  * @create: 2019/12/20-10:03
  **/
-public interface ServerPlanCtafService {
-
+public interface ServerplanCtafService {
     /**
      * 查询全部CTAF信息
      * @return

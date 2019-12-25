@@ -4,8 +4,7 @@ import com.example.ips.export.ResultMapUtil;
 import com.example.ips.export.error.EmBusinessCode;
 import com.example.ips.mapper.ServerplanCtafMapper;
 import com.example.ips.model.ServerplanCtaf;
-import com.example.ips.model.ServerplaniTrader;
-import com.example.ips.service.ServerPlanCtafService;
+import com.example.ips.service.ServerplanCtafService;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +15,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 @Service
-public class ServerPlanCtafServiceImpl implements ServerPlanCtafService {
-    private static final Logger logger = LoggerFactory.getLogger(ServerPlanCtafService.class);
+public class ServerplanCtafServiceImpl implements ServerplanCtafService {
+    private static final Logger logger = LoggerFactory.getLogger(ServerplanCtafService.class);
 
     @Autowired
     ServerplanCtafMapper serverplanCtafMapper;
@@ -49,7 +48,7 @@ public class ServerPlanCtafServiceImpl implements ServerPlanCtafService {
                logger.info("CTAFAdd插入成功");
            }else {
                resultMap= ResultMapUtil.fail(EmBusinessCode.SYSTEM_ADD_ERROR.getErrMsg());
-               logger.error("CTAFAdd插入失败");
+               logger.info("CTAFAdd插入失败");
            }
        }catch (Exception e){
            resultMap= ResultMapUtil.fail(EmBusinessCode.SYSTEM_ADD_ERROR.getErrMsg());
@@ -74,7 +73,7 @@ public class ServerPlanCtafServiceImpl implements ServerPlanCtafService {
                 logger.info("CTAFUpdate更新成功");
             }else {
                 resultMap= ResultMapUtil.fail(EmBusinessCode.SYSTEM_UPDATE_ERROR.getErrMsg());
-                logger.error("CTAFUpdate更新失败");
+                logger.info("CTAFUpdate更新失败");
             }
         }catch (Exception e){
             resultMap= ResultMapUtil.fail(EmBusinessCode.SYSTEM_UPDATE_ERROR.getErrMsg());

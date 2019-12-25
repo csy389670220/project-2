@@ -1,14 +1,18 @@
 package com.example.ips.util;
 
+import com.example.ips.model.SystemenvEnvlist;
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.read.biff.BiffException;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.util.CellRangeAddress;
 
+import java.io.*;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * @author: Farben
@@ -25,11 +29,25 @@ public class ExcelUtils {
      * @return 返回一个HSSFWorkbook
      * @throws Exception
      */
-    public static <T> HSSFWorkbook exportBlackboardPlans(String fileName, String[] excelHeader,
+    public static <T> HSSFWorkbook exportIDealNew(String fileName, String[] excelHeader,
                                           Collection<T> dataList) {
         // 创建一个Workbook，对应一个Excel文件
         HSSFWorkbook wb = new HSSFWorkbook();
         try {
+            // XSSFCellStyle.ALIGN_CENTER 居中对齐
+            // XSSFCellStyle.ALIGN_LEFT 左对齐
+            // XSSFCellStyle.ALIGN_RIGHT 右对齐
+            // XSSFCellStyle.VERTICAL_TOP 上对齐
+            // XSSFCellStyle.VERTICAL_CENTER 中对齐
+            // XSSFCellStyle.VERTICAL_BOTTOM 下对齐
+
+            // CellStyle.BORDER_DOUBLE 双边线
+            // CellStyle.BORDER_THIN 细边线
+            // CellStyle.BORDER_MEDIUM 中等边线
+            // CellStyle.BORDER_DASHED 虚线边线
+            // CellStyle.BORDER_HAIR 小圆点虚线边线
+            // CellStyle.BORDER_THICK 粗边线
+
             // 设置标题样式
             HSSFCellStyle titleStyle = wb.createCellStyle();
             // 设置单元格边框样式
@@ -52,6 +70,8 @@ public class ExcelUtils {
 
             // 在Workbook中添加一个sheet,对应Excel文件中的sheet
             HSSFSheet sheet = wb.createSheet(fileName);
+            //设置关键字段滚动时固定
+            sheet.createFreezePane(2,2,2,2);
             // 标题数组
             String[] titleArray = new String[excelHeader.length];
             // 字段名数组
@@ -82,7 +102,7 @@ public class ExcelUtils {
             dataStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
             dataStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
             // 设置居中样式
-            dataStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 水平居中
+            dataStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT); // 水平居左边
             dataStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 垂直居中
             dataStyle.setWrapText(true);//字段换行
             // 设置数据字体
@@ -115,37 +135,12 @@ public class ExcelUtils {
                     Object value = getMethod.invoke(t, new Object[]{});// 动态调用方,得到属性值
                     if (value != null) {
                         dataCell.setCellValue(value.toString());// 为当前列赋值
-                        //列内容大于列标题，设置列宽度
-                        if(value.toString().length()>titleArray[i].length()) {
-                            if(value.toString().contains("\n")){//发版计划内容有折行
-                                String[] values=value.toString().split("\n");
-                                int[] valueSizes =new int[values.length];
-                                for(int j=0;j<valueSizes.length;j++){
-                                    valueSizes[j]=values[j].length();
-                                }
-                                Arrays.sort(valueSizes);
-                                //取所有折行中宽度最大值
-                                sheet.setColumnWidth(i + 1, valueSizes[valueSizes.length-1] * 2 * 256);
-                            }else {
-                                sheet.setColumnWidth(i + 1, value.toString().length() * 2 * 256);
-                            }
-                        }
-                        //备注栏固定宽度，自动换行
-                        if("备注".equals(titleArray[i])){
-                            // 设置备注内容样式
-                            HSSFCellStyle memoStyle = wb.createCellStyle();
-                            // 设置单元格边框样式
-                            memoStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);// 上边框 细边线
-                            memoStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);// 下边框 细边线
-                            memoStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);// 左边框 细边线
-                            memoStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);// 右边框 细边线
-                            // 设置单元格对齐方式
-                            memoStyle.setAlignment(HSSFCellStyle.ALIGN_LEFT); // 水平居左边
-                            memoStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER); // 垂直居中
-                            memoStyle.setWrapText(true);//字段换行
-                            memoStyle.setFont(dataFont);//字体样式
-                            dataCell.setCellStyle(memoStyle);
-                            sheet.setColumnWidth(i + 1, 22 * 2 * 256);
+                        //设置列宽度
+                        if("serverApplication".equals(fieldName)){
+                            //serverApplication字段行宽设置
+                            sheet.setColumnWidth(i + 1, 6000);
+                        }else {
+                            sheet.setColumnWidth(i + 1, 6000*2);
                         }
 
                     }
@@ -157,20 +152,57 @@ public class ExcelUtils {
         }
         return wb;
     }
-    // XSSFCellStyle.ALIGN_CENTER 居中对齐
-    // XSSFCellStyle.ALIGN_LEFT 左对齐
-    // XSSFCellStyle.ALIGN_RIGHT 右对齐
-    // XSSFCellStyle.VERTICAL_TOP 上对齐
-    // XSSFCellStyle.VERTICAL_CENTER 中对齐
-    // XSSFCellStyle.VERTICAL_BOTTOM 下对齐
 
-    // CellStyle.BORDER_DOUBLE 双边线
-    // CellStyle.BORDER_THIN 细边线
-    // CellStyle.BORDER_MEDIUM 中等边线
-    // CellStyle.BORDER_DASHED 虚线边线
-    // CellStyle.BORDER_HAIR 小圆点虚线边线
-    // CellStyle.BORDER_THICK 粗边线
 
+    public static List<?> ToAnalysisExcel(File Inputfile,  Object classObj) {
+        // Unable to recognize OLE stream  不支持xlsx格式  支持xls格式
+        Workbook workbook= null;
+        List  list=new ArrayList();
+        try {
+            Field[] fieldSource = classObj.getClass().getDeclaredFields();
+            FileInputStream fileInputStream = new FileInputStream(Inputfile);
+            workbook = Workbook.getWorkbook(fileInputStream);
+
+            Sheet readfirst = workbook.getSheet(0);
+            int rows = readfirst.getRows();
+            int clomns = readfirst.getColumns();
+            //System.out.println("row:" + rows);
+            //System.out.println("clomns:" + clomns);
+
+            //i下标从1开始，标题行不读取
+            for(int i =1;i<rows;i++) {
+                Cell[] cells = readfirst.getRow(i); //循环得到每一行的单元格对象
+                //通过泛型创建实体类
+                ModelUtil o=new ModelUtil();
+                Object cellObj=o.getObject(classObj.getClass());
+
+                //根据每一个单元格对象得到里面的值，并且通过反射赋值给cellObj实体类
+                for(int j=0;j<cells.length;j++){
+                    //fieldSource下标+1，跳过id
+                    String key = fieldSource[j+1].getName();
+                    String value=cells[j].getContents();
+                    Field staffF= fieldSource[j+1];
+                    //访问其中私有变量的权限
+                    staffF.setAccessible(true);
+                    // 给属性设值
+                    staffF.set(cellObj,(String)value);
+                }
+                list.add(cellObj);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (BiffException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
 }
     

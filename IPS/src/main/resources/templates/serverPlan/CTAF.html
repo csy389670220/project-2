@@ -8,6 +8,7 @@
     <title>CTAF</title>
     <meta name="msapplication-tap-highlight" content="no">
     <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/css/common.css}"/>
 </head>
 
 <body>
@@ -27,7 +28,7 @@
                                 <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
                                 </i>
                             </div>
-                            <div>iTrader
+                            <div>CTAF
                                 <div class="page-title-subheading">
                                     CTAF系统服务规划
                                 </div>
@@ -49,37 +50,36 @@
                     <div class="main-card mb-3 card">
                         <div class="card-body">
                             <h5 class="card-title"></h5>
-                            <table class="mb-0 table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>服务器用途</th>
-                                    <th>DEV</th>
-                                    <th>ST</th>
-                                    <th>内网</th>
-                                    <th>外网</th>
-                                    <shiro:hasRole name="admin">
-                                        <th>操作</th>
-                                    </shiro:hasRole>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <!--<tr class="gradeU" th:each="iDealNew:${iDealNewlist}">-->
-                                <!--<td th:text="${iDealNew.serverApplication}"></td>-->
-                                <!--</tr>-->
-                                <tr class="gradeU" th:each="CTAF:${list}">
-                                    <td th:text="${CTAF.serverUse}"></td>
-                                    <td th:text="${CTAF.dev}"></td>
-                                    <td th:text="${CTAF.st}"></td>
-                                    <td th:text="${CTAF.netN}"></td>
-                                    <td th:text="${CTAF.netW}"></td>
-                                    <shiro:hasRole name="admin">
-                                        <td>
-                                            <button  class="btn btn-info" th:onclick="CTAF_update([[${CTAF.id}]])">修改</button>
-                                        </td>
-                                    </shiro:hasRole>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <div id="box">
+                                <table class="mb-0 table table-bordered" id="tab">
+                                    <thead>
+                                    <tr>
+                                        <th>服务器用途</th>
+                                        <th>DEV</th>
+                                        <th>ST</th>
+                                        <th>内网</th>
+                                        <th>外网</th>
+                                        <shiro:hasRole name="admin">
+                                            <th>操作</th>
+                                        </shiro:hasRole>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="gradeU" th:each="CTAF:${list}">
+                                        <td th:text="${CTAF.serverUse}"></td>
+                                        <td th:text="${CTAF.dev}"></td>
+                                        <td th:text="${CTAF.st}"></td>
+                                        <td th:text="${CTAF.netN}"></td>
+                                        <td th:text="${CTAF.netW}"></td>
+                                        <shiro:hasRole name="admin">
+                                            <td>
+                                                <button  class="btn btn-info" th:onclick="CTAF_update([[${CTAF.id}]])">修改</button>
+                                            </td>
+                                        </shiro:hasRole>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -94,6 +94,7 @@
     $(document).ready(function () {
         //选中菜单栏
         ipsSystem.menu.active("serverPlan_Menu", "CTAF_Menu");
+        scroll("tab","box",1);
         showTableP();
     });
 
@@ -113,10 +114,5 @@
     }
 
 </script>
-<style>
-    p{
-        margin-bottom: 1px !important;
-    }
-</style>
 </body>
 </html>

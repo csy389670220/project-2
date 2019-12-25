@@ -38,7 +38,21 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="main-card mb-3 card">
-                            <div class="card-body"><h5 class="card-title">npm仓库维护配置一</h5>
+                            <div class="card-body">
+                                <div class="form-row">
+                                    <div class="col-md-3">
+                                        <div class="position-relative form-group">
+                                            <h5 class="card-title">npm仓库维护配置一</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <shiro:hasRole name="admin">
+                                        <div class="position-relative form-group">
+                                            <button onclick="npmMaintain_add1()" type="button" class="btn-shadow  btn btn-info ">新增</button>
+                                        </div>
+                                        </shiro:hasRole>
+                                    </div>
+                                </div>
                                 <table class="mb-0 table table-bordered">
                                     <thead>
                                     <tr>
@@ -49,17 +63,25 @@
                                         <th>本币release</th>
                                         <th>映射地址</th>
                                         <th>proxy</th>
+                                        <shiro:hasRole name="admin">
+                                            <th style="width: 100px;">操作</th>
+                                        </shiro:hasRole>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>访问地址</td>
-                                        <td>http://200.31.155.108:1117/</td>
-                                        <td>http://200.31.155.108:1117/</td>
-                                        <td>http://200.31.155.108:1117/</td>
-                                        <td>http://200.31.155.108:1117/</td>
-                                        <td>http://200.31.155.108:1117/</td>
-                                        <td>http://200.31.155.108:1117/</td>
+                                    <tr class="gradeU" th:each="npmMaintain1:${resultMap.npmMaintain1es}">
+                                        <td th:text="${npmMaintain1.storehouseUse}"></td>
+                                        <td th:text="${npmMaintain1.develop}"></td>
+                                        <td th:text="${npmMaintain1.construct}"></td>
+                                        <td th:text="${npmMaintain1.releaseW}"></td>
+                                        <td th:text="${npmMaintain1.releaseB}"></td>
+                                        <td th:text="${npmMaintain1.mappinfAddress}"></td>
+                                        <td th:text="${npmMaintain1.proxy}"></td>
+                                        <shiro:hasRole name="admin">
+                                            <td>
+                                                <button  class="btn btn-info" th:onclick="npmMaintain1_update([[${npmMaintain1.id}]])">修改</button>
+                                            </td>
+                                        </shiro:hasRole>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -68,7 +90,21 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="main-card mb-3 card">
-                            <div class="card-body"><h5 class="card-title">npm仓库维护配置二</h5>
+                            <div class="card-body">
+                                <div class="form-row">
+                                    <div class="col-md-3">
+                                        <div class="position-relative form-group">
+                                            <h5 class="card-title">npm仓库维护配置二</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <shiro:hasRole name="admin">
+                                        <div class="position-relative form-group">
+                                            <button  onclick="npmMaintain_add2()"  type="button" class="btn-shadow  btn btn-info ">新增</button>
+                                        </div>
+                                        </shiro:hasRole>
+                                    </div>
+                                </div>
                                 <table class="mb-0 table table-bordered">
                                     <thead>
                                     <tr>
@@ -76,14 +112,22 @@
                                         <th>即时通讯release</th>
                                         <th>映射地址</th>
                                         <th>即时通讯proxy</th>
+                                        <shiro:hasRole name="admin">
+                                            <th style="width: 100px;">操作</th>
+                                        </shiro:hasRole>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>访问地址</td>
-                                        <td>http://172.17.195.175:5678/</td>
-                                        <td>http://172.17.239.92:8080/</td>
-                                        <td>http://172.19.195.122:8080/</td>
+                                    <tr class="gradeU" th:each="npmMaintain2:${resultMap.npmMaintain2es}">
+                                        <td th:text="${npmMaintain2.storehouseUse}"></td>
+                                        <td th:text="${npmMaintain2.releaseTimely}"></td>
+                                        <td th:text="${npmMaintain2.mappinfAddress}"></td>
+                                        <td th:text="${npmMaintain2.proxyTimely}"></td>
+                                        <shiro:hasRole name="admin">
+                                            <td>
+                                                <button  class="btn btn-info" th:onclick="npmMaintain2_update([[${npmMaintain2.id}]])">修改</button>
+                                            </td>
+                                        </shiro:hasRole>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -102,6 +146,26 @@
         //选中菜单栏
         ipsSystem.menu.active("serverPlan_Menu","npmMaintain_Menu");
     });
+
+    //表1新增
+    function  npmMaintain_add1() {
+        ipsSystem.doPost("/serverPlan/npmMaintainConfig",{"type":"A1","id":null})
+    }
+
+    //表2新增
+    function  npmMaintain_add2() {
+        ipsSystem.doPost("/serverPlan/npmMaintainConfig",{"type":"A2","id":null})
+    }
+
+    //表1更新
+    function npmMaintain1_update(id){
+        ipsSystem.doPost("/serverPlan/npmMaintainConfig",{"type":"U1","id":id})
+    }
+
+    //表2更新
+    function npmMaintain2_update(id){
+        ipsSystem.doPost("/serverPlan/npmMaintainConfig",{"type":"U2","id":id})
+    }
 </script>
 </body>
 </html>

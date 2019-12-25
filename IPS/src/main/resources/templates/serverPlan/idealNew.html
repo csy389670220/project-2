@@ -8,6 +8,7 @@
     <title>iDeal-New</title>
     <meta name="msapplication-tap-highlight" content="no">
     <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/css/common.css}"/>
 </head>
 
 <body>
@@ -36,10 +37,10 @@
                         <div class="page-title-actions">
                             <div class="d-inline-block dropdown">
                                 <shiro:hasRole name="admin">
-                                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                        onclick="idealNew_config()" class="btn-shadow  btn btn-info">
-                                    配 置
-                                </button>
+                                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            onclick="idealNew_config()" class="btn-shadow  btn btn-info">
+                                        配 置
+                                    </button>
                                 </shiro:hasRole>
                                 <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                         onclick="idealNew_getExcel()" class="btn-shadow  btn btn-info">
@@ -49,93 +50,60 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-lg-12" >
                     <div class="main-card mb-3 card">
-                        <div class="card-body"><h5 class="card-title">表-1</h5>
-                            <table class="mb-0 table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>服务器用途</th>
-                                    <th>本币DEV</th>
-                                    <th>ST1</th>
-                                    <th>ST2</th>
-                                    <th>ST3</th>
-                                    <th>ST4</th>
-                                    <th>UAT1</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="gradeU" th:each="iDealNew:${iDealNewlist}">
-                                    <td th:text="${iDealNew.serverApplication}"></td>
-                                    <td th:text="${iDealNew.dev}"></td>
-                                    <td th:text="${iDealNew.st1}"></td>
-                                    <td th:text="${iDealNew.st2}"></td>
-                                    <td th:text="${iDealNew.st3}"></td>
-                                    <td th:text="${iDealNew.st4}"></td>
-                                    <td th:text="${iDealNew.uat1}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="main-card mb-3 card">
-                        <div class="card-body"><h5 class="card-title">表-2</h5>
-                            <table class="mb-0 table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>服务器用途</th>
-                                    <th>UAT2</th>
-                                    <th>UAT3</th>
-                                    <th>UAT4</th>
-                                    <th>UAT5</th>
-                                    <th>UAT6</th>
-                                    <th>培训环境</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="gradeU" th:each="iDealNew:${iDealNewlist}">
-                                    <td th:text="${iDealNew.serverApplication}"></td>
-                                    <td th:text="${iDealNew.uat2}"></td>
-                                    <td th:text="${iDealNew.uat3}"></td>
-                                    <td th:text="${iDealNew.uat4}"></td>
-                                    <td th:text="${iDealNew.uat5}"></td>
-                                    <td th:text="${iDealNew.uat6}"></td>
-                                    <td th:text="${iDealNew.train}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="main-card mb-3 card">
-                        <div class="card-body"><h5 class="card-title">表-3</h5>
-                            <table class="mb-0 table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>服务器用途</th>
-                                    <th>MEM1</th>
-                                    <th>模拟数据迁移验证环境-A</th>
-                                    <th>全国模拟演练(new)</th>
-                                    <th>模拟演练环境</th>
-                                    <th>模拟-A</th>
-                                    <th>生产</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr class="gradeU" th:each="iDealNew:${iDealNewlist}">
-                                    <td th:text="${iDealNew.serverApplication}"></td>
-                                    <td th:text="${iDealNew.mem1}"></td>
-                                    <td th:text="${iDealNew.simulationDataA}"></td>
-                                    <td th:text="${iDealNew.nationalSimulationExerciseN}"></td>
-                                    <td th:text="${iDealNew.simulationExercise}"></td>
-                                    <td th:text="${iDealNew.simulationA}"></td>
-                                    <td th:text="${iDealNew.produce}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
+                        <div class="card-body" >
+                            <h5 class="card-title"></h5>
+                            <div id="box">
+                                <table  class="table table-bordered " id="tab">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 100px;">服务器用途</th>
+                                        <th>本币DEV</th>
+                                        <th>ST1</th>
+                                        <th>ST2</th>
+                                        <th>ST3</th>
+                                        <th>ST4</th>
+                                        <th>UAT1</th>
+                                        <th>UAT2</th>
+                                        <th>UAT3</th>
+                                        <th>UAT4</th>
+                                        <th>UAT5</th>
+                                        <th>UAT6</th>
+                                        <th>培训环境</th>
+                                        <th>MEM1</th>
+                                        <th>模拟数据迁移验证环境-A</th>
+                                        <th>全国模拟演练(new)</th>
+                                        <th>模拟演练环境</th>
+                                        <th>模拟-A</th>
+                                        <th>生产</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="gradeU" th:each="iDealNew:${iDealNewlist}">
+                                        <td th:text="${iDealNew.serverApplication}"></td>
+                                        <td th:text="${iDealNew.dev}"></td>
+                                        <td th:text="${iDealNew.st1}"></td>
+                                        <td th:text="${iDealNew.st2}"></td>
+                                        <td th:text="${iDealNew.st3}"></td>
+                                        <td th:text="${iDealNew.st4}"></td>
+                                        <td th:text="${iDealNew.uat1}"></td>
+                                        <td th:text="${iDealNew.uat2}"></td>
+                                        <td th:text="${iDealNew.uat3}"></td>
+                                        <td th:text="${iDealNew.uat4}"></td>
+                                        <td th:text="${iDealNew.uat5}"></td>
+                                        <td th:text="${iDealNew.uat6}"></td>
+                                        <td th:text="${iDealNew.train}"></td>
+                                        <td th:text="${iDealNew.mem1}"></td>
+                                        <td th:text="${iDealNew.simulationDataA}"></td>
+                                        <td th:text="${iDealNew.nationalSimulationExerciseN}"></td>
+                                        <td th:text="${iDealNew.simulationExercise}"></td>
+                                        <td th:text="${iDealNew.simulationA}"></td>
+                                        <td th:text="${iDealNew.produce}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -150,6 +118,7 @@
     $(document).ready(function () {
         //选中菜单栏
         ipsSystem.menu.active("serverPlan_Menu", "iDealNew_Menu");
+        scroll("tab","box",1);
         showTableP();
     });
 
@@ -158,7 +127,7 @@
     }
     //内容显示换行符
     function showTableP(){
-        for(var  i=2;i<8;i++){
+        for(var  i=2;i<20;i++){
             replaceBr(i);
         }
     }
@@ -167,11 +136,7 @@
     function idealNew_getExcel() {
         ipsSystem.doGet("/serverPlan/getIDealNewExcel")
     }
+
 </script>
-<style>
-    p{
-        margin-bottom: 1px !important;
-    }
-</style>
 </body>
 </html>

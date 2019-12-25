@@ -150,3 +150,64 @@ var ipsSystem = {
     }
 
 }
+
+/**
+ * 功能：固定表头
+ * 参数   viewid     表格的id
+ *       scrollid   滚动条所在容器的id
+ *       size       表头的行数（复杂表头可能不止一行）
+ */
+function scroll(viewid,scrollid,size){
+    // 获取滚动条容器
+    var container = document.getElementById(scrollid);
+    // 将表格拷贝一份
+    var tb2 = document.getElementById(viewid).cloneNode(true);
+    // 将拷贝得到的表格中非表头行删除
+    for(var i=tb2.rows.length;i>size;i--){
+        // 每次删除数据行的第一行
+        tb2.deleteRow(size);
+    }
+    // 创建一个div
+    var bak = document.createElement("div");
+    // 将div添加到滚动条容器中
+    container.appendChild(bak);
+    // 将拷贝得到的表格在删除数据行后添加到创建的div中
+    bak.appendChild(tb2);
+    // 设置创建的div的position属性为absolute，即绝对定于滚动条容器（滚动条容器的position属性必须为relative）
+    bak.style.position = "absolute";
+    // 设置创建的div的背景色与原表头的背景色相同（貌似不是必须）
+    //bak.style.backgroundColor = "#cfc";
+    // 设置div的display属性为block，即显示div（貌似也不是必须，但如果你不希望总是显示拷贝得来的表头，这个属性还是有用处的）
+    bak.style.display = "block";
+    // 设置创建的div的left属性为0，即该div与滚动条容器紧贴
+    bak.style.left = 0;
+    // 设置div的top属性为0，初期时滚动条位置为0，此属性与left属性协作达到遮盖原表头
+    bak.style.top = "0px";
+    bak.style.width = "100%";
+    // 给滚动条容器绑定滚动条滚动事件，在滚动条滚动事件发生时，调整拷贝得来的表头的top值，保持其在可视范围内，且在滚动条容器的顶端
+    container.onscroll = function(){
+        // 设置div的top值为滚动条距离滚动条容器顶部的距离值
+        bak.style.top = this.scrollTop+"px";
+    }
+}
+
+/**
+ * 功能：判断数据中的key集合是否全部为空值
+ * @param value_list
+ * @returns {boolean}
+ */
+function checkEmpty(value_list) {
+    var str="";
+    for(var i=0;i<value_list.length;i++){
+        //1.ID字段不进行判空,
+        //2.该key输入框页面存在不为null
+        if(value_list[i]!="id"&&value_list[i]!="id_u"&&$("#"+value_list[i]).val()!=null){
+            str+=$("#"+value_list[i]).val();
+        }
+    }
+    if(str==""||str==null){
+        alert("输入框不能全部为空");
+        return false;
+    }
+    return true;
+}

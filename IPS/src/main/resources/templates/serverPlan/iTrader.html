@@ -8,6 +8,7 @@
     <title>iTrader</title>
     <meta name="msapplication-tap-highlight" content="no">
     <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/css/common.css}"/>
 </head>
 
 <body>
@@ -18,7 +19,7 @@
         <!--菜单栏-->
         <div th:replace="common/common_body :: body_left"></div>
         <!--右侧主内容-->
-        <div class="app-main__outer" style="overflow:auto">
+        <div class="app-main__outer" >
             <div class="app-main__inner">
                 <div class="app-page-title">
                     <div class="page-title-wrapper">
@@ -45,51 +46,50 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-lg-12" >
                     <div class="main-card mb-3 card">
-                        <div class="card-body">
+                        <div class="card-body" >
                             <h5 class="card-title"></h5>
-                            <table class="mb-0 table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>环境</th>
-                                    <th>服务器名</th>
-                                    <th>机器名</th>
-                                    <th>机器IP(外网)</th>
-                                    <th>虚IP</th>
-                                    <th>内外网映射IP</th>
-                                    <th>公网IP</th>
-                                    <th>DEP组播子网IP</th>
-                                    <th>DSP组播</th>
-                                    <th>备注</th>
-                                    <shiro:hasRole name="admin">
-                                    <th>操作</th>
-                                    </shiro:hasRole>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <!--<tr class="gradeU" th:each="iDealNew:${iDealNewlist}">-->
-                                    <!--<td th:text="${iDealNew.serverApplication}"></td>-->
-                                <!--</tr>-->
-                                <tr class="gradeU" th:each="iTrader:${list}">
-                                    <td th:text="${iTrader.env}"></td>
-                                    <td th:text="${iTrader.serverName}"></td>
-                                    <td th:text="${iTrader.machineName}"></td>
-                                    <td th:text="${iTrader.machineIpW}"></td>
-                                    <td th:text="${iTrader.virtualIp}"></td>
-                                    <td th:text="${iTrader.mappingIp}"></td>
-                                    <td th:text="${iTrader.publicNetIp}"></td>
-                                    <td th:text="${iTrader.depIp}"></td>
-                                    <td th:text="${iTrader.dsp}"></td>
-                                    <td th:text="${iTrader.memo}"></td>
-                                    <shiro:hasRole name="admin">
-                                    <td>
-                                        <button  class="btn btn-info" th:onclick="iTrader_update([[${iTrader.id}]])">修改</button>
-                                    </td>
-                                    </shiro:hasRole>
-                                </tr>
-                                </tbody>
-                            </table>
+                            <div id="box">
+                                <table class="mb-0 table table-bordered" id="tab">
+                                    <thead>
+                                    <tr>
+                                        <th class="action_th">环境</th>
+                                        <th class="action_th">服务器名</th>
+                                        <th class="action_th">机器名</th>
+                                        <th>机器IP(外网)</th>
+                                        <th>虚IP</th>
+                                        <th>内外网映射IP</th>
+                                        <th>公网IP</th>
+                                        <th>DEP组播子网IP</th>
+                                        <th>DSP组播</th>
+                                        <th>备注</th>
+                                        <shiro:hasRole name="admin">
+                                            <th class="action_th">操作</th>
+                                        </shiro:hasRole>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="gradeU" th:each="iTrader:${list}">
+                                        <td  class="action_th" th:text="${iTrader.env}"></td>
+                                        <td  class="action_th" th:text="${iTrader.serverName}"></td>
+                                        <td  class="action_th" th:text="${iTrader.machineName}"></td>
+                                        <td th:text="${iTrader.machineIpW}"></td>
+                                        <td th:text="${iTrader.virtualIp}"></td>
+                                        <td th:text="${iTrader.mappingIp}"></td>
+                                        <td th:text="${iTrader.publicNetIp}"></td>
+                                        <td th:text="${iTrader.depIp}"></td>
+                                        <td th:text="${iTrader.dsp}"></td>
+                                        <td th:text="${iTrader.memo}"></td>
+                                        <shiro:hasRole name="admin">
+                                            <td class="action_th">
+                                                <button  class="btn btn-info" th:onclick="iTrader_update([[${iTrader.id}]])">修改</button>
+                                            </td>
+                                        </shiro:hasRole>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,6 +104,7 @@
     $(document).ready(function () {
         //选中菜单栏
         ipsSystem.menu.active("serverPlan_Menu", "iTrader_Menu");
+        scroll("tab","box",1);
         showTableP();
     });
 
@@ -120,6 +121,8 @@
     //内容显示换行符
     function showTableP(){
         replaceBr(5);
+        replaceBr(7);
+        replaceBr(10);
     }
 
 
@@ -127,10 +130,6 @@
         ipsSystem.doGet("/serverPlan/getIDealNewExcel")
     }
 </script>
-<style>
-    p{
-        margin-bottom: 1px !important;
-    }
-</style>
+
 </body>
 </html>

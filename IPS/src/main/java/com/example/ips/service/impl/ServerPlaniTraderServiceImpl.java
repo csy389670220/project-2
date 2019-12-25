@@ -4,7 +4,7 @@ import com.example.ips.export.ResultMapUtil;
 import com.example.ips.export.error.EmBusinessCode;
 import com.example.ips.mapper.ServerplaniTraderMapper;
 import com.example.ips.model.ServerplaniTrader;
-import com.example.ips.service.ServerPlaniTraderService;
+import com.example.ips.service.ServerplaniTraderService;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class ServerPlaniTraderServiceImpl implements ServerPlaniTraderService {
+public class ServerPlaniTraderServiceImpl implements ServerplaniTraderService {
 
-    private static final Logger logger = LoggerFactory.getLogger(ServerPlaniTraderService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ServerplaniTraderService.class);
     @Autowired
     ServerplaniTraderMapper serverplaniTraderMapper;
 
@@ -50,7 +50,7 @@ public class ServerPlaniTraderServiceImpl implements ServerPlaniTraderService {
             if(num>0){
                 resultMap=ResultMapUtil.success(EmBusinessCode.SERVERPLAN_ITRADER_ADD_SUCCESS.getErrMsg());
             }else {
-                logger.error("iTraderAdd插入信息失败");
+                logger.info("iTraderAdd插入信息失败");
                 resultMap=ResultMapUtil.fail(EmBusinessCode.SERVERPLAN_ITRADER_ADD_ERROR.getErrMsg());
             }
 
@@ -75,7 +75,7 @@ public class ServerPlaniTraderServiceImpl implements ServerPlaniTraderService {
             if(num>0){
                 resultMap=ResultMapUtil.success(EmBusinessCode.SYSTEM_UPDATE_SUCCESS.getErrMsg());
             }else {
-                logger.error("iTraderUpdate更新信息失败");
+                logger.info("iTraderUpdate更新信息失败");
                 resultMap=ResultMapUtil.fail(EmBusinessCode.SYSTEM_UPDATE_ERROR.getErrMsg());
             }
 

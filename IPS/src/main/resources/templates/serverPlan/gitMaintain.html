@@ -8,6 +8,7 @@
     <title>git维护</title>
     <meta name="msapplication-tap-highlight" content="no">
     <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/css/common.css}"/>
 </head>
 
 <body>
@@ -33,50 +34,53 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <shiro:hasRole name="admin">
+                                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            onclick="gitMaintain_add()" class="btn-shadow  btn btn-info">
+                                        新 增
+                                    </button>
+                                </shiro:hasRole>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="main-card mb-3 card">
-                            <div class="card-body"><h5 class="card-title">公共用途记录</h5>
-                                <table class="mb-0 table table-bordered">
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+                                <div id="box">
+                                    <table class="table table-bordered " id="tab">
                                     <thead>
                                     <tr>
                                         <th>网域</th>
                                         <th>项目分类</th>
                                         <th>目录/模块</th>
-                                        <th>内容</th>
                                         <th>地址</th>
                                         <th>备注</th>
+                                        <shiro:hasRole name="admin">
+                                            <th class="action_th">操作</th>
+                                        </shiro:hasRole>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>内网</td>
-                                        <td>UT-stack</td>
-                                        <td>ctaf</td>
-                                        <td>交付物</td>
-                                        <td>git@gitlab:internet/iDeal_2.0.git</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>内网</td>
-                                        <td>UT-stack</td>
-                                        <td>ctaf</td>
-                                        <td>交付物</td>
-                                        <td>git@gitlab:internet/iDeal_2.0.git</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>内网</td>
-                                        <td>UT-stack</td>
-                                        <td>ctaf</td>
-                                        <td>交付物</td>
-                                        <td>http://svn.scm.cfets.com/svn/17_TAG/deliver/ctaf</td>
-                                        <td></td>
+                                    <tr class="gradeU" th:each="gitMaintain:${list}">
+                                        <td th:text="${gitMaintain.domain}"></td>
+                                        <td th:text="${gitMaintain.category}"></td>
+                                        <td th:text="${gitMaintain.moduleName}"></td>
+                                        <td th:text="${gitMaintain.address}"></td>
+                                        <td th:text="${gitMaintain.memo}"></td>
+                                        <shiro:hasRole name="admin">
+                                            <td class="action_th">
+                                                <button  class="btn btn-info" th:onclick="gitMaintain_update([[${gitMaintain.id}]])">修改</button>
+                                            </td>
+                                        </shiro:hasRole>
                                     </tr>
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -90,8 +94,25 @@
 <script>
     $(document).ready(function () {
         //选中菜单栏
-        ipsSystem.menu.active("serverPlan_Menu","gitMaintain_Menu");
+        ipsSystem.menu.active("serverPlan_Menu", "gitMaintain_Menu");
+        scroll("tab","box",1);
+        showTableP();
     });
+
+    //跳转新增页面
+    function gitMaintain_add() {
+        ipsSystem.doPost("/serverPlan/gitMaintainConfig",{"type":"A","id":null})
+    }
+
+    //跳转更新页面
+    function gitMaintain_update(id) {
+        ipsSystem.doPost("/serverPlan/gitMaintainConfig",{"type":"U","id":id})
+    }
+
+    //内容显示换行符
+    function showTableP(){
+            replaceBr(5);
+    }
 </script>
 </body>
 </html>

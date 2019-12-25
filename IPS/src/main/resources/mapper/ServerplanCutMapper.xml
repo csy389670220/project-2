@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ips.mapper.ServerplanCutMapper" >
+  <resultMap id="BaseResultMap" type="com.example.ips.model.ServerplanCut" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SERVER_USE" property="serverUse" jdbcType="VARCHAR" />
+    <result column="DEV" property="dev" jdbcType="VARCHAR" />
+    <result column="ST_A" property="stA" jdbcType="VARCHAR" />
+    <result column="ST_B" property="stB" jdbcType="VARCHAR" />
+    <result column="ST_C" property="stC" jdbcType="VARCHAR" />
+    <result column="UAT_A" property="uatA" jdbcType="VARCHAR" />
+    <result column="UAT_B" property="uatB" jdbcType="VARCHAR" />
+    <result column="UAT_C_TO_A" property="uatCToA" jdbcType="VARCHAR" />
+    <result column="MEM1" property="mem1" jdbcType="VARCHAR" />
+    <result column="MEM2" property="mem2" jdbcType="VARCHAR" />
+    <result column="TRAIN" property="train" jdbcType="VARCHAR" />
+    <result column="SIMULATION_DATA_MIGRATION_A" property="simulationDataMigrationA" jdbcType="VARCHAR" />
+    <result column="SIMULATION_DATA_MIGRATION_B" property="simulationDataMigrationB" jdbcType="VARCHAR" />
+    <result column="SIMULATION_RELIABILITY" property="simulationReliability" jdbcType="VARCHAR" />
+    <result column="SIMULATION_A" property="simulationA" jdbcType="VARCHAR" />
+    <result column="SIMULATION_B" property="simulationB" jdbcType="VARCHAR" />
+    <result column="PRODUCE" property="produce" jdbcType="VARCHAR" />
+    <result column="DISASTER_RECOVERY_BEIJINHG" property="disasterRecoveryBeijinhg" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SERVER_USE, DEV, ST_A, ST_B, ST_C, UAT_A, UAT_B, UAT_C_TO_A, MEM1, MEM2, TRAIN, 
+    SIMULATION_DATA_MIGRATION_A, SIMULATION_DATA_MIGRATION_B, SIMULATION_RELIABILITY, 
+    SIMULATION_A, SIMULATION_B, PRODUCE, DISASTER_RECOVERY_BEIJINHG, CREATE_TIME, UPDATE_TIME, 
+    CREATE_USER, UPDATE_USER
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from serverplan_cut
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from serverplan_cut
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.ips.model.ServerplanCut" >
+    insert into serverplan_cut (SERVER_USE, DEV, ST_A,
+      ST_B, ST_C, UAT_A, UAT_B, 
+      UAT_C_TO_A, MEM1, MEM2, 
+      TRAIN, SIMULATION_DATA_MIGRATION_A, SIMULATION_DATA_MIGRATION_B, 
+      SIMULATION_RELIABILITY, SIMULATION_A, SIMULATION_B, 
+      PRODUCE, DISASTER_RECOVERY_BEIJINHG, CREATE_TIME, 
+      UPDATE_TIME, CREATE_USER, UPDATE_USER
+      )
+    values (#{serverUse,jdbcType=VARCHAR}, #{dev,jdbcType=VARCHAR}, #{stA,jdbcType=VARCHAR}, 
+      #{stB,jdbcType=VARCHAR}, #{stC,jdbcType=VARCHAR}, #{uatA,jdbcType=VARCHAR}, #{uatB,jdbcType=VARCHAR}, 
+      #{uatCToA,jdbcType=VARCHAR}, #{mem1,jdbcType=VARCHAR}, #{mem2,jdbcType=VARCHAR}, 
+      #{train,jdbcType=VARCHAR}, #{simulationDataMigrationA,jdbcType=VARCHAR}, #{simulationDataMigrationB,jdbcType=VARCHAR}, 
+      #{simulationReliability,jdbcType=VARCHAR}, #{simulationA,jdbcType=VARCHAR}, #{simulationB,jdbcType=VARCHAR}, 
+      #{produce,jdbcType=VARCHAR}, #{disasterRecoveryBeijinhg,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=INTEGER}, #{updateUser,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.ips.model.ServerplanCut" >
+    insert into serverplan_cut
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serverUse != null" >
+        SERVER_USE,
+      </if>
+      <if test="dev != null" >
+        DEV,
+      </if>
+      <if test="stA != null" >
+        ST_A,
+      </if>
+      <if test="stB != null" >
+        ST_B,
+      </if>
+      <if test="stC != null" >
+        ST_C,
+      </if>
+      <if test="uatA != null" >
+        UAT_A,
+      </if>
+      <if test="uatB != null" >
+        UAT_B,
+      </if>
+      <if test="uatCToA != null" >
+        UAT_C_TO_A,
+      </if>
+      <if test="mem1 != null" >
+        MEM1,
+      </if>
+      <if test="mem2 != null" >
+        MEM2,
+      </if>
+      <if test="train != null" >
+        TRAIN,
+      </if>
+      <if test="simulationDataMigrationA != null" >
+        SIMULATION_DATA_MIGRATION_A,
+      </if>
+      <if test="simulationDataMigrationB != null" >
+        SIMULATION_DATA_MIGRATION_B,
+      </if>
+      <if test="simulationReliability != null" >
+        SIMULATION_RELIABILITY,
+      </if>
+      <if test="simulationA != null" >
+        SIMULATION_A,
+      </if>
+      <if test="simulationB != null" >
+        SIMULATION_B,
+      </if>
+      <if test="produce != null" >
+        PRODUCE,
+      </if>
+      <if test="disasterRecoveryBeijinhg != null" >
+        DISASTER_RECOVERY_BEIJINHG,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serverUse != null" >
+        #{serverUse,jdbcType=VARCHAR},
+      </if>
+      <if test="dev != null" >
+        #{dev,jdbcType=VARCHAR},
+      </if>
+      <if test="stA != null" >
+        #{stA,jdbcType=VARCHAR},
+      </if>
+      <if test="stB != null" >
+        #{stB,jdbcType=VARCHAR},
+      </if>
+      <if test="stC != null" >
+        #{stC,jdbcType=VARCHAR},
+      </if>
+      <if test="uatA != null" >
+        #{uatA,jdbcType=VARCHAR},
+      </if>
+      <if test="uatB != null" >
+        #{uatB,jdbcType=VARCHAR},
+      </if>
+      <if test="uatCToA != null" >
+        #{uatCToA,jdbcType=VARCHAR},
+      </if>
+      <if test="mem1 != null" >
+        #{mem1,jdbcType=VARCHAR},
+      </if>
+      <if test="mem2 != null" >
+        #{mem2,jdbcType=VARCHAR},
+      </if>
+      <if test="train != null" >
+        #{train,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationDataMigrationA != null" >
+        #{simulationDataMigrationA,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationDataMigrationB != null" >
+        #{simulationDataMigrationB,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationReliability != null" >
+        #{simulationReliability,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationA != null" >
+        #{simulationA,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationB != null" >
+        #{simulationB,jdbcType=VARCHAR},
+      </if>
+      <if test="produce != null" >
+        #{produce,jdbcType=VARCHAR},
+      </if>
+      <if test="disasterRecoveryBeijinhg != null" >
+        #{disasterRecoveryBeijinhg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.ips.model.ServerplanCut" >
+    update serverplan_cut
+    <set >
+      <if test="serverUse != null" >
+        SERVER_USE = #{serverUse,jdbcType=VARCHAR},
+      </if>
+      <if test="dev != null" >
+        DEV = #{dev,jdbcType=VARCHAR},
+      </if>
+      <if test="stA != null" >
+        ST_A = #{stA,jdbcType=VARCHAR},
+      </if>
+      <if test="stB != null" >
+        ST_B = #{stB,jdbcType=VARCHAR},
+      </if>
+      <if test="stC != null" >
+        ST_C = #{stC,jdbcType=VARCHAR},
+      </if>
+      <if test="uatA != null" >
+        UAT_A = #{uatA,jdbcType=VARCHAR},
+      </if>
+      <if test="uatB != null" >
+        UAT_B = #{uatB,jdbcType=VARCHAR},
+      </if>
+      <if test="uatCToA != null" >
+        UAT_C_TO_A = #{uatCToA,jdbcType=VARCHAR},
+      </if>
+      <if test="mem1 != null" >
+        MEM1 = #{mem1,jdbcType=VARCHAR},
+      </if>
+      <if test="mem2 != null" >
+        MEM2 = #{mem2,jdbcType=VARCHAR},
+      </if>
+      <if test="train != null" >
+        TRAIN = #{train,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationDataMigrationA != null" >
+        SIMULATION_DATA_MIGRATION_A = #{simulationDataMigrationA,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationDataMigrationB != null" >
+        SIMULATION_DATA_MIGRATION_B = #{simulationDataMigrationB,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationReliability != null" >
+        SIMULATION_RELIABILITY = #{simulationReliability,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationA != null" >
+        SIMULATION_A = #{simulationA,jdbcType=VARCHAR},
+      </if>
+      <if test="simulationB != null" >
+        SIMULATION_B = #{simulationB,jdbcType=VARCHAR},
+      </if>
+      <if test="produce != null" >
+        PRODUCE = #{produce,jdbcType=VARCHAR},
+      </if>
+      <if test="disasterRecoveryBeijinhg != null" >
+        DISASTER_RECOVERY_BEIJINHG = #{disasterRecoveryBeijinhg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.ips.model.ServerplanCut" >
+    update serverplan_cut
+    set SERVER_USE = #{serverUse,jdbcType=VARCHAR},
+      DEV = #{dev,jdbcType=VARCHAR},
+      ST_A = #{stA,jdbcType=VARCHAR},
+      ST_B = #{stB,jdbcType=VARCHAR},
+      ST_C = #{stC,jdbcType=VARCHAR},
+      UAT_A = #{uatA,jdbcType=VARCHAR},
+      UAT_B = #{uatB,jdbcType=VARCHAR},
+      UAT_C_TO_A = #{uatCToA,jdbcType=VARCHAR},
+      MEM1 = #{mem1,jdbcType=VARCHAR},
+      MEM2 = #{mem2,jdbcType=VARCHAR},
+      TRAIN = #{train,jdbcType=VARCHAR},
+      SIMULATION_DATA_MIGRATION_A = #{simulationDataMigrationA,jdbcType=VARCHAR},
+      SIMULATION_DATA_MIGRATION_B = #{simulationDataMigrationB,jdbcType=VARCHAR},
+      SIMULATION_RELIABILITY = #{simulationReliability,jdbcType=VARCHAR},
+      SIMULATION_A = #{simulationA,jdbcType=VARCHAR},
+      SIMULATION_B = #{simulationB,jdbcType=VARCHAR},
+      PRODUCE = #{produce,jdbcType=VARCHAR},
+      DISASTER_RECOVERY_BEIJINHG = #{disasterRecoveryBeijinhg,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=INTEGER},
+      UPDATE_USER = #{updateUser,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAllCut" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from serverplan_cut
+  </select>
+</mapper>

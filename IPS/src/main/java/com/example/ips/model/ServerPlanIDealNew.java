@@ -2,7 +2,7 @@ package com.example.ips.model;
 
 import java.util.Date;
 
-public class ServerPlanIDealNew  {
+public class ServerplanIDealNew {
     private Integer id;
 
     private String serverApplication;

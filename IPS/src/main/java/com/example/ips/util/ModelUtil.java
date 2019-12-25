@@ -113,4 +113,18 @@ public class ModelUtil {
         }
     }
 
+
+    /**
+     * 通过泛型创建实体类
+     * @param c
+     * @param <T>
+     * @return
+     * @throws IllegalAccessException
+     * @throws InstantiationException
+     */
+    public   <T>T getObject(Class<T> c) throws IllegalAccessException, InstantiationException {
+        T t=c.newInstance();
+        return t;
+    }
+
 }

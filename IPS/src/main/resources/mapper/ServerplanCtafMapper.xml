@@ -27,10 +27,7 @@
     where ID = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.example.ips.model.ServerplanCtaf" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into serverplan_ctaf (SERVER_USE, DEV, ST, 
+    insert into serverplan_ctaf (SERVER_USE, DEV, ST,
       NET_N, NET_W, CREATE_TIME, 
       UPDATE_TIME, CREATE_USER, UPDATE_USER
       )

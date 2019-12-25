@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>WeChat配置</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" style="overflow:auto">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper ">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>WeChat配置-<span th:text="${type=='A'?'新增':'修改'}"></span>
+                                <div class="page-title-subheading">
+                                    WeChat系统服务规划信息配置项
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        onclick="WeChat_back()" class="btn-shadow  btn btn-info">
+                                    返 回
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--新增模块-->
+                <div id="addProject"  th:hidden="${type=='A'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="serverUse" class="">服务器用途</label>
+                                                <input name="serverUse" id="serverUse" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="st" class="">ST</label>
+                                                <textarea name="st" id="st" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="uat" class="">UAT</label>
+                                                <textarea name="uat" id="uat" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="simulationd" class="">模拟</label>
+                                                <textarea name="simulationd" id="simulationd" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="produce" class="">生产</label>
+                                                <textarea name="produce" id="produce" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="WeChat_add()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--更新模块-->
+                <div id="updateProject" th:hidden="${type=='U'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="serverUse" class="">服务器用途</label>
+                                                <input type="hidden" id="id_u" th:value="${WeChat.id}">
+                                                <input th:value="${WeChat.serverUse}" name="serverUse_u" id="serverUse_u" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="st_u" class="">ST</label>
+                                                <textarea th:text="${WeChat.st}"  name="st_u" id="st_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="uat_u" class="">UAT</label>
+                                                <textarea th:text="${WeChat.uat}"  name="uat_u" id="uat_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="simulationd_u" class="">模拟</label>
+                                                <textarea th:text="${WeChat.simulationd}" name="simulationd_u" id="simulationd_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="produce_u" class="">生产</label>
+                                                <textarea th:text="${WeChat.produce}" name="produce_u" id="produce_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="WeChat_update()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serverPlan_Menu", "WeChat_Menu");
+    });
+
+    //新增模块，更新模块字段key集合
+    var WeChat_add_list=["id","serverUse","st","uat","simulationd","produce"];
+    var WeChat_update_list=["id_u","serverUse_u","st_u","uat_u","simulationd_u","produce_u"];
+
+    //返回
+    function WeChat_back() {
+        ipsSystem.doGet("/serverPlan/WeChat");
+    }
+
+
+    //WeChat新增
+    function WeChat_add() {
+        var check=checkEmpty(WeChat_add_list);
+        if(!check){
+            return;
+        }
+        //组装请求数据json
+        var param=bilidParam(WeChat_add_list,WeChat_add_list);
+        $.ajax({
+            url: "WeChatAdd",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    clearAdd();
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("新增系统错误");
+                console.log(err);
+            }
+        });
+    }
+
+    //WeChat更新
+    function WeChat_update() {
+        var check=checkEmpty(WeChat_update_list);
+        if(!check){
+            return;
+        }
+        //组装请求数据json
+        var param=bilidParam(WeChat_add_list,WeChat_update_list);
+        console.log(param);
+        $.ajax({
+            url: "WeChatUpdate",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("更新系统错误");
+                console.log(err);
+            }
+        });
+
+    }
+
+
+    /**
+     * 清空新增面板输入框
+     */
+    function  clearAdd() {
+        for(var i=0;i<WeChat_add_list.length;i++){
+            $("#"+WeChat_add_list[i]).val("");
+        }
+    }
+
+</script>
+</body>
+</html>

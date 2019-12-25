@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>logHistory配置</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" style="overflow:auto">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper ">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>logHistory配置-<span th:text="${type=='A'?'新增':'修改'}"></span>
+                                <div class="page-title-subheading">
+                                    logHistory系统服务规划信息配置项
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        onclick="logHistory_back()" class="btn-shadow  btn btn-info">
+                                    返 回
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--新增模块-->
+                <div id="addProject"  th:hidden="${type=='A'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="version" class="">版本</label>
+                                                <input name="version" id="version" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="time" class="">日期</label>
+                                                <input name="time" id="time" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="updater" class="">修改人</label>
+                                                <input name="updater" id="updater" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="content" class="">内容</label>
+                                                <textarea name="content" id="content" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="logHistory_add()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--更新模块-->
+                <div id="updateProject" th:hidden="${type=='U'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="version_u" class="">版本</label>
+                                                <input type="hidden"  id="id_u" th:value="${logHistory.id}">
+                                                <input th:value="${logHistory.version}" name="version_u" id="version_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="time_u" class="">日期</label>
+                                                <input th:value="${logHistory.time}" name="time_u" id="time_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="updater_u" class="">修改人</label>
+                                                <input th:value="${logHistory.updater}" name="updater_u" id="updater_u" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="content_u" class="">内容</label>
+                                                <textarea th:text="${logHistory.content}" name="content_u" id="content_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="logHistory_update()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serverPlan_Menu", "logHistory_Menu");
+    });
+
+    //新增模块，更新模块字段key集合
+    var logHistory_add_list=["id","version","time","updater","content"];
+    var logHistory_update_list=["id_u","version_u","time_u","updater_u","content_u"];
+
+    //返回
+    function logHistory_back() {
+        ipsSystem.doGet("/serverPlan/logHistory");
+    }
+
+
+    //logHistory新增
+    function logHistory_add() {
+        var check=checkEmpty(logHistory_add_list);
+        if(!check){
+            return;
+        }
+
+        //组装请求数据json
+        var param=bilidParam(logHistory_add_list,logHistory_add_list);
+        $.ajax({
+            url: "logHistoryAdd",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    clearAdd();
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("新增系统错误");
+                console.log(err);
+            }
+        });
+    }
+
+    //logHistory更新
+    function logHistory_update() {
+        var check=checkEmpty(logHistory_update_list);
+        if(!check){
+            return;
+        }
+        //组装请求数据json
+        var param=bilidParam(logHistory_add_list,logHistory_update_list);
+        console.log(param);
+        $.ajax({
+            url: "logHistoryUpdate",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("更新系统错误");
+                console.log(err);
+            }
+        });
+
+    }
+
+
+    /**
+     * 清空新增面板输入框
+     */
+    function  clearAdd() {
+        for(var i=0;i<logHistory_add_list.length;i++){
+            $("#"+logHistory_add_list[i]).val("");
+        }
+    }
+
+</script>
+</body>
+</html>

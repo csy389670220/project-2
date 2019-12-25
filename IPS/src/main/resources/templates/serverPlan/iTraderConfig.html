@@ -53,13 +53,33 @@
                                     <div class="col-md-3">
                                         <div class="position-relative form-group">
                                             <label for="env" class="">环境</label>
-                                            <input name="env" id="env" class="form-control">
+                                            <select type="select" name="env" id="env"  class="custom-select">
+                                                <option value=""></option>
+                                                <option value="开发">开发</option>
+                                                <option value="ST">ST</option>
+                                                <option value="UAT">UAT</option>
+                                                <option value="UAT-B">UAT-B</option>
+                                                <option value="UAT演示">UAT演示</option>
+                                                <option value="模拟">模拟</option>
+                                                <option value="生产">生产</option>
+                                                <option value="模拟演练">模拟演练</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="position-relative form-group">
                                             <label for="serverName" class="">服务器名</label>
-                                            <input name="serverName" id="serverName" class="form-control">
+                                            <select type="select" name="serverName" id="serverName"  class="custom-select">
+                                                <option value=""></option>
+                                                <option value="应用服务器">应用服务器 </option>
+                                                <option value="大数据服务器">大数据服务器</option>
+                                                <option value="接口服务器">接口服务器</option>
+                                                <option value="场务服务器">场务服务器</option>
+                                                <option value="聊天服务器">聊天服务器</option>
+                                                <option value="IMT服务器">IMT服务器</option>
+                                                <option value="数据库服务器">数据库服务器</option>
+                                                <option value="DSP服务器">DSP服务器</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-md-3">
@@ -84,12 +104,6 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="position-relative form-group">
-                                            <label for="publicNetIp" class="">公网IP</label>
-                                            <input name="publicNetIp" id="publicNetIp" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="position-relative form-group">
                                             <label for="depIp" class="">DEP组播子网IP</label>
                                             <input name="depIp" id="depIp" class="form-control">
                                         </div>
@@ -98,6 +112,12 @@
                                         <div class="position-relative form-group">
                                             <label for="dsp" class="">DSP组播</label>
                                             <input name="dsp" id="dsp" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="position-relative form-group">
+                                            <label for="publicNetIp" class="">公网IP</label>
+                                            <textarea name="publicNetIp" id="publicNetIp" class="form-control"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -133,13 +153,33 @@
                                             <div class="position-relative form-group">
                                                 <label for="env_u" class="">环境</label>
                                                 <input type="hidden" id="id_u"  th:value="${iTraderInfo.id}">
-                                                <input name="env_u" id="env_u"  th:value="${iTraderInfo.env}" class="form-control">
+                                                <select type="select" name="env_u" id="env_u"  class="custom-select">
+                                                    <option value=""></option>
+                                                    <option th:selected="${iTraderInfo.env eq '开发'}" value="开发">开发</option>
+                                                    <option th:selected="${iTraderInfo.env eq 'ST'}" value="ST">ST</option>
+                                                    <option th:selected="${iTraderInfo.env eq 'UAT'}" value="UAT">UAT</option>
+                                                    <option th:selected="${iTraderInfo.env eq 'UAT-B'}" value="UAT-B">UAT-B</option>
+                                                    <option th:selected="${iTraderInfo.env eq 'UAT演示'}" value="UAT演示">UAT演示</option>
+                                                    <option th:selected="${iTraderInfo.env eq '模拟'}" value="模拟">模拟</option>
+                                                    <option th:selected="${iTraderInfo.env eq '生产'}" value="生产">生产</option>
+                                                    <option th:selected="${iTraderInfo.env eq '模拟演练'}" value="模拟演练">模拟演练</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="position-relative form-group">
                                                 <label for="serverName_u" class="">服务器名</label>
-                                                <input name="serverName_u" id="serverName_u" th:value="${iTraderInfo.serverName}" class="form-control">
+                                                <select type="select" name="serverName_u" id="serverName_u"  class="custom-select">
+                                                    <option value=""></option>
+                                                    <option th:selected="${iTraderInfo.serverName eq '应用服务器'}" value="应用服务器">应用服务器 </option>
+                                                    <option th:selected="${iTraderInfo.serverName eq '大数据服务器'}" value="大数据服务器">大数据服务器</option>
+                                                    <option th:selected="${iTraderInfo.serverName eq '接口服务器'}" value="接口服务器">接口服务器</option>
+                                                    <option th:selected="${iTraderInfo.serverName eq '场务服务器'}" value="场务服务器">场务服务器</option>
+                                                    <option th:selected="${iTraderInfo.serverName eq '聊天服务器'}" value="聊天服务器">聊天服务器</option>
+                                                    <option th:selected="${iTraderInfo.serverName eq 'IMT服务器'}" value="IMT服务器">IMT服务器</option>
+                                                    <option th:selected="${iTraderInfo.serverName eq '数据库服务器'}" value="数据库服务器">数据库服务器</option>
+                                                    <option th:selected="${iTraderInfo.serverName eq 'DSP服务器'}" value="DSP服务器">DSP服务器</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -164,12 +204,6 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="position-relative form-group">
-                                                <label for="publicNetIp_u" class="">公网IP</label>
-                                                <input name="publicNetIp_u" id="publicNetIp_u" th:value="${iTraderInfo.publicNetIp}" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="position-relative form-group">
                                                 <label for="depIp_u" class="">DEP组播子网IP</label>
                                                 <input name="depIp_u" id="depIp_u" th:value="${iTraderInfo.depIp}" class="form-control">
                                             </div>
@@ -178,6 +212,13 @@
                                             <div class="position-relative form-group">
                                                 <label for="dsp_u" class="">DSP组播</label>
                                                 <input name="dsp_u" id="dsp_u" th:value="${iTraderInfo.dsp}" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="publicNetIp_u" class="">公网IP</label>
+                                                <textarea name="publicNetIp_u" id="publicNetIp_u"
+                                                          th:text="${iTraderInfo.publicNetIp}" class="form-control"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -228,6 +269,10 @@
 
     //iTrader新增
     function iTrader_add() {
+        var check=checkEmpty(iTrader_add_list);
+        if(!check){
+            return;
+        }
         //组装请求数据json
         var param=bilidParam(iTrader_add_list,iTrader_add_list);
         $.ajax({
@@ -254,6 +299,10 @@
 
     //iTrader更新
     function iTrader_update() {
+        var check=checkEmpty(iTrader_update_list);
+        if(!check){
+            return;
+        }
         //组装请求数据json
         var param=bilidParam(iTrader_add_list,iTrader_update_list);
         console.log(param);
@@ -284,7 +333,7 @@
      * 清空新增面板输入框
      */
     function  clearAdd() {
-        for(var i=0;i<iTrader_add_list.length;i++){
+        for(var i=3;i<iTrader_add_list.length;i++){
             $("#"+iTrader_add_list[i]).val("");
         }
     }

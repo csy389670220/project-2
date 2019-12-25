@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.ips.mapper.ServerPlanIDealNewMapper" >
-  <resultMap id="BaseResultMap" type="com.example.ips.model.ServerPlanIDealNew" >
+<mapper namespace="com.example.ips.mapper.ServerplanIDealNewMapper" >
+  <resultMap id="BaseResultMap" type="com.example.ips.model.ServerplanIDealNew" >
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="SERVER_APPLICATION" property="serverApplication" jdbcType="VARCHAR" />
     <result column="DEV" property="dev" jdbcType="VARCHAR" />
@@ -42,7 +42,7 @@
     delete from serverplan_idealnew
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.example.ips.model.ServerPlanIDealNew" >
+  <insert id="insert" parameterType="com.example.ips.model.ServerplanIDealNew" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -63,7 +63,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=INTEGER}, 
       #{updateUser,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.example.ips.model.ServerPlanIDealNew" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.example.ips.model.ServerplanIDealNew" useGeneratedKeys="true" keyProperty="id">
     insert into serverplan_idealnew
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="serverApplication != null" >
@@ -208,7 +208,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.ips.model.ServerPlanIDealNew" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.ips.model.ServerplanIDealNew" >
     update serverplan_idealnew
     <set >
       <if test="serverApplication != null" >
@@ -283,7 +283,7 @@
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.ips.model.ServerPlanIDealNew" >
+  <update id="updateByPrimaryKey" parameterType="com.example.ips.model.ServerplanIDealNew" >
     update serverplan_idealnew
     set SERVER_APPLICATION = #{serverApplication,jdbcType=VARCHAR},
       DEV = #{dev,jdbcType=VARCHAR},

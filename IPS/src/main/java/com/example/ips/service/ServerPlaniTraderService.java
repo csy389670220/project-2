@@ -1,9 +1,7 @@
 package com.example.ips.service;
 
-import com.example.ips.model.ServerPlanIDealNew;
 import com.example.ips.model.ServerplaniTrader;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +10,7 @@ import java.util.Map;
  * @description: ServerPlaniTraderService:服务器规划-iTrader业务类接口
  * @create: 2019/12/18-9:09
  **/
-public interface ServerPlaniTraderService {
+public interface ServerplaniTraderService {
 
     /**
      * 查询全部iTrader信息

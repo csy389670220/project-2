@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>publicUse配置</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" style="overflow:auto">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper ">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div> 公共用途配置-<span th:text="${type=='A'?'新增':'修改'}"></span>
+                                <div class="page-title-subheading">
+                                    公共用途系统服务规划信息配置项
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        onclick="publicUse_back()" class="btn-shadow  btn btn-info">
+                                    返 回
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--新增模块-->
+                <div id="addProject"  th:hidden="${type=='A'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="server" class="">服务器</label>
+                                                <input name="server" id="server" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="application" class="">用途</label>
+                                                <textarea name="application" id="application" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="memo" class="">备注</label>
+                                                <textarea name="memo" id="memo" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="publicUse_add()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--更新模块-->
+                <div id="updateProject" th:hidden="${type=='U'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="server_u" class="">服务器</label>
+                                                <input  th:value="${publicUse.id}" type="hidden" id="id_u">
+                                                <input  th:value="${publicUse.server}" name="server_u" id="server_u" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="application_u" class="">用途</label>
+                                                <textarea  th:text="${publicUse.application}" name="application_u" id="application_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="memo_u" class="">备注</label>
+                                                <textarea  th:text="${publicUse.memo}" name="memo_u" id="memo_u" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="publicUse_update()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serverPlan_Menu", "publicUse_Menu");
+    });
+
+    //新增模块，更新模块字段key集合
+    var publicUse_add_list=["id","server","application","memo"];
+    var publicUse_update_list=["id_u","server_u","application_u","memo_u"];
+
+    //返回
+    function publicUse_back() {
+        ipsSystem.doGet("/serverPlan/publicUse");
+    }
+
+
+    //iTrader新增
+    function publicUse_add() {
+        var check=checkEmpty(publicUse_add_list);
+        if(!check){
+            return;
+        }
+
+        //组装请求数据json
+        var param=bilidParam(publicUse_add_list,publicUse_add_list);
+        $.ajax({
+            url: "publicUseAdd",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    clearAdd();
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("新增系统错误");
+                console.log(err);
+            }
+        });
+    }
+
+    //iTrader更新
+    function publicUse_update() {
+        var check=checkEmpty(publicUse_update_list);
+        if(!check){
+            return;
+        }
+
+        //组装请求数据json
+        var param=bilidParam(publicUse_add_list,publicUse_update_list);
+        console.log(param);
+        $.ajax({
+            url: "publicUseUpdate",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("更新系统错误");
+                console.log(err);
+            }
+        });
+
+    }
+
+
+    /**
+     * 清空新增面板输入框
+     */
+    function  clearAdd() {
+        for(var i=0;i<publicUse_add_list.length;i++){
+            $("#"+publicUse_add_list[i]).val("");
+        }
+    }
+
+</script>
+</body>
+</html>

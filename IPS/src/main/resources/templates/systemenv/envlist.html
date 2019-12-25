@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>环境列表</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/css/common.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" style="overflow:auto">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>环境列表
+                                <div class="page-title-subheading">
+                                    系统环境规划列表
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <shiro:hasRole name="admin">
+                                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            onclick="envlist_add()" class="btn-shadow  btn btn-info">
+                                        新 增
+                                    </button>
+                                </shiro:hasRole>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <div id="box">
+                                <table class="mb-0 table table-bordered" id="tab">
+                                    <thead>
+                                    <tr>
+                                        <th class="action_th">系统</th>
+                                        <th class="action_th">类别</th>
+                                        <th>环境</th>
+                                        <th>所属战线</th>
+                                        <th>外汇</th>
+                                        <th>新本币</th>
+                                        <th>老本币</th>
+                                        <th>DEP</th>
+                                        <th>DSP</th>
+                                        <th>iHUB</th>
+                                        <th>备注</th>
+                                        <shiro:hasRole name="admin">
+                                            <th class="action_th">操作</th>
+                                        </shiro:hasRole>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="gradeU" th:each="envlist:${list}">
+                                        <td class="action_th" th:text="${envlist.system}"></td>
+                                        <td class="action_th" th:text="${envlist.classification}"></td>
+                                        <td th:text="${envlist.env}"></td>
+                                        <td th:text="${envlist.belongingFront}"></td>
+                                        <td th:text="${envlist.foreignExchange}"></td>
+                                        <td th:text="${envlist.rmbNew}"></td>
+                                        <td th:text="${envlist.rmbOld}"></td>
+                                        <td th:text="${envlist.dep}"></td>
+                                        <td th:text="${envlist.dsp}"></td>
+                                        <td th:text="${envlist.iHub}"></td>
+                                        <td th:text="${envlist.memo}"></td>
+                                        <shiro:hasRole name="admin">
+                                            <td class="action_th">
+                                                <button  class="btn btn-info" th:onclick="envlist_update([[${envlist.id}]])">修改</button>
+                                            </td>
+                                        </shiro:hasRole>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("systemEnv_Menu", "envlist_Menu");
+        scroll("tab","box",1);
+        showTableP();
+    });
+
+    //跳转新增页面
+    function envlist_add() {
+        ipsSystem.doPost("/systemenv/envlistConfig",{"type":"A","id":null})
+    }
+
+    //跳转更新页面
+    function envlist_update(id) {
+        ipsSystem.doPost("/systemenv/envlistConfig",{"type":"U","id":id})
+    }
+
+    //内容显示换行符
+    function showTableP(){
+        replaceBr(11);
+    }
+
+</script>
+
+</body>
+</html>

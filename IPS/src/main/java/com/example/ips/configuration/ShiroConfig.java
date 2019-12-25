@@ -87,6 +87,7 @@ public class ShiroConfig {
         //授权匿名用户url
         filterChainDefinitionMap.put("/index", "anon");
         filterChainDefinitionMap.put("/serverPlan/**", "anon");
+        filterChainDefinitionMap.put("/systemenv/**", "anon");
 
         //其他资源都需要认证  authc 表示需要认证才能进行访问 user表示配置记住我或认证通过可以访问的地址
         filterChainDefinitionMap.put("/**", "kickout,user");

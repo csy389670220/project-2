@@ -1,6 +1,6 @@
 package com.example.ips.mapper;
 
-import com.example.ips.model.ServerPlanIDealNew;
+import com.example.ips.model.ServerplanIDealNew;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +9,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ServerPlanIDealNewMapperTest {
+public class ServerplanIDealNewMapperTest {
     @Autowired
-    ServerPlanIDealNewMapper serverPlanIDealNewMapper;
+    ServerplanIDealNewMapper serverPlanIDealNewMapper;
 
     @Test
     public void selectByApplication() {
-        ServerPlanIDealNew s=serverPlanIDealNewMapper.selectByApplication("即时通讯核心");
+        ServerplanIDealNew s=serverPlanIDealNewMapper.selectByApplication("即时通讯核心");
         System.out.println(">>>>>>>>>>>>>"+s.getDev());
     }
 

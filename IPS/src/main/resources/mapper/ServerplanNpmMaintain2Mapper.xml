@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ips.mapper.ServerplanNpmMaintain2Mapper" >
+  <resultMap id="BaseResultMap" type="com.example.ips.model.ServerplanNpmMaintain2" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="STOREHOUSE_USE" property="storehouseUse" jdbcType="VARCHAR" />
+    <result column="RELEASE_TIMELY" property="releaseTimely" jdbcType="VARCHAR" />
+    <result column="MAPPINF_ADDRESS" property="mappinfAddress" jdbcType="VARCHAR" />
+    <result column="PROXY_TIMELY" property="proxyTimely" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, STOREHOUSE_USE, RELEASE_TIMELY, MAPPINF_ADDRESS, PROXY_TIMELY, CREATE_TIME, UPDATE_TIME, 
+    CREATE_USER, UPDATE_USER
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from serverplan_npmmaintain2
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from serverplan_npmmaintain2
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.ips.model.ServerplanNpmMaintain2" >
+    insert into serverplan_npmmaintain2 (STOREHOUSE_USE, RELEASE_TIMELY, MAPPINF_ADDRESS,
+      PROXY_TIMELY, CREATE_TIME, UPDATE_TIME, 
+      CREATE_USER, UPDATE_USER)
+    values (#{storehouseUse,jdbcType=VARCHAR}, #{releaseTimely,jdbcType=VARCHAR}, #{mappinfAddress,jdbcType=VARCHAR}, 
+      #{proxyTimely,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=INTEGER}, #{updateUser,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.ips.model.ServerplanNpmMaintain2" >
+    insert into serverplan_npmmaintain2
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="storehouseUse != null" >
+        STOREHOUSE_USE,
+      </if>
+      <if test="releaseTimely != null" >
+        RELEASE_TIMELY,
+      </if>
+      <if test="mappinfAddress != null" >
+        MAPPINF_ADDRESS,
+      </if>
+      <if test="proxyTimely != null" >
+        PROXY_TIMELY,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="storehouseUse != null" >
+        #{storehouseUse,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTimely != null" >
+        #{releaseTimely,jdbcType=VARCHAR},
+      </if>
+      <if test="mappinfAddress != null" >
+        #{mappinfAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="proxyTimely != null" >
+        #{proxyTimely,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.ips.model.ServerplanNpmMaintain2" >
+    update serverplan_npmmaintain2
+    <set >
+      <if test="storehouseUse != null" >
+        STOREHOUSE_USE = #{storehouseUse,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTimely != null" >
+        RELEASE_TIMELY = #{releaseTimely,jdbcType=VARCHAR},
+      </if>
+      <if test="mappinfAddress != null" >
+        MAPPINF_ADDRESS = #{mappinfAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="proxyTimely != null" >
+        PROXY_TIMELY = #{proxyTimely,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.ips.model.ServerplanNpmMaintain2" >
+    update serverplan_npmmaintain2
+    set STOREHOUSE_USE = #{storehouseUse,jdbcType=VARCHAR},
+      RELEASE_TIMELY = #{releaseTimely,jdbcType=VARCHAR},
+      MAPPINF_ADDRESS = #{mappinfAddress,jdbcType=VARCHAR},
+      PROXY_TIMELY = #{proxyTimely,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=INTEGER},
+      UPDATE_USER = #{updateUser,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getAllNpmMaintain2" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from serverplan_npmmaintain2
+  </select>
+</mapper>

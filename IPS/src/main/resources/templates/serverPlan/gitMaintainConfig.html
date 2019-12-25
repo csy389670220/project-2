@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>git维护配置</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" style="overflow:auto">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper ">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>git维护配置-<span th:text="${type=='A'?'新增':'修改'}"></span>
+                                <div class="page-title-subheading">
+                                    git维护系统服务规划信息配置项
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        onclick="gitMaintain_back()" class="btn-shadow  btn btn-info">
+                                    返 回
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--新增模块-->
+                <div id="addProject"  th:hidden="${type=='A'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="domain" class="">网域</label>
+                                                <select type="select" name="domain" id="domain"  class="custom-select">
+                                                    <option value=""></option>
+                                                    <option value="内网">内网</option>
+                                                    <option value="中心外网">中心外网</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="category" class="">项目分类</label>
+                                                <select type="select" name="category" id="category"  class="custom-select">
+                                                    <option value=""></option>
+                                                    <option value="iDeal">iDeal</option>
+                                                    <option value="UT-Stack">UT-Stack</option>
+                                                    <option value="Helpdesk">Helpdesk</option>
+                                                    <option value="配置组">配置组</option>
+                                                    <option value="iDeal-Mobile">iDeal-Mobile</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="moduleName" class="">目录/模块名</label>
+                                                <input name="moduleName" id="moduleName" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="address" class="">地址</label>
+                                                <input name="address" id="address" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="memo" class="">备注</label>
+                                                <textarea name="memo" id="memo" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="gitMaintain_add()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--更新模块-->
+                <div id="updateProject" th:hidden="${type=='U'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="domain_u" class="">网域</label>
+                                                <input  th:value="${gitMaintain.id}" type="hidden"  id="id_u">
+                                                <select th:value="${gitMaintain.domain}"  type="select" name="domain_u" id="domain_u"  class="custom-select">
+                                                    <option value=""></option>
+                                                    <option  th:selected="${gitMaintain.domain eq '内网'}" value="内网">内网</option>
+                                                    <option th:selected="${gitMaintain.domain eq '中心外网'}" value="中心外网">中心外网</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="category_u" class="">项目分类</label>
+                                                <select th:selected="${gitMaintain.category}"  type="select" name="category_u" id="category_u"  class="custom-select">
+                                                    <option value=""></option>
+                                                    <option th:selected="${gitMaintain.category eq 'iDeal'}"  value="iDeal">iDeal</option>
+                                                    <option th:selected="${gitMaintain.category eq 'UT-Stack'}" value="UT-Stack">UT-Stack</option>
+                                                    <option th:selected="${gitMaintain.category eq 'Helpdesk'}" value="Helpdesk">Helpdesk</option>
+                                                    <option th:selected="${gitMaintain.category eq '配置组'}" value="配置组">配置组</option>
+                                                    <option th:selected="${gitMaintain.category eq 'iDeal-Mobile'}" value="iDeal-Mobile">iDeal-Mobile</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="moduleName_u" class="">目录/模块名</label>
+                                                <input th:value="${gitMaintain.moduleName}" name="moduleName_u" id="moduleName_u" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="address_u" class="">地址</label>
+                                                <input th:value="${gitMaintain.address}" name="address_u" id="address_u" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="memo_u" class="">备注</label>
+                                                <textarea th:text="${gitMaintain.memo}" name="memo_u" id="memo_u"
+                                                          class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="gitMaintain_update()">确 定</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serverPlan_Menu", "gitMaintain_Menu");
+    });
+
+    //新增模块，更新模块字段key集合
+    var gitMaintain_add_list=["id","domain","category","moduleName","content","address","memo"];
+    var gitMaintain_update_list=["id_u","domain_u","category_u","moduleName_u","content_u","address_u","memo_u"];
+
+    //返回
+    function gitMaintain_back() {
+        ipsSystem.doGet("/serverPlan/gitMaintain");
+    }
+
+
+    //gitMaintain新增
+    function gitMaintain_add() {
+        var check=checkEmpty(gitMaintain_add_list);
+        if(!check){
+            return;
+        }
+        //组装请求数据json
+        var param=bilidParam(gitMaintain_add_list,gitMaintain_add_list);
+        $.ajax({
+            url: "gitMaintainAdd",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    clearAdd();
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("新增系统错误");
+                console.log(err);
+            }
+        });
+    }
+
+    //gitMaintain更新
+    function gitMaintain_update() {
+        var check=checkEmpty(gitMaintain_update_list);
+        if(!check){
+            return;
+        }
+        //组装请求数据json
+        var param=bilidParam(gitMaintain_add_list,gitMaintain_update_list);
+        console.log(param);
+        $.ajax({
+            url: "gitMaintainUpdate",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("更新系统错误");
+                console.log(err);
+            }
+        });
+
+    }
+
+
+    /**
+     * 清空新增面板输入框
+     */
+    function  clearAdd() {
+        for(var i=3;i<gitMaintain_add_list.length;i++){
+            $("#"+gitMaintain_add_list[i]).val("");
+        }
+    }
+
+</script>
+</body>
+</html>

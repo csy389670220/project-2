@@ -42,32 +42,90 @@
         </javaClientGenerator>
 
         <!--<table tableName="sys_user" domainObjectName="SysUser"-->
-               <!--enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false">-->
-            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
 
-        <!--<table tableName="serverplan_idealnew" domainObjectName="ServerPlanIDealNew"-->
-               <!--enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false">-->
-            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--<table tableName="serverplan_idealnew" domainObjectName="ServerplanIDealNew"-->
+        <!--enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
 
 
-        <table tableName="serverplan_itrader" domainObjectName="ServerplaniTrader"
+        <!--<table tableName="serverplan_itrader" domainObjectName="ServerplaniTrader"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-        </table>
+        </table>-->
 
         <!--<table tableName="serverplan_ctaf" domainObjectName="ServerplanCtaf"-->
-               <!--enableCountByExample="false" enableUpdateByExample="false"-->
-               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--selectByExampleQueryId="false">-->
-            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+        <!--selectByExampleQueryId="false">-->
+        <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
         <!--</table>-->
+
+        <!-- <table tableName="serverplan_cut" domainObjectName="ServerplanCut"
+                enableCountByExample="false" enableUpdateByExample="false"
+                enableDeleteByExample="false" enableSelectByExample="false"
+                selectByExampleQueryId="false">
+             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+         </table>
+
+         <table tableName="serverplan_loghistory" domainObjectName="ServerplanLogHistory"
+                enableCountByExample="false" enableUpdateByExample="false"
+                enableDeleteByExample="false" enableSelectByExample="false"
+                selectByExampleQueryId="false">
+             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+         </table>
+         <table tableName="serverplan_publicuse" domainObjectName="ServerplanPublicUse"
+                enableCountByExample="false" enableUpdateByExample="false"
+                enableDeleteByExample="false" enableSelectByExample="false"
+                selectByExampleQueryId="false">
+             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+         </table>
+         <table tableName="serverplan_svnmaintain" domainObjectName="ServerplanSvnMaintain"
+                enableCountByExample="false" enableUpdateByExample="false"
+                enableDeleteByExample="false" enableSelectByExample="false"
+                selectByExampleQueryId="false">
+             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+         </table>
+         <table tableName="serverplan_gitmaintain" domainObjectName="ServerplanGitMaintain"
+                enableCountByExample="false" enableUpdateByExample="false"
+                enableDeleteByExample="false" enableSelectByExample="false"
+                selectByExampleQueryId="false">
+             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+         </table>
+         <table tableName="serverplan_npmmaintain1" domainObjectName="ServerplanNpmMaintain1"
+                enableCountByExample="false" enableUpdateByExample="false"
+                enableDeleteByExample="false" enableSelectByExample="false"
+                selectByExampleQueryId="false">
+             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+         </table>
+         <table tableName="serverplan_npmmaintain2" domainObjectName="ServerplanNpmMaintain2"
+                enableCountByExample="false" enableUpdateByExample="false"
+                enableDeleteByExample="false" enableSelectByExample="false"
+                selectByExampleQueryId="false">
+             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+         </table>-->
+
+        <!--  <table tableName="serverplan_wechat" domainObjectName="ServerplanWeChat"
+                 enableCountByExample="false" enableUpdateByExample="false"
+                 enableDeleteByExample="false" enableSelectByExample="false"
+                 selectByExampleQueryId="false">
+              <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+          </table>-->
+
+        <!--<table tableName="systemenv_envlist" domainObjectName="SystemenvEnvlist"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>-->
     </context>
 </generatorConfiguration>

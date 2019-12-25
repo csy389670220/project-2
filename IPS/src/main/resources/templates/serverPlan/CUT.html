@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>CUT</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/css/common.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" style="overflow:auto">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>CUT
+                                <div class="page-title-subheading">
+                                    CUT系统服务规划
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <shiro:hasRole name="admin">
+                                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            onclick="CUT_add()" class="btn-shadow  btn btn-info">
+                                        新 增
+                                    </button>
+                                </shiro:hasRole>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div></div>
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body" >
+                            <h5 class="card-title"></h5>
+                            <div id="box">
+                                <table class="mb-0 table table-bordered" id="tab">
+                                    <thead>
+                                    <tr>
+                                        <th>服务器用途</th>
+                                        <th>DEV</th>
+                                        <th>ST-A(闲置)</th>
+                                        <th>ST-B</th>
+                                        <th>ST-C</th>
+                                        <th>UAT-A(闲置)</th>
+                                        <th>UAT-B</th>
+                                        <th>原UAT-C更改为UAT-A</th>
+                                        <th>MEM1</th>
+                                        <th>MEM2</th>
+                                        <th>培训</th>
+                                        <th>模拟数据迁移验证环境-A</th>
+                                        <th>模拟数据迁移验证环境-B</th>
+                                        <th>模拟可靠性验证环境</th>
+                                        <th>模拟-A性能测试</th>
+                                        <th>模拟-B(废弃)功能测试</th>
+                                        <th>生产</th>
+                                        <th>北京灾备</th>
+                                        <shiro:hasRole name="admin">
+                                            <th class="action_th">操作</th>
+                                        </shiro:hasRole>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="CUT:${list}">
+                                        <td th:text="${CUT.serverUse}"></td>
+                                        <td th:text="${CUT.dev}"></td>
+                                        <td th:text="${CUT.stA}"></td>
+                                        <td th:text="${CUT.stB}"></td>
+                                        <td th:text="${CUT.stC}"></td>
+                                        <td th:text="${CUT.uatA}"></td>
+                                        <td th:text="${CUT.uatB}"></td>
+                                        <td th:text="${CUT.uatCToA}"></td>
+                                        <td th:text="${CUT.mem1}"></td>
+                                        <td th:text="${CUT.mem2}"></td>
+                                        <td th:text="${CUT.train}"></td>
+                                        <td th:text="${CUT.simulationDataMigrationA}"></td>
+                                        <td th:text="${CUT.simulationDataMigrationB}"></td>
+                                        <td th:text="${CUT.simulationReliability}"></td>
+                                        <td th:text="${CUT.simulationA}"></td>
+                                        <td th:text="${CUT.simulationB}"></td>
+                                        <td th:text="${CUT.produce}"></td>
+                                        <td th:text="${CUT.disasterRecoveryBeijinhg}"></td>
+                                        <shiro:hasRole name="admin">
+                                            <td class="action_th">
+                                                <button  class="btn btn-info" th:onclick="CUT_update([[${CUT.id}]])">修改</button>
+                                            </td>
+                                        </shiro:hasRole>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serverPlan_Menu", "CUT_Menu");
+        scroll("tab","box",1);
+        showTableP();
+    });
+
+    //跳转新增页面
+    function CUT_add() {
+        ipsSystem.doPost("/serverPlan/CUTConfig",{"type":"A","id":null})
+    }
+
+    //跳转更新页面
+    function CUT_update(id) {
+        ipsSystem.doPost("/serverPlan/CUTConfig",{"type":"U","id":id})
+    }
+
+    //内容显示换行符
+    function showTableP(){
+        for(var i=1;i<18;i++){
+            replaceBr(i);
+        }
+
+    }
+
+</script>
+</body>
+</html>
