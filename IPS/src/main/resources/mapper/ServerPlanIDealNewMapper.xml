@@ -323,4 +323,9 @@
     from serverplan_idealnew
   </select>
 
+  <select id="getAllApplication" resultMap="BaseResultMap" >
+    select
+    SERVER_APPLICATION
+    from serverplan_idealnew
+  </select>
 </mapper>

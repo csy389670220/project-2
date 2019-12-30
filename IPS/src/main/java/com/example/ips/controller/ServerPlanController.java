@@ -378,6 +378,7 @@ public class ServerplanController extends BaseController{
         return view;
     }
 
+
     /**
      * 模块：iDealNew
      * 跳转到iDealNew配置页面
@@ -386,7 +387,9 @@ public class ServerplanController extends BaseController{
     @RequiresRoles("admin")
     public ModelAndView iDealNewConfig() {
         ModelAndView view = new ModelAndView("serverPlan/iDealNewConfig");
+        List<ServerplanIDealNew> list=serverplanIDealNewService.selectAllServerApplication();
         linkSysInfo(view);
+        view.addObject("applications", list);
         return view;
     }
 

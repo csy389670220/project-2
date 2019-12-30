@@ -43,4 +43,11 @@ public interface ServerplanIDealNewService {
      * 导出iDealNew excel文档
      */
     void getIDealNewExcel( HttpServletResponse response);
+
+
+    /**
+     * 查询全部服务器用途集合
+     * @return
+     */
+    List<ServerplanIDealNew>  selectAllServerApplication();
 }

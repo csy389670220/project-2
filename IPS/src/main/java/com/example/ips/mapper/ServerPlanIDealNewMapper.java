@@ -29,4 +29,10 @@ public interface ServerplanIDealNewMapper {
      * @return
      */
     List<ServerplanIDealNew>selectAll();
+
+    /**
+     * 查询全部服务器用途集合
+     * @return
+     */
+    List<ServerplanIDealNew>getAllApplication();
 }

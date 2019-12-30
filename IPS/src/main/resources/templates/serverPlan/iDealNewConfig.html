@@ -195,19 +195,7 @@
                                             <input  type="hidden"  id="id_u" value="" />
                                             <select type="select" name="serverApplication_u" id="serverApplication_u"  onchange="idealNew_select_change()" class="custom-select">
                                                 <option value=""></option>
-                                                <option value="即时通讯核心">即时通讯核心</option>
-                                                <option value="代理主机-内网">代理主机-内网</option>
-                                                <option value="代理主机-外网">代理主机-外网</option>
-                                                <option value="IMT主机">IMT主机</option>
-                                                <option value="Redis主机">Redis主机</option>
-                                                <option value="接入主机-外网">接入主机-外网</option>
-                                                <option value="接入主机-内网">接入主机-内网</option>
-                                                <option value="本币内嵌版-外网">本币内嵌版-外网</option>
-                                                <option value="本币内嵌版-内网">本币内嵌版-内网</option>
-                                                <option value="外汇内嵌版-内网">外汇内嵌版-内网</option>
-                                                <option value="ORACLE数据库">ORACLE数据库</option>
-                                                <option value="mysql数据库">mysql数据库</option>
-                                                <option value="大蚂蚁核心(6.6)">大蚂蚁核心(6.6)</option>
+                                                <option th:each="result : ${applications}" th:value="${result.serverApplication}" th:text="${result.serverApplication}"></option>
                                             </select>
                                         </div>
                                     </div>
@@ -508,6 +496,7 @@
         }
     }
     
+
 </script>
 </body>
 </html>

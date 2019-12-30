@@ -165,4 +165,10 @@ public class ServerplanIDealNewServiceImpl implements ServerplanIDealNewService 
         }
     }
 
+    @Override
+    public List<ServerplanIDealNew> selectAllServerApplication() {
+        return serverplanIDealNewMapper.getAllApplication();
+    }
+
+
 }
