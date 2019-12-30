@@ -211,3 +211,32 @@ function checkEmpty(value_list) {
     }
     return true;
 }
+
+//计算2个时间的差值，输出格式时：分：秒
+function  count_time_difference(endTime,startTime){
+    var  minus = Math.abs(endTime.getTime() - startTime.getTime())/1000; //两时间字符串相减，转成相差秒；
+    var  hours = parseInt(minus/3600); //将相差毫秒转成小时
+    var minutes = parseInt((minus %3600/60)); //将相差毫秒转成分钟
+    var second=parseInt((minus%60));
+    var  sum = hours+':'+minutes+":"+second; //小时和分钟拼接
+    if (sum !=='NaN:NaN:NaN'){
+        return sum;
+    }
+}
+
+
+/**
+ * 检查页面关键字是否为空
+ * @param keywords {"姓名":"name","年纪","age"}
+ * @returns {boolean}通过返回true,拒绝返回false
+ */
+function checkKeywordsEmpty(keywords) {
+    for(var p in keywords){//遍历json对象的每个key/value对,p为key
+        if(!$("#" + keywords[p]).val()){
+            alert(p+"字段为空");
+            return false;
+        }
+    }
+    return true;
+}
+

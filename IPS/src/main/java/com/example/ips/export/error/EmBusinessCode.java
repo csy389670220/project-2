@@ -24,6 +24,14 @@ public enum EmBusinessCode implements CommonError{
     //服务器规划-iTrader
     SERVERPLAN_ITRADER_ADD_SUCCESS(20002,"新增成功"),
     SERVERPLAN_ITRADER_ADD_ERROR(20003,"新增失败"),
+    //服务部署-UAT升级记录
+    //1待提交 2已提交
+    SERVICEDEP_UATUP_SAUTUS_PENDING(30001,"1"),
+    SERVICEDEP_UATUP_SAUTUS_SUBMITTED(30002,"2"),
+    SERVICEDEP_UATUP_ADD_SUCCESS(30003,"保存成功"),
+    SERVICEDEP_UATUP_ADD_ERROR(30004,"保存失败"),
+    SERVICEDEP_UATUP_SAVE_SUCCESS(30005,"提交成功"),
+    SERVICEDEP_UATUP_SAVE_ERROR(30006,"提交失败"),
     ;
 
     private int errCode;

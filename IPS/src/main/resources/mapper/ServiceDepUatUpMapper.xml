@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.ips.mapper.ServiceDepUatUpMapper" >
+  <resultMap id="BaseResultMap" type="com.example.ips.model.ServiceDepUatUp" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="FRONT" property="front" jdbcType="VARCHAR" />
+    <result column="VERSION" property="version" jdbcType="VARCHAR" />
+    <result column="UPROUND" property="upround" jdbcType="VARCHAR" />
+    <result column="ENV" property="env" jdbcType="VARCHAR" />
+    <result column="TEST_PHASE" property="testPhase" jdbcType="VARCHAR" />
+    <result column="RELEASE_TIME" property="releaseTime" jdbcType="TIMESTAMP" />
+    <result column="SUBMIT_APPLICATION_TIME" property="submitApplicationTime" jdbcType="TIMESTAMP" />
+    <result column="PASS_APPLICATION_TIME" property="passApplicationTime" jdbcType="TIMESTAMP" />
+    <result column="DEPLOY_START_TIME" property="deployStartTime" jdbcType="TIMESTAMP" />
+    <result column="DEPLOY_END_TIME" property="deployEndTime" jdbcType="TIMESTAMP" />
+    <result column="SUBMIT_APPLICATION_ELAPSED_TIME" property="submitApplicationElapsedTime" jdbcType="VARCHAR" />
+    <result column="APPROVAL_ELAPSED_TIME" property="approvalElapsedTime" jdbcType="VARCHAR" />
+    <result column="REPLY_ELAPSED_TIME" property="replyElapsedTime" jdbcType="VARCHAR" />
+    <result column="DEPLOY_ELAPSED_TIME" property="deployElapsedTime" jdbcType="VARCHAR" />
+    <result column="ALL_ELAPSED_TIME" property="allElapsedTime" jdbcType="VARCHAR" />
+    <result column="MEMO" property="memo" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="UPDATE_USER" property="updateUser" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, FRONT, VERSION, UPROUND, ENV, TEST_PHASE, RELEASE_TIME, SUBMIT_APPLICATION_TIME, 
+    PASS_APPLICATION_TIME, DEPLOY_START_TIME, DEPLOY_END_TIME, SUBMIT_APPLICATION_ELAPSED_TIME, 
+    APPROVAL_ELAPSED_TIME, REPLY_ELAPSED_TIME, DEPLOY_ELAPSED_TIME, ALL_ELAPSED_TIME, 
+    MEMO, STATUS, CREATE_TIME, UPDATE_TIME, CREATE_USER, UPDATE_USER
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from servicedep_uatup
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from servicedep_uatup
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.ips.model.ServiceDepUatUp" >
+    insert into servicedep_uatup (FRONT, VERSION, UPROUND,
+      ENV, TEST_PHASE, RELEASE_TIME, 
+      SUBMIT_APPLICATION_TIME, PASS_APPLICATION_TIME, 
+      DEPLOY_START_TIME, DEPLOY_END_TIME, SUBMIT_APPLICATION_ELAPSED_TIME, 
+      APPROVAL_ELAPSED_TIME, REPLY_ELAPSED_TIME, 
+      DEPLOY_ELAPSED_TIME, ALL_ELAPSED_TIME, MEMO, 
+      STATUS, CREATE_TIME, UPDATE_TIME, 
+      CREATE_USER, UPDATE_USER)
+    values (#{front,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}, #{upround,jdbcType=VARCHAR}, 
+      #{env,jdbcType=VARCHAR}, #{testPhase,jdbcType=VARCHAR}, #{releaseTime,jdbcType=TIMESTAMP}, 
+      #{submitApplicationTime,jdbcType=TIMESTAMP}, #{passApplicationTime,jdbcType=TIMESTAMP}, 
+      #{deployStartTime,jdbcType=TIMESTAMP}, #{deployEndTime,jdbcType=TIMESTAMP}, #{submitApplicationElapsedTime,jdbcType=VARCHAR}, 
+      #{approvalElapsedTime,jdbcType=VARCHAR}, #{replyElapsedTime,jdbcType=VARCHAR}, 
+      #{deployElapsedTime,jdbcType=VARCHAR}, #{allElapsedTime,jdbcType=VARCHAR}, #{memo,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=INTEGER}, #{updateUser,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.ips.model.ServiceDepUatUp" >
+    insert into servicedep_uatup
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="front != null" >
+        FRONT,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="upround != null" >
+        UPROUND,
+      </if>
+      <if test="env != null" >
+        ENV,
+      </if>
+      <if test="testPhase != null" >
+        TEST_PHASE,
+      </if>
+      <if test="releaseTime != null" >
+        RELEASE_TIME,
+      </if>
+      <if test="submitApplicationTime != null" >
+        SUBMIT_APPLICATION_TIME,
+      </if>
+      <if test="passApplicationTime != null" >
+        PASS_APPLICATION_TIME,
+      </if>
+      <if test="deployStartTime != null" >
+        DEPLOY_START_TIME,
+      </if>
+      <if test="deployEndTime != null" >
+        DEPLOY_END_TIME,
+      </if>
+      <if test="submitApplicationElapsedTime != null" >
+        SUBMIT_APPLICATION_ELAPSED_TIME,
+      </if>
+      <if test="approvalElapsedTime != null" >
+        APPROVAL_ELAPSED_TIME,
+      </if>
+      <if test="replyElapsedTime != null" >
+        REPLY_ELAPSED_TIME,
+      </if>
+      <if test="deployElapsedTime != null" >
+        DEPLOY_ELAPSED_TIME,
+      </if>
+      <if test="allElapsedTime != null" >
+        ALL_ELAPSED_TIME,
+      </if>
+      <if test="memo != null" >
+        MEMO,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="front != null" >
+        #{front,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="upround != null" >
+        #{upround,jdbcType=VARCHAR},
+      </if>
+      <if test="env != null" >
+        #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="testPhase != null" >
+        #{testPhase,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTime != null" >
+        #{releaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="submitApplicationTime != null" >
+        #{submitApplicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="passApplicationTime != null" >
+        #{passApplicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deployStartTime != null" >
+        #{deployStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deployEndTime != null" >
+        #{deployEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="submitApplicationElapsedTime != null" >
+        #{submitApplicationElapsedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalElapsedTime != null" >
+        #{approvalElapsedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="replyElapsedTime != null" >
+        #{replyElapsedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="deployElapsedTime != null" >
+        #{deployElapsedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="allElapsedTime != null" >
+        #{allElapsedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        #{updateUser,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.ips.model.ServiceDepUatUp" >
+    update servicedep_uatup
+    <set >
+      <if test="front != null" >
+        FRONT = #{front,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=VARCHAR},
+      </if>
+      <if test="upround != null" >
+        UPROUND = #{upround,jdbcType=VARCHAR},
+      </if>
+      <if test="env != null" >
+        ENV = #{env,jdbcType=VARCHAR},
+      </if>
+      <if test="testPhase != null" >
+        TEST_PHASE = #{testPhase,jdbcType=VARCHAR},
+      </if>
+        RELEASE_TIME = #{releaseTime,jdbcType=TIMESTAMP},
+        SUBMIT_APPLICATION_TIME = #{submitApplicationTime,jdbcType=TIMESTAMP},
+        PASS_APPLICATION_TIME = #{passApplicationTime,jdbcType=TIMESTAMP},
+        DEPLOY_START_TIME = #{deployStartTime,jdbcType=TIMESTAMP},
+        DEPLOY_END_TIME = #{deployEndTime,jdbcType=TIMESTAMP},
+      <if test="submitApplicationElapsedTime != null" >
+        SUBMIT_APPLICATION_ELAPSED_TIME = #{submitApplicationElapsedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalElapsedTime != null" >
+        APPROVAL_ELAPSED_TIME = #{approvalElapsedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="replyElapsedTime != null" >
+        REPLY_ELAPSED_TIME = #{replyElapsedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="deployElapsedTime != null" >
+        DEPLOY_ELAPSED_TIME = #{deployElapsedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="allElapsedTime != null" >
+        ALL_ELAPSED_TIME = #{allElapsedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="memo != null" >
+        MEMO = #{memo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="updateUser != null" >
+        UPDATE_USER = #{updateUser,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.ips.model.ServiceDepUatUp" >
+    update servicedep_uatup
+    set FRONT = #{front,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=VARCHAR},
+      UPROUND = #{upround,jdbcType=VARCHAR},
+      ENV = #{env,jdbcType=VARCHAR},
+      TEST_PHASE = #{testPhase,jdbcType=VARCHAR},
+      RELEASE_TIME = #{releaseTime,jdbcType=TIMESTAMP},
+      SUBMIT_APPLICATION_TIME = #{submitApplicationTime,jdbcType=TIMESTAMP},
+      PASS_APPLICATION_TIME = #{passApplicationTime,jdbcType=TIMESTAMP},
+      DEPLOY_START_TIME = #{deployStartTime,jdbcType=TIMESTAMP},
+      DEPLOY_END_TIME = #{deployEndTime,jdbcType=TIMESTAMP},
+      SUBMIT_APPLICATION_ELAPSED_TIME = #{submitApplicationElapsedTime,jdbcType=VARCHAR},
+      APPROVAL_ELAPSED_TIME = #{approvalElapsedTime,jdbcType=VARCHAR},
+      REPLY_ELAPSED_TIME = #{replyElapsedTime,jdbcType=VARCHAR},
+      DEPLOY_ELAPSED_TIME = #{deployElapsedTime,jdbcType=VARCHAR},
+      ALL_ELAPSED_TIME = #{allElapsedTime,jdbcType=VARCHAR},
+      MEMO = #{memo,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=INTEGER},
+      UPDATE_USER = #{updateUser,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getAllUatUp" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from servicedep_uatup
+  </select>
+</mapper>

@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>UAT升级</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/jedate_6.5.0/skin/jedate.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper ">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>UAT升级记录配置-<span th:text="${type=='A'?'新增':'修改'}"></span>
+                                <div class="page-title-subheading">
+                                    UAT升级记录信息配置项
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        onclick="uatUp_back()" class="btn-shadow  btn btn-info">
+                                    返 回
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--新增模块-->
+                <div id="addProject" th:hidden="${type=='A'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-0" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="front" class="">战线</label>
+                                                <input name="front" id="front" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="version" class="">版本号</label>
+                                                <input name="version" id="version" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="upround" class="">升级轮次</label>
+                                                <input name="upround" id="upround" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="env" class="">环境</label>
+                                                <input name="env" id="env" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="testPhase" class="">测试阶段</label>
+                                                <input name="testPhase" id="testPhase" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row datebox">
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <div class="jeinpbox">
+                                                    <label for="releaseTime" class="">发版确认时间</label>
+                                                    <div class="jeinpbox">
+                                                        <input type="text" name="releaseTime" id="releaseTime"
+                                                               placeholder="" readonly
+                                                               class="form-control je-input je-pl5 je-pr5">
+                                                        <div class="icons jebtns"
+                                                             onclick="jeDate('#releaseTime',param1);"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="submitApplicationTime" class="">提单结束时间</label>
+                                                <div class="jeinpbox">
+                                                    <input type="text" name="submitApplicationTime"
+                                                           id="submitApplicationTime" placeholder="" readonly
+                                                           class="form-control je-input je-pl5 je-pr5">
+                                                    <div class="icons jebtns"
+                                                         onclick="jeDate('#submitApplicationTime',param2);"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="passApplicationTime" class="">审批结束时间</label>
+                                                <div class="jeinpbox">
+                                                    <input type="text" name="passApplicationTime"
+                                                           id="passApplicationTime"
+                                                           placeholder="" readonly
+                                                           class="form-control je-input je-pl5 je-pr5">
+                                                    <div class="icons jebtns"
+                                                         onclick="jeDate('#passApplicationTime',param3);"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="deployStartTime" class="">开始部署时间</label>
+                                                <div class="jeinpbox">
+                                                    <input type="text" name="deployStartTime" id="deployStartTime"
+                                                           placeholder="" readonly
+                                                           class="form-control je-input je-pl5 je-pr5">
+                                                    <div class="icons jebtns"
+                                                         onclick="jeDate('#deployStartTime',param4);"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="deployEndTime" class="">部署结束时间</label>
+                                                <div class="jeinpbox">
+                                                    <input type="text" name="deployEndTime" id="deployEndTime"
+                                                           placeholder="" readonly
+                                                           class="form-control je-input je-pl5 je-pr5">
+                                                    <div class="icons jebtns"
+                                                         onclick="jeDate('#deployEndTime',param5);"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="submitApplicationElapsedTime" class="">集成组提单耗时</label>
+                                                <input type="text" name="submitApplicationElapsedTime"
+                                                       id="submitApplicationElapsedTime" placeholder="" readonly
+                                                       class="form-control je-input je-pl5 je-pr5">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="approvalElapsedTime" class="">测试组审批耗时</label>
+                                                <input type="text" name="approvalElapsedTime" id="approvalElapsedTime"
+                                                       placeholder="" readonly
+                                                       class="form-control je-input je-pl5 je-pr5">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="replyElapsedTime" class="">配置组响应耗时</label>
+                                                <input type="text" name="replyElapsedTime" id="replyElapsedTime"
+                                                       placeholder="" readonly
+                                                       class="form-control je-input je-pl5 je-pr5">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="deployElapsedTime" class="">部署耗时</label>
+                                                <input type="text" name="deployElapsedTime" id="deployElapsedTime"
+                                                       placeholder="" readonly
+                                                       class="form-control je-input je-pl5 je-pr5">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="allElapsedTime" class="">总耗时</label>
+                                                <input type="text" name="allElapsedTime" id="allElapsedTime"
+                                                       placeholder="" readonly
+                                                       class="form-control je-input je-pl5 je-pr5">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="memo" class="">备注</label>
+                                                <textarea name="memo" id="memo" class="form-control"
+                                                          style="height: 150px"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <p style="color: red">流程时间请依次填写，请勿跳跃！</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-light" onclick="uatUp_add()">保 存</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--更新模块-->
+                <div id="updateProject" th:hidden="${type=='U'?false:true}">
+                    <div class="tab-content">
+                        <div class="tab-pane tabs-animation fade show active" id="tab-content-1" role="tabpanel">
+                            <div class="main-card mb-3 card">
+                                <div class="card-body">
+                                    <div class="form-row">
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="front_u" class="">战线</label>
+                                                <input type="hidden" id="id_u" th:value="${uatUp.id}">
+                                                <input th:value="${uatUp.front}" name="front_u" id="front_u"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="version_u" class="">版本号</label>
+                                                <input th:value="${uatUp.version}" name="version_u" id="version_u"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="upround_u" class="">升级轮次</label>
+                                                <input th:value="${uatUp.upround}" name="upround_u" id="upround_u"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="env_u" class="">环境</label>
+                                                <input th:value="${uatUp.env}" name="env_u" id="env_u"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="testPhase_u" class="">测试阶段</label>
+                                                <input th:value="${uatUp.testPhase}" name="testPhase_u" id="testPhase_u"
+                                                       class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row datebox">
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <div class="jeinpbox">
+                                                    <label for="releaseTime_u" class="">发版确认时间</label>
+                                                    <div class="jeinpbox">
+                                                        <input th:value="${#dates.format(uatUp.releaseTime,'yyyy-MM-dd HH:mm:ss')}"
+                                                               type="text" name="releaseTime_u" id="releaseTime_u"
+                                                               placeholder="" readonly
+                                                               class="form-control je-input je-pl5 je-pr5">
+                                                        <div class="icons jebtns"
+                                                             onclick="jeDate('#releaseTime_u',param1_u);"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="submitApplicationTime_u" class="">提单结束时间</label>
+                                                <div class="jeinpbox">
+                                                    <input th:value="${#dates.format(uatUp.submitApplicationTime,'yyyy-MM-dd HH:mm:ss')}"
+                                                           type="text" name="submitApplicationTime_u"
+                                                           id="submitApplicationTime_u" placeholder="" readonly
+                                                           class="form-control je-input je-pl5 je-pr5">
+                                                    <div class="icons jebtns"
+                                                         onclick="jeDate('#submitApplicationTime_u',param2_u);"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="passApplicationTime_u" class="">审批结束时间</label>
+                                                <div class="jeinpbox">
+                                                    <input th:value="${#dates.format(uatUp.passApplicationTime,'yyyy-MM-dd HH:mm:ss')}"
+                                                           type="text" name="passApplicationTime_u"
+                                                           id="passApplicationTime_u"
+                                                           placeholder="" readonly
+                                                           class="form-control je-input je-pl5 je-pr5">
+                                                    <div class="icons jebtns"
+                                                         onclick="jeDate('#passApplicationTime_u',param3_u);"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="deployStartTime_u" class="">开始部署时间</label>
+                                                <div class="jeinpbox">
+                                                    <input th:value="${#dates.format(uatUp.deployStartTime,'yyyy-MM-dd HH:mm:ss')}"
+                                                           type="text" name="deployStartTime_u" id="deployStartTime_u"
+                                                           placeholder="" readonly
+                                                           class="form-control je-input je-pl5 je-pr5">
+                                                    <div class="icons jebtns"
+                                                         onclick="jeDate('#deployStartTime_u',param4_u);"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="deployEndTime_u" class="">部署结束时间</label>
+                                                <div class="jeinpbox">
+                                                    <input th:value="${#dates.format(uatUp.deployEndTime,'yyyy-MM-dd HH:mm:ss')}"
+                                                           type="text" name="deployEndTime_u" id="deployEndTime_u"
+                                                           placeholder="" readonly
+                                                           class="form-control je-input je-pl5 je-pr5">
+                                                    <div class="icons jebtns"
+                                                         onclick="jeDate('#deployEndTime_u',param5_u);"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="submitApplicationElapsedTime_u" class="">集成组提单耗时</label>
+                                                <input th:value="${uatUp.submitApplicationElapsedTime}" type="text"
+                                                       name="submitApplicationElapsedTime_u"
+                                                       id="submitApplicationElapsedTime_u" placeholder="" readonly
+                                                       class="form-control je-input je-pl5 je-pr5">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="approvalElapsedTime_u" class="">测试组审批耗时</label>
+                                                <input th:value="${uatUp.approvalElapsedTime}" type="text"
+                                                       name="approvalElapsedTime_u" id="approvalElapsedTime_u"
+                                                       placeholder="" readonly
+                                                       class="form-control je-input je-pl5 je-pr5">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="replyElapsedTime_u" class="">配置组响应耗时</label>
+                                                <input th:value="${uatUp.replyElapsedTime}" type="text"
+                                                       name="replyElapsedTime_u" id="replyElapsedTime_u"
+                                                       placeholder="" readonly
+                                                       class="form-control je-input je-pl5 je-pr5">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="deployElapsedTime_u" class="">部署耗时</label>
+                                                <input th:value="${uatUp.deployElapsedTime}" type="text"
+                                                       name="deployElapsedTime_u" id="deployElapsedTime_u"
+                                                       placeholder="" readonly
+                                                       class="form-control je-input je-pl5 je-pr5">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="position-relative form-group">
+                                                <label for="allElapsedTime_u" class="">总耗时</label>
+                                                <input th:value="${uatUp.allElapsedTime}" type="text"
+                                                       name="allElapsedTime_u" id="allElapsedTime_u"
+                                                       placeholder="" readonly
+                                                       class="form-control je-input je-pl5 je-pr5">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label for="memo_u" class="">备注</label>
+                                                <textarea th:text=" ${uatUp.memo}" name="memo_u" id="memo_u"
+                                                          class="form-control"
+                                                          style="height: 150px"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <p style="color: red">流程时间请依次填写，请勿跳跃！</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-light" onclick="uatUp_update()">更 新</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script type="text/javascript" th:src="@{/thirdparty/jedate_6.5.0/js/jedate.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serviceDep_Menu", "uatUp_Menu");
+    });
+
+    //初始化时间选择空间
+    var param1 = {
+        trigger: false,
+        format: 'YYYY-MM-DD hh:mm:ss',
+        maxDate: '2099-06-16 23:59:59', //最大日期
+        donefun: function (obj) {
+            time_change("", "releaseTime", "submitApplicationTime", "", "submitApplicationElapsedTime");
+            time_change("", "releaseTime", "deployEndTime", "", "allElapsedTime");
+        }
+    };
+    var param2 = {
+        trigger: false,
+        format: 'YYYY-MM-DD hh:mm:ss',
+        maxDate: '2099-06-16 23:59:59', //最大日期
+        donefun: function (obj) {
+            time_change("releaseTime", "submitApplicationTime", "passApplicationTime", "submitApplicationElapsedTime", "approvalElapsedTime");
+        }
+    };
+    var param3 = {
+        trigger: false,
+        format: 'YYYY-MM-DD hh:mm:ss',
+        maxDate: '2099-06-16 23:59:59', //最大日期
+        donefun: function (obj) {
+            time_change("submitApplicationTime", "passApplicationTime", "deployStartTime",
+                "approvalElapsedTime", "replyElapsedTime");
+        }
+    };
+    var param4 = {
+        trigger: false,
+        format: 'YYYY-MM-DD hh:mm:ss',
+        maxDate: '2099-06-16 23:59:59', //最大日期
+        donefun: function (obj) {
+            time_change("passApplicationTime", "deployStartTime", "deployEndTime",
+                "replyElapsedTime", "deployElapsedTime");
+        }
+    };
+    var param5 = {
+        trigger: false,
+        format: 'YYYY-MM-DD hh:mm:ss',
+        maxDate: '2099-06-16 23:59:59', //最大日期
+        donefun: function (obj) {
+            time_change("deployStartTime", "deployEndTime", "", "deployElapsedTime", "");
+            time_change("releaseTime", "deployEndTime", "", "allElapsedTime", "");
+        }
+    };
+
+    var param1_u = {
+        trigger: false,
+        format: 'YYYY-MM-DD hh:mm:ss',
+        maxDate: '2099-06-16 23:59:59', //最大日期
+        donefun: function (obj) {
+            time_change("", "releaseTime", "submitApplicationTime_u", "", "submitApplicationElapsedTime_u");
+            time_change("", "releaseTime_u", "deployEndTime_u", "", "allElapsedTime_u");
+        }
+    };
+    var param2_u = {
+        trigger: false,
+        format: 'YYYY-MM-DD hh:mm:ss',
+        maxDate: '2099-06-16 23:59:59', //最大日期
+        donefun: function (obj) {
+            time_change("releaseTime_u", "submitApplicationTime_u", "passApplicationTime_u",
+                "submitApplicationElapsedTime_u","approvalElapsedTime_u");
+        }
+    };
+    var param3_u = {
+        trigger: false,
+        format: 'YYYY-MM-DD hh:mm:ss',
+        maxDate: '2099-06-16 23:59:59', //最大日期
+        donefun: function (obj) {
+            time_change("submitApplicationTime_u", "passApplicationTime_u", "deployStartTime_u",
+                "approvalElapsedTime_u","replyElapsedTime_u");
+        }
+    };
+    var param4_u = {
+        trigger: false,
+        format: 'YYYY-MM-DD hh:mm:ss',
+        maxDate: '2099-06-16 23:59:59', //最大日期
+        donefun: function (obj) {
+            time_change("passApplicationTime_u", "deployStartTime_u", "deployEndTime_u",
+                "replyElapsedTime_u","deployElapsedTime_u");
+        }
+    };
+    var param5_u = {
+        trigger: false,
+        format: 'YYYY-MM-DD hh:mm:ss',
+        maxDate: '2099-06-16 23:59:59', //最大日期
+        donefun: function (obj) {
+            time_change("deployStartTime_u", "deployEndTime_u", "", "deployElapsedTime_u","");
+            time_change("releaseTime_u", "deployEndTime_u", "", "allElapsedTime_u","");
+        }
+    };
+
+    //时间变动时，进行判断以及计算差值
+    //开始时间ID ,选择时间ID ,结束时间ID ,与开始差值ID，与结束差值ID，
+    function time_change(startId, chooseId, endId, beforeId, laterId) {
+        var startTime = new Date($('#' + startId).val());//开始时间
+        var chooseTime = new Date($('#' + chooseId).val()); //中间选择时间
+        var endTime = new Date($('#' + endId).val()); //结束时间
+        //开始时间如果不存在默认最小
+        if (startId == "" || startTime == "Invalid Date") {
+            var timeStr = "0001-01-01 00:00:00"
+            var startTime = new Date(timeStr.replace(/-/, "/"))
+        }
+        //结束时间不存在默认最大
+        if (endId == "" || endTime == "Invalid Date") {
+            var timeStr = "9999-12-01 00:00:00"
+            var endTime = new Date(timeStr.replace(/-/, "/"))
+        }
+        var startMsg = getTimeMessage(startId);
+        var endMsg = getTimeMessage(endId);
+
+        //1.与开始时间比较
+        if (startTime > chooseTime) {
+            alert("不能小于" + startMsg)
+            $("#" + chooseId).val("");
+            $("#" + beforeId).val("");
+            $("#" + laterId).val("");
+            return;
+        }
+        //2.与结束时间比较，结束时间可以为空
+        if (chooseTime > endTime) {
+            alert("不能大于" + endMsg)
+            $("#" + chooseId).val("");
+            $("#" + beforeId).val("");
+            $("#" + laterId).val("");
+            return;
+        }
+
+        //两时间字符串相减，转成相差毫秒；
+        var beforesum;
+        var latersum;
+        //开始时间不存在不计算差值
+        if($('#' + startId).val()){
+             beforesum = count_time_difference(chooseTime, startTime);
+        }else{
+            beforesum = "";
+        }
+        //结束时间不存在不计算差值
+        if($('#' + endId).val()){
+             latersum = count_time_difference(endTime, chooseTime);
+        }else{
+            latersum = "";
+        }
+        $("#" + beforeId).val(beforesum);
+        $("#" + laterId).val(latersum);
+    }
+
+    //检查时间大小顺序是否符合逻辑
+    //时间依次1到5逐渐递增。
+    //通过返回true,拒绝返回false
+    function checkTimeOrder(first,second,third,fourth,fifth){
+        var firstTime = new Date($('#' + first).val());//时间1
+        var secondTime = new Date($('#' + second).val());//时间2
+        var thirdTime = new Date($('#' + third).val());//时间3
+        var fourthTime = new Date($('#' + fourth).val());//时间4
+        var fifthTime = new Date($('#' + fifth).val());//时间5
+        //时间未填写默认最大9999
+        var timeStr = "9999-12-01 00:00:00";
+        if (first == "" || firstTime == "Invalid Date") {
+             firstTime = new Date(timeStr.replace(/-/, "/"))
+        }
+        if (second == "" || secondTime == "Invalid Date") {
+            secondTime = new Date(timeStr.replace(/-/, "/"))
+        }
+        if (third == "" || thirdTime == "Invalid Date") {
+            thirdTime = new Date(timeStr.replace(/-/, "/"))
+        }
+        if (fourth == "" || fourthTime == "Invalid Date") {
+            fourthTime = new Date(timeStr.replace(/-/, "/"))
+        }
+        if (fifth == "" || fifthTime == "Invalid Date") {
+            fifthTime = new Date(timeStr.replace(/-/, "/"))
+        }
+        var message_1=""
+        if(firstTime>secondTime){
+            message_1= getTimeMessage(first);
+            alert(message_1+"错误");
+            return false;
+        }
+        if(secondTime>thirdTime){
+            message_1= getTimeMessage(second);
+            alert(message_1+"错误");
+            return false;
+        }
+        if(thirdTime>fourthTime){
+            message_1= getTimeMessage(third);
+            alert(message_1+"错误");
+            return false;
+        }
+        if(fourthTime>fifthTime){
+            message_1= getTimeMessage(fourth);
+            alert(message_1+"错误");
+            return false;
+        }
+        return true;
+    }
+
+    //根据ID选择时间切换提示语
+    function getTimeMessage(timeID) {
+        var str = "";
+        switch (timeID) {
+            case "releaseTime":
+                str = "发版确认时间"
+                break;
+            case "submitApplicationTime":
+                str = "提单结束时间"
+                break;
+            case "passApplicationTime":
+                str = "审批结束时间"
+                break;
+            case "deployStartTime":
+                str = "开始部署时间"
+                break;
+            case "deployEndTime":
+                str = "部署结束时间"
+                break;
+            case "releaseTime_u":
+                str = "发版确认时间"
+                break;
+            case "submitApplicationTime_u":
+                str = "提单结束时间"
+                break;
+            case "passApplicationTime_u":
+                str = "审批结束时间"
+                break;
+            case "deployStartTime_u":
+                str = "开始部署时间"
+                break;
+            case "deployEndTime_u":
+                str = "部署结束时间"
+                break;
+            default:
+                "开始时间"
+        }
+        return str;
+    }
+
+    //返回
+    function uatUp_back() {
+        ipsSystem.doGet("/serviceDep/uatUp");
+    }
+
+    //新增模块，更新模块字段key集合
+    var uatUp_add_list = ["id", "front", "version", "upround", "env", "testPhase", "releaseTime", "submitApplicationTime", "passApplicationTime", "deployStartTime", "deployEndTime", "submitApplicationElapsedTime", "approvalElapsedTime", "replyElapsedTime", "deployElapsedTime", "allElapsedTime", "memo", "status"];
+    var uatUp_update_list = ["id_u", "front_u", "version_u", "upround_u", "env_u", "testPhase_u", "releaseTime_u", "submitApplicationTime_u", "passApplicationTime_u", "deployStartTime_u", "deployEndTime_u", "submitApplicationElapsedTime_u", "approvalElapsedTime_u", "replyElapsedTime_u", "deployElapsedTime_u", "allElapsedTime_u", "memo_u", "status_u"];
+
+
+    //uatUp新增
+    function uatUp_add() {
+        //检查时间字段顺序是否正常
+        var checkTime=checkTimeOrder("releaseTime","submitApplicationTime","passApplicationTime","deployStartTime","deployEndTime");
+        if (!checkTime) {
+            return;
+        }
+
+        //检查关键字字段是否为空
+        var keywords={"战线参数":"front","版本号参数":"version","升级轮次参数":"upround","环境参数":"env","测试阶段参数":"testPhase"};
+        var checkKeywordsResult=checkKeywordsEmpty(keywords);
+        if (!checkKeywordsResult) {
+            return;
+        }
+
+        if($('#allElapsedTime').val()) {
+            var startTime = new Date($('#releaseTime').val());//开始时间
+            var endTime = new Date($('#deployEndTime').val()); //结束时间
+            var minus = Math.abs(endTime.getTime() - startTime.getTime()) / 1000; //两时间字符串相减，转成相差秒；
+            //超过115分钟，需要备注说明
+            if (minus > 115 * 60 && !$("#memo").val()) {
+                alert("你已经超时，请备注说明");
+                return;
+            }
+        }
+
+        //组装请求数据json
+        var param = bilidParam(uatUp_add_list, uatUp_add_list);
+        //时间字段格式化
+        param.releaseTime = new Date($("#releaseTime").val());
+        param.submitApplicationTime = new Date($("#submitApplicationTime").val());
+        param.passApplicationTime = new Date($("#passApplicationTime").val());
+        param.deployStartTime = new Date($("#deployStartTime").val());
+        param.deployEndTime = new Date($("#deployEndTime").val());
+        //未填写的时间字段，不传值，否则格式错误报错
+        if (!$("#releaseTime").val()) {
+            delete param.releaseTime;
+        }
+        if (!$("#submitApplicationTime").val()) {
+            delete param.submitApplicationTime;
+        }
+        if (!$("#passApplicationTime").val()) {
+            delete param.passApplicationTime;
+        }
+        if (!$("#deployStartTime").val()) {
+            delete param.deployStartTime;
+        }
+        if (!$("#deployEndTime").val()) {
+            delete param.deployEndTime;
+        }
+
+
+        $.ajax({
+            url: "uatUpAdd",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    clearAdd();
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("新增系统错误");
+                console.log(err);
+            }
+        });
+    }
+
+    //uatUp更新
+    function uatUp_update() {
+        var checkTime=checkTimeOrder("releaseTime_u","submitApplicationTime_u","passApplicationTime_u","deployStartTime_u","deployEndTime_u");
+        if (!checkTime) {
+            return;
+        }
+
+        //检查关键字字段是否为空
+        var keywords={"战线参数":"front_u","版本号参数":"version_u","升级轮次参数":"upround_u","环境参数":"env_u","测试阶段参数":"testPhase_u"};
+        var checkKeywordsResult=checkKeywordsEmpty(keywords);
+        if (!checkKeywordsResult) {
+            return;
+        }
+
+        if($('#allElapsedTime_u').val()){
+            var startTime = new Date($('#releaseTime_u').val());//开始时间
+            var endTime = new Date($('#deployEndTime_u').val()); //结束时间
+            var  minus = Math.abs(endTime.getTime() - startTime.getTime())/1000; //两时间字符串相减，转成相差秒；
+            //超过115分钟，需要备注说明
+            if(minus>115*60&&!$("#memo_u").val()){
+                alert("你已经超时，请备注说明");
+                return;
+            }
+        }
+
+
+        //组装请求数据json
+        var param = bilidParam(uatUp_add_list, uatUp_update_list);
+        //时间字段格式化
+        param.releaseTime = new Date($("#releaseTime_u").val());
+        param.submitApplicationTime = new Date($("#submitApplicationTime_u").val());
+        param.passApplicationTime = new Date($("#passApplicationTime_u").val());
+        param.deployStartTime = new Date($("#deployStartTime_u").val());
+        param.deployEndTime = new Date($("#deployEndTime_u").val());
+        //未填写的时间字段，不传值，否则格式错误报错
+        if (!$("#releaseTime_u").val()) {
+            delete param.releaseTime;
+        }
+        if (!$("#submitApplicationTime_u").val()) {
+            delete param.submitApplicationTime;
+        }
+        if (!$("#passApplicationTime_u").val()) {
+            delete param.passApplicationTime;
+        }
+        if (!$("#deployStartTime_u").val()) {
+            delete param.deployStartTime;
+        }
+        if (!$("#deployEndTime_u").val()) {
+            delete param.deployEndTime;
+        }
+
+        $.ajax({
+            url: "uatUpUpdate",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    successMsg(result.data);
+                } else {
+                    errorMsg(result.code, result.data);
+                }
+
+            },
+            error: function (err) {
+                alert("更新系统错误");
+                console.log(err);
+            }
+        });
+    }
+
+    /**
+     * 清空新增面板输入框
+     */
+    function clearAdd() {
+        for (var i = 0; i < uatUp_add_list.length; i++) {
+            $("#" + uatUp_add_list[i]).val("");
+        }
+    }
+
+</script>
+<style>
+    #releaseTime, #submitApplicationTime, #passApplicationTime, #deployStartTime, #deployEndTime,
+    #submitApplicationElapsedTime, #approvalElapsedTime, #replyElapsedTime, #deployElapsedTime, #allElapsedTime {
+        background: white;
+    }
+    #releaseTime_u, #submitApplicationTime_u, #passApplicationTime_u, #deployStartTime_u, #deployEndTime_u,
+    #submitApplicationElapsedTime_u, #approvalElapsedTime_u, #replyElapsedTime_u, #deployElapsedTime_u, #allElapsedTime_u {
+        background: white;
+    }
+
+    .datebox {
+        margin-bottom: 14px;
+    }
+</style>
+</body>
+</html>

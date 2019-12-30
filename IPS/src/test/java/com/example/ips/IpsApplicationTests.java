@@ -8,6 +8,10 @@ import org.apache.shiro.util.ByteSource;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @SpringBootTest
 public class IpsApplicationTests {
 
@@ -55,6 +59,23 @@ public class IpsApplicationTests {
         int hashIterations = 2;
         SimpleHash result = new SimpleHash(hashAlgorithmName, source, byteSalt, hashIterations);
         System.out.println(result.toString());
+
+    }
+
+    /**
+     * 时间相减算法
+     * @throws ParseException
+     */
+    @Test
+    public void  timeDel() throws ParseException {
+        SimpleDateFormat dfs = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date begin=dfs.parse("2004-01-02 11:09:21");
+        Date end = dfs.parse("2004-01-03 12:11:33");
+        long between=(end.getTime()-begin.getTime())/1000;//除以1000是为了转换成秒
+        long hour1=between/3600;
+        long minute1=between%3600/60;
+        long second1=between%60/1;
+        System.out.println(""+hour1+"小时"+minute1+"分"+second1+"秒");
 
     }
 

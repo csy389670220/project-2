@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>UAT升级</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/css/common.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" >
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>UAT升级
+                                <div class="page-title-subheading">
+                                    UAT升级流程记录列表
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <shiro:hasRole name="admin">
+                                    <button type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            onclick="uatUp_add()" class="btn-shadow  btn btn-info">
+                                        新 增
+                                    </button>
+                                </shiro:hasRole>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <div id="box">
+                                <table class="mb-0 table table-bordered" id="tab">
+                                    <thead>
+                                    <tr>
+                                        <th>战线</th>
+                                        <th>版本号</th>
+                                        <th>升级轮次</th>
+                                        <th>环境</th>
+                                        <th>测试阶段</th>
+                                        <th>发版确认时间</th>
+                                        <th>提单完成时间</th>
+                                        <th>审批完成时间</th>
+                                        <th>开始部署时间</th>
+                                        <th>部署结束时间</th>
+                                        <th>集成组提单耗时</th>
+                                        <th>测试组审批耗时</th>
+                                        <th>配置组响应耗时</th>
+                                        <th>部署耗时</th>
+                                        <th>总耗时</th>
+                                        <th>备注</th>
+                                        <shiro:hasRole name="admin">
+                                        <th>操作</th>
+                                        </shiro:hasRole>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="gradeU" th:each="uatUp:${list}">
+                                        <td th:text="${uatUp.front}"></td>
+                                        <td th:text="${uatUp.version}"></td>
+                                        <td th:text="${uatUp.upround}"></td>
+                                        <td th:text="${uatUp.env}"></td>
+                                        <td th:text="${uatUp.testPhase}"></td>
+                                        <td th:text="${#dates.format(uatUp.releaseTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td th:text="${#dates.format(uatUp.submitApplicationTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td th:text="${#dates.format(uatUp.passApplicationTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td th:text="${#dates.format(uatUp.deployStartTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td th:text="${#dates.format(uatUp.deployEndTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td th:text="${uatUp.submitApplicationElapsedTime}"></td>
+                                        <td th:text="${uatUp.approvalElapsedTime}"></td>
+                                        <td th:text="${uatUp.replyElapsedTime}"></td>
+                                        <td th:text="${uatUp.deployElapsedTime}"></td>
+                                        <td th:text="${uatUp.allElapsedTime}"></td>
+                                        <td th:text="${uatUp.memo}"></td>
+                                        <shiro:hasRole name="admin">
+                                        <td>
+                                            <button   class="btn btn-info" th:onclick="uatUp_update([[${uatUp.id}]])">修 改</button>
+                                        </td>
+                                        </shiro:hasRole>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_js :: base_js"></div>
+<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serviceDep_Menu", "uatUp_Menu");
+        scroll("tab","box",1);
+        showTableP();
+    });
+
+    //跳转新增页面
+    function uatUp_add() {
+        ipsSystem.doPost("/serviceDep/uatUpConfig",{"type":"A","id":null})
+    }
+
+    //跳转更新页面
+    function uatUp_update(id) {
+        ipsSystem.doPost("/serviceDep/uatUpConfig",{"type":"U","id":id})
+    }
+
+
+    //内容显示换行符
+    function showTableP(){
+        replaceBr(16);
+    }
+
+</script>
+
+</body>
+</html>
