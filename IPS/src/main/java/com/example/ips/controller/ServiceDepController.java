@@ -82,4 +82,5 @@ public class ServiceDepController extends BaseController{
         Map<String, Object> result=serviceDepUatUpService.uatUpUpdate(serviceDepUatUp);
         return result;
     }
+
 }

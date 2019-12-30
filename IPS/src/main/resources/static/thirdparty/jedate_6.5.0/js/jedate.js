@@ -118,8 +118,12 @@
         });
     }
     //返回日期
-    function DateTime(arr,valObj) {
-        var that = this,newdate = new Date(), narr = ["FullYear","Month","Date","Hours","Minutes","Seconds"]; 
+    function DateTime(arr,valObj,id) {
+        var that = this,newdate = new Date(), narr = ["FullYear","Month","Date","Hours","Minutes","Seconds"];
+        //创建时间，如果当前输入框存在时间，使用输入框时间，
+        if($("#"+id).val()){
+            newdate=new Date($("#"+id).val());
+        }
         var vb = jet.extend({YYYY:null,MM:null,DD:null,hh:newdate.getHours(),mm:newdate.getMinutes(),ss:newdate.getSeconds()},valObj);
         var ND = valObj == undefined ? newdate : new Date(vb.YYYY,vb.MM,vb.DD,vb.hh,vb.mm,vb.ss);
         if((arr||[]).length>0) jet.each(arr,function (i,par) { 
@@ -324,8 +328,12 @@
         },
         isBool : function(obj){  return (obj == undefined || obj == true ?  true : false); },
         //获取返回的日期
-        getDateTime : function (obj) {
-            var result = new DateTime(), objVal = jet.extend({YYYY:null,MM:null,DD:null,hh:0,mm:0,ss:0},obj),
+        getDateTime : function (obj,id) {
+            /**
+             * id-当前日期选择框ID
+             * 当前输入框为空创建当前时间，不为空创建输入框的时间
+             */
+            var result = new DateTime(null,null,id), objVal = jet.extend({YYYY:null,MM:null,DD:null,hh:0,mm:0,ss:0},obj),
                 matArr = {YYYY:"FullYear",MM:"Month",DD:"Date",hh:"Hours",mm:"Minutes",ss:"Seconds"};
             jet.each(["ss","mm","hh","DD","MM","YYYY"],function (i,mat) {
                 if (!jet.isNum(parseInt(objVal[mat]))) return null;
@@ -421,7 +429,7 @@
             var getCurrValue = function () {
                 var mats = jet.reMatch(that.format), isEmpty = that.getValue() != "",curVal = [],
                     parmat = that.dlen == 7 ? "hh:mm:ss" : "YYYY-MM"+ (that.dlen <= 2 ? "":"-DD");
-                that.selectValue = [jet.parse(jet.getDateTime({}), parmat)];
+                that.selectValue = [jet.parse(jet.getDateTime({},that.valCell.name), parmat)];
                 if(isEmpty && isShow){
                     var getVal = that.getValue().split(range);
                     jet.each(new Array(range ? 2 : 1),function (a) {
@@ -568,7 +576,7 @@
                 opts = that.$opts, reObj, result = new DateTime().reDate(),
                 dateY = result.GetYear(),dateM = result.GetMonth(),dateD = result.GetDate(),
                 timeh = result.GetHours(),timem = result.GetMinutes(),times = result.GetSeconds();
-            if (valobj == undefined && jet.isBool(opts.isShow)){         
+            if (valobj == undefined && jet.isBool(opts.isShow)){
                 reObj = jet.valText(valCell); 
             }else {
                 var isValShow = jet.isBool(opts.isShow) ? (jet.valText(valCell) == "") : !jet.isBool(opts.isShow),
@@ -806,8 +814,8 @@
                     }   
                     that.renderDate();
                 },
-                shortClick:function (val) {  
-                    var reval = val.replace(/\#/g,','),evobj = eval("("+reval+")"), 
+                shortClick:function (val) {
+                    var reval = val.replace(/\#/g,','),evobj = eval("("+reval+")"),
                         gval = jet.getDateTime(evobj),tmval = that.selectTime;
                     that.selectValue = [jet.parse(gval,"YYYY-MM-DD")];
                     that.selectDate = [{YYYY:gval.YYYY,MM:gval.MM,DD:gval.DD}];

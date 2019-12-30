@@ -408,12 +408,16 @@
         ipsSystem.menu.active("serviceDep_Menu", "uatUp_Menu");
     });
 
-    //初始化时间选择空间
+    //初始化时间选择空间定义参数
     var param1 = {
         trigger: false,
         format: 'YYYY-MM-DD hh:mm:ss',
         maxDate: '2099-06-16 23:59:59', //最大日期
-        donefun: function (obj) {
+        donefun: function (obj) {//点击确定后的回调,obj包含{ elem当前输入框ID, val当前选择的值, date当前的日期值}
+            time_change("", "releaseTime", "submitApplicationTime", "", "submitApplicationElapsedTime");
+            time_change("", "releaseTime", "deployEndTime", "", "allElapsedTime");
+        },
+        clearfun:function(elem, val) {//清除日期后的回调, elem当前输入框ID, val当前选择的值
             time_change("", "releaseTime", "submitApplicationTime", "", "submitApplicationElapsedTime");
             time_change("", "releaseTime", "deployEndTime", "", "allElapsedTime");
         }
@@ -424,6 +428,9 @@
         maxDate: '2099-06-16 23:59:59', //最大日期
         donefun: function (obj) {
             time_change("releaseTime", "submitApplicationTime", "passApplicationTime", "submitApplicationElapsedTime", "approvalElapsedTime");
+        },
+        clearfun:function(elem, val) {//清除日期后的回调, elem当前输入框ID, val当前选择的值
+            time_change("releaseTime", "submitApplicationTime", "passApplicationTime", "submitApplicationElapsedTime", "approvalElapsedTime");
         }
     };
     var param3 = {
@@ -431,6 +438,10 @@
         format: 'YYYY-MM-DD hh:mm:ss',
         maxDate: '2099-06-16 23:59:59', //最大日期
         donefun: function (obj) {
+            time_change("submitApplicationTime", "passApplicationTime", "deployStartTime",
+                "approvalElapsedTime", "replyElapsedTime");
+        },
+        clearfun:function(elem, val) {//清除日期后的回调, elem当前输入框ID, val当前选择的值
             time_change("submitApplicationTime", "passApplicationTime", "deployStartTime",
                 "approvalElapsedTime", "replyElapsedTime");
         }
@@ -442,6 +453,10 @@
         donefun: function (obj) {
             time_change("passApplicationTime", "deployStartTime", "deployEndTime",
                 "replyElapsedTime", "deployElapsedTime");
+        },
+        clearfun:function(elem, val) {//清除日期后的回调, elem当前输入框ID, val当前选择的值
+            time_change("passApplicationTime", "deployStartTime", "deployEndTime",
+                "replyElapsedTime", "deployElapsedTime");
         }
     };
     var param5 = {
@@ -449,6 +464,10 @@
         format: 'YYYY-MM-DD hh:mm:ss',
         maxDate: '2099-06-16 23:59:59', //最大日期
         donefun: function (obj) {
+            time_change("deployStartTime", "deployEndTime", "", "deployElapsedTime", "");
+            time_change("releaseTime", "deployEndTime", "", "allElapsedTime", "");
+        },
+        clearfun:function(elem, val) {//清除日期后的回调, elem当前输入框ID, val当前选择的值
             time_change("deployStartTime", "deployEndTime", "", "deployElapsedTime", "");
             time_change("releaseTime", "deployEndTime", "", "allElapsedTime", "");
         }
@@ -461,6 +480,10 @@
         donefun: function (obj) {
             time_change("", "releaseTime", "submitApplicationTime_u", "", "submitApplicationElapsedTime_u");
             time_change("", "releaseTime_u", "deployEndTime_u", "", "allElapsedTime_u");
+        },
+        clearfun:function(elem, val) {//清除日期后的回调, elem当前输入框ID, val当前选择的值
+            time_change("", "releaseTime", "submitApplicationTime_u", "", "submitApplicationElapsedTime_u");
+            time_change("", "releaseTime_u", "deployEndTime_u", "", "allElapsedTime_u");
         }
     };
     var param2_u = {
@@ -468,6 +491,10 @@
         format: 'YYYY-MM-DD hh:mm:ss',
         maxDate: '2099-06-16 23:59:59', //最大日期
         donefun: function (obj) {
+            time_change("releaseTime_u", "submitApplicationTime_u", "passApplicationTime_u",
+                "submitApplicationElapsedTime_u","approvalElapsedTime_u");
+        },
+        clearfun:function(elem, val) {//清除日期后的回调, elem当前输入框ID, val当前选择的值
             time_change("releaseTime_u", "submitApplicationTime_u", "passApplicationTime_u",
                 "submitApplicationElapsedTime_u","approvalElapsedTime_u");
         }
@@ -479,6 +506,10 @@
         donefun: function (obj) {
             time_change("submitApplicationTime_u", "passApplicationTime_u", "deployStartTime_u",
                 "approvalElapsedTime_u","replyElapsedTime_u");
+        },
+        clearfun:function(elem, val) {//清除日期后的回调, elem当前输入框ID, val当前选择的值
+            time_change("submitApplicationTime_u", "passApplicationTime_u", "deployStartTime_u",
+                "approvalElapsedTime_u","replyElapsedTime_u");
         }
     };
     var param4_u = {
@@ -488,6 +519,10 @@
         donefun: function (obj) {
             time_change("passApplicationTime_u", "deployStartTime_u", "deployEndTime_u",
                 "replyElapsedTime_u","deployElapsedTime_u");
+        },
+        clearfun:function(elem, val) {//清除日期后的回调, elem当前输入框ID, val当前选择的值
+            time_change("passApplicationTime_u", "deployStartTime_u", "deployEndTime_u",
+                "replyElapsedTime_u","deployElapsedTime_u");
         }
     };
     var param5_u = {
@@ -495,6 +530,10 @@
         format: 'YYYY-MM-DD hh:mm:ss',
         maxDate: '2099-06-16 23:59:59', //最大日期
         donefun: function (obj) {
+            time_change("deployStartTime_u", "deployEndTime_u", "", "deployElapsedTime_u","");
+            time_change("releaseTime_u", "deployEndTime_u", "", "allElapsedTime_u","");
+        },
+        clearfun:function(elem, val) {//清除日期后的回调, elem当前输入框ID, val当前选择的值
             time_change("deployStartTime_u", "deployEndTime_u", "", "deployElapsedTime_u","");
             time_change("releaseTime_u", "deployEndTime_u", "", "allElapsedTime_u","");
         }
