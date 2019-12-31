@@ -7,7 +7,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>UAT升级</title>
     <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/jedate_6.5.0/skin/jedate.css}"/>
 </head>
 
 <body>
@@ -399,9 +398,9 @@
     </div>
 </div>
 </div>
-<div th:replace="common/common_js :: base_js"></div>
-<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
-<script type="text/javascript" th:src="@{/thirdparty/jedate_6.5.0/js/jedate.js}"></script>
+<div th:replace="common/common_sources :: base_js"></div>
+<div th:replace="common/common_sources :: jedate"></div>
+<div th:replace="common/common_sources :: jebox"></div>
 <script>
     $(document).ready(function () {
         //选中菜单栏
@@ -560,7 +559,7 @@
 
         //1.与开始时间比较
         if (startTime > chooseTime) {
-            alert("不能小于" + startMsg)
+            jeBox.msg('不能小于'+startMsg, {icon: 1,time: 2,maskLock: true, maskClose: true });
             $("#" + chooseId).val("");
             $("#" + beforeId).val("");
             $("#" + laterId).val("");
@@ -568,7 +567,7 @@
         }
         //2.与结束时间比较，结束时间可以为空
         if (chooseTime > endTime) {
-            alert("不能大于" + endMsg)
+            jeBox.msg('不能大于'+endMsg, {icon: 1,time: 2,maskLock: true, maskClose: true });
             $("#" + chooseId).val("");
             $("#" + beforeId).val("");
             $("#" + laterId).val("");
@@ -623,22 +622,22 @@
         var message_1=""
         if(firstTime>secondTime){
             message_1= getTimeMessage(first);
-            alert(message_1+"错误");
+            jeBox.msg(message_1+'错误', {icon: 1,time: 2,maskLock: true, maskClose: true });
             return false;
         }
         if(secondTime>thirdTime){
             message_1= getTimeMessage(second);
-            alert(message_1+"错误");
+            jeBox.msg(message_1+'错误', {icon: 1,time: 2,maskLock: true, maskClose: true });
             return false;
         }
         if(thirdTime>fourthTime){
             message_1= getTimeMessage(third);
-            alert(message_1+"错误");
+            jeBox.msg(message_1+'错误', {icon: 1,time: 2,maskLock: true, maskClose: true });
             return false;
         }
         if(fourthTime>fifthTime){
             message_1= getTimeMessage(fourth);
-            alert(message_1+"错误");
+            jeBox.msg(message_1+'错误', {icon: 1,time: 2,maskLock: true, maskClose: true });
             return false;
         }
         return true;
@@ -696,12 +695,6 @@
 
     //uatUp新增
     function uatUp_add() {
-        //检查时间字段顺序是否正常
-        var checkTime=checkTimeOrder("releaseTime","submitApplicationTime","passApplicationTime","deployStartTime","deployEndTime");
-        if (!checkTime) {
-            return;
-        }
-
         //检查关键字字段是否为空
         var keywords={"战线参数":"front","版本号参数":"version","升级轮次参数":"upround","环境参数":"env","测试阶段参数":"testPhase"};
         var checkKeywordsResult=checkKeywordsEmpty(keywords);
@@ -709,13 +702,20 @@
             return;
         }
 
+        //检查时间字段顺序是否正常
+        var checkTime=checkTimeOrder("releaseTime","submitApplicationTime","passApplicationTime","deployStartTime","deployEndTime");
+        if (!checkTime) {
+            return;
+        }
+
+
         if($('#allElapsedTime').val()) {
             var startTime = new Date($('#releaseTime').val());//开始时间
             var endTime = new Date($('#deployEndTime').val()); //结束时间
             var minus = Math.abs(endTime.getTime() - startTime.getTime()) / 1000; //两时间字符串相减，转成相差秒；
             //超过115分钟，需要备注说明
             if (minus > 115 * 60 && !$("#memo").val()) {
-                alert("你已经超时，请备注说明");
+                jeBox.msg('你已经超时，请备注说明', {icon: 1,time: 2,maskLock: true, maskClose: true });
                 return;
             }
         }
@@ -755,14 +755,14 @@
             success: function (result) {
                 if (result.code == "success") {
                     clearAdd();
-                    successMsg(result.data);
+                    jeBox.msg(result.data, {icon: 2,time: 2,maskLock: true, maskClose: true });
                 } else {
-                    errorMsg(result.code, result.data);
+                    jeBox.msg(result.data, {icon: 3,time: 2,maskLock: true, maskClose: true });
                 }
 
             },
             error: function (err) {
-                alert("新增系统错误");
+                jeBox.msg('新增系统错误', {icon: 3,time: 2,maskLock: true, maskClose: true });
                 console.log(err);
             }
         });
@@ -770,15 +770,16 @@
 
     //uatUp更新
     function uatUp_update() {
-        var checkTime=checkTimeOrder("releaseTime_u","submitApplicationTime_u","passApplicationTime_u","deployStartTime_u","deployEndTime_u");
-        if (!checkTime) {
-            return;
-        }
 
         //检查关键字字段是否为空
         var keywords={"战线参数":"front_u","版本号参数":"version_u","升级轮次参数":"upround_u","环境参数":"env_u","测试阶段参数":"testPhase_u"};
         var checkKeywordsResult=checkKeywordsEmpty(keywords);
         if (!checkKeywordsResult) {
+            return;
+        }
+
+        var checkTime=checkTimeOrder("releaseTime_u","submitApplicationTime_u","passApplicationTime_u","deployStartTime_u","deployEndTime_u");
+        if (!checkTime) {
             return;
         }
 
@@ -788,7 +789,7 @@
             var  minus = Math.abs(endTime.getTime() - startTime.getTime())/1000; //两时间字符串相减，转成相差秒；
             //超过115分钟，需要备注说明
             if(minus>115*60&&!$("#memo_u").val()){
-                alert("你已经超时，请备注说明");
+                jeBox.msg('你已经超时，请备注说明', {icon: 1,time: 2,maskLock: true, maskClose: true });
                 return;
             }
         }
@@ -827,14 +828,14 @@
             datatype: 'json',
             success: function (result) {
                 if (result.code == "success") {
-                    successMsg(result.data);
+                    jeBox.msg(result.data, {icon: 2,time: 2,maskLock: true, maskClose: true });
                 } else {
-                    errorMsg(result.code, result.data);
+                    jeBox.msg(result.data, {icon: 3,time: 2,maskLock: true, maskClose: true });
                 }
 
             },
             error: function (err) {
-                alert("更新系统错误");
+                jeBox.msg('更新系统错误', {icon: 3,time: 2,maskLock: true, maskClose: true });
                 console.log(err);
             }
         });

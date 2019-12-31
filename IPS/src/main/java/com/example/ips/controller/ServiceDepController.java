@@ -1,5 +1,6 @@
 package com.example.ips.controller;
 
+import com.example.ips.export.ResultMapUtil;
 import com.example.ips.model.ServiceDepUatUp;
 import com.example.ips.service.ServiceDepUatUpService;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -80,6 +81,18 @@ public class ServiceDepController extends BaseController{
     @RequiresRoles("admin")
     public Map<String, Object> uatUpUpdate(ServiceDepUatUp serviceDepUatUp) {
         Map<String, Object> result=serviceDepUatUpService.uatUpUpdate(serviceDepUatUp);
+        return result;
+    }
+
+    /**
+     * 模块：UAT升级记录
+     *  UAT升级记录配置页面-新增
+     */
+    @RequestMapping(value = "/uatUpDelById", method = RequestMethod.POST)
+    @ResponseBody
+    @RequiresRoles("admin")
+    public Map<String, Object> uatUpDelById(Integer id) {
+        Map<String, Object> result= serviceDepUatUpService.uatUpDel(id);
         return result;
     }
 

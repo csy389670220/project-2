@@ -70,17 +70,20 @@ public class LoginController {
         //查询用户信息
         String loginName=(String) subject.getPrincipal();
         Integer sysId= (Integer) SecurityUtils.getSubject().getSession().getAttribute("sysId");
-
+        String chinaName= (String) SecurityUtils.getSubject().getSession().getAttribute("chinaName");
         //非匿名登录条件下，sysId为空需要查询数据库更新数据
         if(CheckUtil.isEmpty(sysId)&&!CheckUtil.isEmpty(loginName)){
             SysUser user =sysUserMapper.selectByLoginName(loginName);
             sysId=user.getId();
+            chinaName=user.getChinaName();
             SecurityUtils.getSubject().getSession().setAttribute("sysId",sysId);
+            SecurityUtils.getSubject().getSession().setAttribute("chinaName",chinaName);
         }
 
         ModelAndView view = new ModelAndView("index");
         view.addObject("loginName", loginName);
         view.addObject("sysId", sysId);
+        view.addObject("chinaName", chinaName);
         return view;
     }
 

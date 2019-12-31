@@ -95,6 +95,7 @@
                                         <shiro:hasRole name="admin">
                                         <td>
                                             <button   class="btn btn-info" th:onclick="uatUp_update([[${uatUp.id}]])">修 改</button>
+                                            <button   class="btn btn-danger" th:onclick="del_info([[${uatUp.id}]])">删 除</button>
                                         </td>
                                         </shiro:hasRole>
                                     </tr>
@@ -109,8 +110,8 @@
     </div>
 </div>
 </div>
-<div th:replace="common/common_js :: base_js"></div>
-<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<div th:replace="common/common_sources :: base_js"></div>
+<div th:replace="common/common_sources :: jebox"></div>
 <script>
     $(document).ready(function () {
         //选中菜单栏
@@ -134,6 +135,67 @@
         replaceBr(16);
     }
 
+
+    //删除方法
+    function del_info(id){
+        //弹出对话框进一步确认是否需要删除
+        jeBox({
+            cell: "del_info",
+            title: "删除",
+            //boxSize:["400px","150px"],
+            padding: "5px 30px",
+            content: '<p style="text-align: center;">是否需要继续删除信息</p>',
+            maskLock: true,
+            btnAlign: "right",
+            button: [
+                {
+                    name: '取消'
+                },
+                {
+                    //确定删除，请求后台删除数据
+                    name: '删除',
+                    callback: function (index) {
+                        var param={"id":id};
+                        $.ajax({
+                            url: "uatUpDelById",
+                            type: "post",    //不区分大小写
+                            traditional: true,
+                            data: param,
+                            datatype: 'json',
+                            success: function (result) {
+                                if (result.code == "success") {
+                                    jeBox.msg(result.data, {
+                                        icon: 2,
+                                        time: 2,
+                                        maskLock: true,            // 是否开启遮罩层
+                                        maskClose: true,         // 点击遮罩层是否可以关闭
+                                        endfun:function () {
+                                            ipsSystem.doGet("/serviceDep/uatUp");
+                                        }
+                                    });
+                                    jeBox.close(index);
+                                } else {
+                                    jeBox.msg(result.data, {
+                                        icon: 3,
+                                        time: 2,
+                                        maskLock: true,            // 是否开启遮罩层
+                                        maskClose: true         // 点击遮罩层是否可以关闭
+                                         });
+                                    jeBox.close(index);
+                                }
+
+                            },
+                            error: function (err) {
+                                jeBox.msg('删除信息系统错误', {icon: 3, time: 2});
+                                jeBox.close(index);
+                                console.log(err);
+                            }
+                        });
+                    }
+                }
+            ]
+        })
+    }
 </script>
 
 </body>

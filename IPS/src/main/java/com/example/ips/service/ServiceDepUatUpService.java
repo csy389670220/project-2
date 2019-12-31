@@ -32,17 +32,6 @@ public interface ServiceDepUatUpService {
 
 
     /**
-     * 提交信息
-     */
-    Map<String, Object> uatUpSave(ServiceDepUatUp record);
-
-    /**
-     * 撤销信息，修改状态为待提交
-     */
-    Map<String, Object> uatUpRevokee(Integer id);
-
-
-    /**
      * 删除信息
      */
     Map<String, Object> uatUpDel(Integer id);

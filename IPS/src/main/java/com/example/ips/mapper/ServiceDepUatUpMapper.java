@@ -18,8 +18,9 @@ public interface ServiceDepUatUpMapper {
     int updateByPrimaryKey(ServiceDepUatUp record);
 
     /**
-     * 查询全部集合
+     * 查询全部有效集合
      * @return
      */
     List<ServiceDepUatUp> getAllUatUp();
+
 }

@@ -324,8 +324,7 @@
     </div>
 </div>
 </div>
-<div th:replace="common/common_js :: base_js"></div>
-<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<div th:replace="common/common_sources :: base_js"></div>
 <script>
     $(document).ready(function () {
         //选中菜单栏
@@ -347,7 +346,7 @@
         }
         var serverApplication=$("#serverApplication").val();
         if(serverApplication==null||serverApplication==""){
-            errorMsg("", "服务器用途字段必填");
+            jeBox.msg('服务器用途字段必填', {icon: 1,time: 2,maskLock: true, maskClose: true });
             return;
         }
         $.ajax({
@@ -378,16 +377,16 @@
             datatype: 'json',
             success: function (result) {
                 if (result.code == "success") {
-                    successMsg(result.data);
+                    jeBox.msg(result.data, {icon: 2,time: 2,maskLock: true, maskClose: true });
                     //清空输入框
                     clearAdd();
                 } else {
-                    errorMsg(result.code, result.data);
+                    jeBox.msg(result.data, {icon: 3,time: 2,maskLock: true, maskClose: true });
                 }
 
             },
             error: function (err) {
-                alert("新增iDdeal服务器规划信息系统错误");
+                jeBox.msg('新增iDdeal信息系统错误', {icon: 3,time: 2,maskLock: true, maskClose: true });
                 console.log(err);
             }
         });
@@ -429,14 +428,14 @@
             datatype: 'json',
             success: function (result) {
                 if (result.code == "success") {
-                    successMsg(result.data);
+                    jeBox.msg(result.data, {icon: 2,time: 2,maskLock: true, maskClose: true });
                 } else {
-                    errorMsg(result.code, result.data);
+                    jeBox.msg(result.data, {icon: 3,time: 2,maskLock: true, maskClose: true });
                 }
 
             },
             error: function (err) {
-                alert("更新当前服务器用途信息错误");
+                jeBox.msg('更新信息错误', {icon: 3,time: 2,maskLock: true, maskClose: true });
                 console.log(err);
             }
         });
@@ -467,12 +466,12 @@
                         $("#"+name+"_u").val(value);
                     });
                 } else {
-                    errorMsg(result.code, result.data);
+                    jeBox.msg(result.data, {icon: 3,time: 2,maskLock: true, maskClose: true });
                 }
 
             },
             error: function (err) {
-                alert("查询当前服务器用途信息错误");
+                jeBox.msg('查询当前服务器用途信息错误', {icon: 3,time: 2,maskLock: true, maskClose: true });
                 console.log(err);
             }
         });

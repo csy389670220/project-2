@@ -282,4 +282,5 @@
     <include refid="Base_Column_List" />
     from servicedep_uatup
   </select>
+
 </mapper>

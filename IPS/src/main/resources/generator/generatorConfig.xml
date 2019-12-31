@@ -41,12 +41,12 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
-        <!--<table tableName="sys_user" domainObjectName="SysUser"-->
-        <!--enableCountByExample="false" enableUpdateByExample="false"-->
-        <!--enableDeleteByExample="false" enableSelectByExample="false"-->
-        <!--selectByExampleQueryId="false">-->
-        <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
-        <!--</table>-->
+        <table tableName="sys_user" domainObjectName="SysUser"
+        enableCountByExample="false" enableUpdateByExample="false"
+        enableDeleteByExample="false" enableSelectByExample="false"
+        selectByExampleQueryId="false">
+        <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
 
         <!--<table tableName="serverplan_idealnew" domainObjectName="ServerplanIDealNew"-->
         <!--enableCountByExample="false" enableUpdateByExample="false"-->
@@ -128,11 +128,11 @@
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>-->
 
-        <table tableName="servicedep_uatup" domainObjectName="ServiceDepUatUp"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-        </table>
+        <!--<table tableName="servicedep_uatup" domainObjectName="ServiceDepUatUp"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
     </context>
 </generatorConfiguration>

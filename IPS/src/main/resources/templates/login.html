@@ -26,7 +26,7 @@
 
 					<!-- Start Sign In Form -->
 					<form id="myForm" action="/login" method="post"  class="fh5co-form animate-box" data-animate-effect="fadeInRight">
-						<h2>IPS看板</h2>
+						<h2>配置组办公系统</h2>
 						<div class="form-group">
 							<label for="loginName" class="sr-only">loginName</label>
 							<input type="text" class="text form-control" id="loginName" placeholder="用户名"
@@ -61,8 +61,8 @@
 			</div>
 		</div>
 		<!-- JS Scripts-->
-		<div th:replace="common/common_js :: base_js"></div>
-		<div th:replace="common/common_js :: bootstrapvalidator_js"></div>
+		<div th:replace="common/common_sources :: base_js"></div>
+		<div th:replace="common/common_sources :: bootstrapvalidator_js"></div>
 		<script th:inline="javascript">
 			$("#myForm").bootstrapValidator({
 				message: 'This value is not valid',

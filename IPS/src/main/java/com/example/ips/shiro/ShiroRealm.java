@@ -95,7 +95,7 @@ public class ShiroRealm extends AuthorizingRealm {
         //获取用户
         String loginName = (String) SecurityUtils.getSubject().getPrincipal();
         SimpleAuthorizationInfo authorizationInfo =  new SimpleAuthorizationInfo();
-
+        String role = this.sysUserMapper.selectRolesByLoginName(loginName);
 
         /**
          * 根据loginName查询数据库，得到用户的权限信息
@@ -103,12 +103,9 @@ public class ShiroRealm extends AuthorizingRealm {
          * 权限配置后续更新
          */
         //增加角色
-        authorizationInfo.addRole("admin");
+        authorizationInfo.addRole(role);
         //增加权限
-        authorizationInfo.addStringPermission("query");
-        authorizationInfo.addStringPermission("add");
-        authorizationInfo.addStringPermission("del");
-        authorizationInfo.addStringPermission("update");
+        //authorizationInfo.addStringPermission("query");
         return authorizationInfo;
     }
 

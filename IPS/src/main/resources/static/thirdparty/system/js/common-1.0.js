@@ -193,6 +193,7 @@ function scroll(viewid,scrollid,size){
 
 /**
  * 功能：判断数据中的key集合是否全部为空值
+ * 使用该判断方法页面需要引用jeBox弹出框模块
  * @param value_list
  * @returns {boolean}
  */
@@ -206,7 +207,7 @@ function checkEmpty(value_list) {
         }
     }
     if(str==""||str==null){
-        alert("输入框不能全部为空");
+        jeBox.msg('输入框不能全部为空', {icon: 1,time: 2,maskLock: true, maskClose: true });
         return false;
     }
     return true;
@@ -227,13 +228,14 @@ function  count_time_difference(endTime,startTime){
 
 /**
  * 检查页面关键字是否为空
+ * 使用该判断方法页面需要引用jeBox弹出框模块
  * @param keywords {"姓名":"name","年纪","age"}
  * @returns {boolean}通过返回true,拒绝返回false
  */
 function checkKeywordsEmpty(keywords) {
     for(var p in keywords){//遍历json对象的每个key/value对,p为key
         if(!$("#" + keywords[p]).val()){
-            alert(p+"字段为空");
+            jeBox.msg(p+'字段为空', {icon: 1,time: 2,maskLock: true, maskClose: true });
             return false;
         }
     }

@@ -87,18 +87,23 @@ public class ServiceDepUatUpServiceImpl implements ServiceDepUatUpService {
         return resultMap;
     }
 
-    @Override
-    public Map<String, Object> uatUpSave(ServiceDepUatUp record) {
-        return null;
-    }
-
-    @Override
-    public Map<String, Object> uatUpRevokee(Integer id) {
-        return null;
-    }
 
     @Override
     public Map<String, Object> uatUpDel(Integer id) {
-        return null;
+        Map<String, Object> resultMap;
+        try{
+            int num=serviceDepUatUpMapper.deleteByPrimaryKey(id);
+            if(num>0){
+                resultMap=ResultMapUtil.success(EmBusinessCode.SYSTEM_DEL_SUCCESS.getErrMsg());
+                logger.info("uatUpDel删除成功");
+            }else {
+                resultMap=ResultMapUtil.fail(EmBusinessCode.SYSTEM_DEL_ERROR.getErrMsg());
+                logger.info("uatUpDel删除失败");
+            }
+        }catch (Exception e){
+            resultMap=ResultMapUtil.fail(EmBusinessCode.SYSTEM_DEL_ERROR.getErrMsg());
+            logger.error("uatUpDel错误:{}",e);
+        }
+        return resultMap;
     }
 }

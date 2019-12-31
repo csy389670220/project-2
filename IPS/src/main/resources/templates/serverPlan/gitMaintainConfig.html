@@ -168,8 +168,7 @@
     </div>
 </div>
 </div>
-<div th:replace="common/common_js :: base_js"></div>
-<script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+<div th:replace="common/common_sources :: base_js"></div>
 <script>
     $(document).ready(function () {
         //选中菜单栏
@@ -203,14 +202,14 @@
             success: function (result) {
                 if (result.code == "success") {
                     clearAdd();
-                    successMsg(result.data);
+                    jeBox.msg(result.data, {icon: 2,time: 2,maskLock: true, maskClose: true });
                 } else {
-                    errorMsg(result.code, result.data);
+                    jeBox.msg(result.data, {icon: 3,time: 2,maskLock: true, maskClose: true });
                 }
 
             },
             error: function (err) {
-                alert("新增系统错误");
+                jeBox.msg('新增系统错误', {icon: 3,time: 2,maskLock: true, maskClose: true });
                 console.log(err);
             }
         });
@@ -233,14 +232,14 @@
             datatype: 'json',
             success: function (result) {
                 if (result.code == "success") {
-                    successMsg(result.data);
+                    jeBox.msg(result.data, {icon: 2,time: 2,maskLock: true, maskClose: true });
                 } else {
-                    errorMsg(result.code, result.data);
+                    jeBox.msg(result.data, {icon: 3,time: 2,maskLock: true, maskClose: true });
                 }
 
             },
             error: function (err) {
-                alert("更新系统错误");
+                jeBox.msg('更新系统错误', {icon: 3,time: 2,maskLock: true, maskClose: true });
                 console.log(err);
             }
         });

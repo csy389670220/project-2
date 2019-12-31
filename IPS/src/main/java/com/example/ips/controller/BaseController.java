@@ -21,7 +21,9 @@ public class BaseController {
         Subject subject = SecurityUtils.getSubject();
         //当前用户登录名
         String loginName=(String) subject.getPrincipal();
+        String chinaName= (String) SecurityUtils.getSubject().getSession().getAttribute("chinaName");
         view.addObject("loginName", loginName);
+        view.addObject("chinaName", chinaName);
     }
 
 }

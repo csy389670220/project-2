@@ -38,8 +38,8 @@
                         <div class="widget-content-wrapper">
                             <div class="widget-content-left  ml-3 header-user-info">
                                 <ul class="header-menu nav">
-                                    <li th:hidden="${loginName}==null" class="nav-item"><a class="nav-link"><i
-                                            class="nav-link-icon fa fa-user-md"> </i><span th:text="${loginName}" ></span></a></li>
+                                    <li th:hidden="${chinaName}==null" class="nav-item"><a class="nav-link"><i
+                                            class="nav-link-icon fa fa-user-md"> </i><span th:text="${chinaName}" ></span></a></li>
                                     <li th:hidden="${loginName}==null" class="btn-group nav-item"><a href="javascript:void(window.location.href='/logout');" class="nav-link"><i
                                             class="nav-link-icon fa fa-power-off"></i>注销</a></li>
                                     <li th:hidden="${loginName}!=null" class="dropdown nav-item"><a href="javascript:void(window.location.href='/login');" class="nav-link"><i
@@ -63,6 +63,8 @@
 
 <!-- 左侧菜单栏目块 -->
 <div th:fragment="body_left" class="leftMeun" id="leftMeun">
+    <script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+    <div th:replace="common/common_sources :: jebox"></div>
     <div class="app-sidebar sidebar-shadow">
         <div class="app-header__logo">
             <div class="logo-src1"></div>
@@ -211,4 +213,5 @@
         </div>
     </div>
 </div>
+</body>
 </html>
