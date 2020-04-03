@@ -1,8 +1,8 @@
-package com.example.ips;
+package com.example.push;
 
-import com.example.ips.export.Constant;
-import com.example.ips.shiro.MyByteSource;
-import com.example.ips.util.AESUtil;
+import com.example.push.export.Constant;
+import com.example.push.shiro.MyByteSource;
+import com.example.push.util.AESUtil;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @SpringBootTest
-public class IpsApplicationTests {
+public class PushApplicationTests {
 
 
     /**
@@ -22,9 +22,9 @@ public class IpsApplicationTests {
     @Test
     public void mybatisInfoTest() {
         String userName="whale";
-        String pass="s&s404";
+        String pass="whale123";
         //加密
-        byte[] userName16=AESUtil.encrypt(userName, Constant.SYS_SALT);
+        byte[] userName16= AESUtil.encrypt(userName, Constant.SYS_SALT);
         byte[] pass16=AESUtil.encrypt(pass, Constant.SYS_SALT);
         String encryptResultUser = AESUtil.parseByte2HexStr(userName16);
         String encryptResultPass = AESUtil.parseByte2HexStr(pass16);

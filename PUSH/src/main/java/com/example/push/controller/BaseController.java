@@ -1,4 +1,4 @@
-package com.example.ips.controller;
+package com.example.push.controller;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;

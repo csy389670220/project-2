@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>push订阅人</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+</head>
+
+<body>
+<div th:replace="common/common_sources :: base_js"></div>
+<div th:replace="common/common_sources :: jebox"></div>
+<div class="app-main__inner">
+    <div class="col-lg-12" style="margin-top: 11px">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <h5 class="card-title"></h5>
+                <div id="box">
+                    <table class="mb-0 table table-bordered" id="tab">
+                        <thead>
+                        <tr>
+                            <th>昵称</th>
+                            <th>openId</th>
+                            <shiro:hasRole name="admin">
+                            <th style="width: 100px">操作</th>
+                            </shiro:hasRole>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="gradeU" th:each="pushSub:${pushSublist}">
+                            <td th:text="${pushSub.nickName}"></td>
+                            <td th:text="${pushSub.openId}"></td>
+                            <shiro:hasRole name="admin">
+                                <td>
+                                    <button class="btn btn-danger"
+                                            th:onclick="pushSub_del([[${pushSub.id}]])">删除
+                                    </button>
+                                </td>
+                            </shiro:hasRole>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //删除方法
+    function pushSub_del(id) {
+        var topicId = [[${topicId}]];
+        //弹出对话框进一步确认是否需要删除
+        jeBox({
+            cell: "del_info",
+            title: "删除",
+            //boxSize:["400px","150px"],
+            padding: "5px 30px",
+            content: '<p style="text-align: center;">是否需要继续删除信息</p>',
+            maskLock: true,
+            btnAlign: "right",
+            button: [
+                {
+                    name: '取消'
+                },
+                {
+                    //确定删除，请求后台删除数据
+                    name: '删除',
+                    callback: function (index) {
+                        var param = {"id": id};
+                        $.ajax({
+                            url: "delPushSub",
+                            type: "post",    //不区分大小写
+                            traditional: true,
+                            data: param,
+                            datatype: 'json',
+                            success: function (result) {
+                                if (result.code == "success") {
+                                    jeBox.msg(result.data, {
+                                        icon: 2,
+                                        time: 2,
+                                        maskLock: true,            // 是否开启遮罩层
+                                        maskClose: true,         // 点击遮罩层是否可以关闭
+                                        endfun: function () {
+                                            ipsSystem.doGet("/push/pushSubViev?id="+topicId);
+                                        }
+                                    });
+                                    jeBox.close(index);
+                                } else {
+                                    jeBox.msg(result.data, {
+                                        icon: 3,
+                                        time: 2,
+                                        maskLock: true,            // 是否开启遮罩层
+                                        maskClose: true         // 点击遮罩层是否可以关闭
+                                    });
+                                    jeBox.close(index);
+                                }
+
+                            },
+                            error: function (err) {
+                                jeBox.msg('删除信息系统错误', {icon: 3, time: 2});
+                                jeBox.close(index);
+                                console.log(err);
+                            }
+                        });
+                    }
+                }
+            ]
+        })
+    }
+
+</script>
+</body>
+</html>

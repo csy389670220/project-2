@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.push.mapper.PushSubscriberMapper" >
+  <resultMap id="BaseResultMap" type="com.example.push.model.PushSubscriber" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="PUSH_GROUP_ID" property="pushGroupId" jdbcType="INTEGER" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="OPEN_ID" property="openId" jdbcType="VARCHAR" />
+    <result column="CREAT_TIME" property="creatTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, PUSH_GROUP_ID, NICK_NAME, OPEN_ID, CREAT_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from push_subscriber
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from push_subscriber
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.push.model.PushSubscriber" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into push_subscriber (PUSH_GROUP_ID, NICK_NAME, OPEN_ID, 
+      CREAT_TIME)
+    values (#{pushGroupId,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
+      #{creatTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.push.model.PushSubscriber" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into push_subscriber
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pushGroupId != null" >
+        PUSH_GROUP_ID,
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME,
+      </if>
+      <if test="openId != null" >
+        OPEN_ID,
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pushGroupId != null" >
+        #{pushGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.push.model.PushSubscriber" >
+    update push_subscriber
+    <set >
+      <if test="pushGroupId != null" >
+        PUSH_GROUP_ID = #{pushGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        OPEN_ID = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.push.model.PushSubscriber" >
+    update push_subscriber
+    set PUSH_GROUP_ID = #{pushGroupId,jdbcType=INTEGER},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      OPEN_ID = #{openId,jdbcType=VARCHAR},
+      CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

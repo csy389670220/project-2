@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="base_js">
+    <script type="text/javascript" th:src="@{/thirdparty/system/js/jquery-1.10.2.js}"></script>
+    <script type="text/javascript" th:src="@{/thirdparty/system/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/thirdparty/system/js/common-1.0.js}"></script>
+</div>
+
+<div th:fragment="bootstrapvalidator_js">
+    <script type="text/javascript" th:src="@{/thirdparty/bootstrapvalidator/js/bootstrapValidator.js}"></script>
+    <script type="text/javascript" th:src="@{/thirdparty/bootstrapvalidator/js/language/zh_CN.js}"></script>
+</div>
+
+<div th:fragment="bootstrapFileinput_css">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/bootstrapFileinput/fileinput.css}"/>
+</div>
+
+<div th:fragment="jedate">
+    <script type="text/javascript" th:src="@{/thirdparty/jedate_6.5.0/js/jedate.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/jedate_6.5.0/skin/jedate.css}"/>
+</div>
+
+<div th:fragment="jebox">
+    <script type="text/javascript" th:src="@{/thirdparty/jebox_1.6/jquery.jebox.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/jebox_1.6/skin/jebox.css}"/>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.push.mapper.PushGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.example.push.model.PushGroup" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="TOPIC_NAME" property="topicName" jdbcType="VARCHAR" />
+    <result column="TOPIC_CODE" property="topicCode" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="VARCHAR" />
+    <result column="Q_R_CODE" property="qRCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, TOPIC_NAME, TOPIC_CODE, CREATE_TIME, UPDATE_TIME, Q_R_CODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from push_group
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from push_group
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.push.model.PushGroup" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into push_group (TOPIC_NAME, TOPIC_CODE, CREATE_TIME, 
+      UPDATE_TIME, Q_R_CODE)
+    values (#{topicName,jdbcType=VARCHAR}, #{topicCode,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=VARCHAR}, #{qRCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.push.model.PushGroup" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into push_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="topicName != null" >
+        TOPIC_NAME,
+      </if>
+      <if test="topicCode != null" >
+        TOPIC_CODE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="qRCode != null" >
+        Q_R_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="topicName != null" >
+        #{topicName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicCode != null" >
+        #{topicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="qRCode != null" >
+        #{qRCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.push.model.PushGroup" >
+    update push_group
+    <set >
+      <if test="topicName != null" >
+        TOPIC_NAME = #{topicName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicCode != null" >
+        TOPIC_CODE = #{topicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="qRCode != null" >
+        Q_R_CODE = #{qRCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.push.model.PushGroup" >
+    update push_group
+    set TOPIC_NAME = #{topicName,jdbcType=VARCHAR},
+      TOPIC_CODE = #{topicCode,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=VARCHAR},
+      Q_R_CODE = #{qRCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllPushGroup" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from push_group
+  </select>
+</mapper>
