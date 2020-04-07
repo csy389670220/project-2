@@ -93,9 +93,17 @@
     }
 
 
-    //群组薪资新增
+    //群组信息新增
     function push_add() {
-        var check=checkEmpty(push_add_list);
+        //群组编码字段字节
+        var checkTopicCodeSize =$("#topicCode").val().replace(/[^\u0000-\u00ff]/g,"aa").length;
+        if(checkTopicCodeSize>20){
+            jeBox.msg('群组编码字段过长，不超过20个字节', {icon: 1,time: 2,maskLock: true, maskClose: true });
+            return;
+        }
+        //验证关键字
+        var checkInfo={"群组编码":"topicCode","群组名称":"topicName"};
+        var check= checkKeywordsEmpty(checkInfo);
         if(!check){
             return;
         }

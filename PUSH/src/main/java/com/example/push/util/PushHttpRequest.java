@@ -1,11 +1,9 @@
 package com.example.push.util;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +23,7 @@ public class PushHttpRequest {
         String result = "";
         BufferedReader in = null;
         try {
-            String urlNameString = url + "?" + param;
+            String urlNameString = characterEncoding(url + "?" + param,"UTF-8");
             URL realUrl = new URL(urlNameString);
             // 打开和URL之间的连接
             URLConnection connection = realUrl.openConnection();
@@ -128,5 +126,30 @@ public class PushHttpRequest {
         return result;
     }
 
+    /**
+     * 对url或者中文进行UTF-8编码处理，防止乱码
+     * @param url   需要编码的带中文的url
+     * @param encodingType  编码类型：gbk  utf-8
+     * @return
+     */
+    public static String characterEncoding(String url,String encodingType) {
+        char[] tp = url.toCharArray();
+        String now = "";
+        for (char ch : tp) {
+            if (ch >= 0x4E00 && ch <= 0x9FA5) {
+                try {
+                    now += URLEncoder.encode(ch + "", encodingType);
+                } catch (UnsupportedEncodingException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            } else {
+                now += ch;
+            }
 
+        }
+        return now;
+    }
+
+   
 }
