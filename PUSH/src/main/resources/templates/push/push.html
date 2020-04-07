@@ -275,7 +275,7 @@
             traditional: true,
             data: param,
             datatype: 'json',
-            success: function (result) {
+            success: function (result,index) {
                 if (result.code == "success") {
                     jeBox.msg(result.data, {
                         icon: 2,
