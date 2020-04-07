@@ -256,4 +256,17 @@ public class CheckUtil {
 	public static boolean checkTel(String phone) {
 		return startCheck(REGEX_PHONE, phone);
 	}
+
+
+	/**
+	 * 判断字符串是否包含特殊字符
+	 * @param str
+	 * @return
+	 */
+	public static Boolean containsSpecialSymbols(String str){
+		String regEx="[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
+		Pattern p=Pattern.compile(regEx);
+		Matcher m=p.matcher(str);
+		return m.find();
+	}
 }

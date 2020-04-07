@@ -24,7 +24,6 @@ public class PushHttpRequest {
         BufferedReader in = null;
         try {
             String urlNameString = characterEncoding(url + "?" + param,"UTF-8");
-            urlNameString=urlNameString.replaceAll("\r|\n","");
             URL realUrl = new URL(urlNameString);
             // 打开和URL之间的连接
             URLConnection connection = realUrl.openConnection();
@@ -151,6 +150,4 @@ public class PushHttpRequest {
         }
         return now;
     }
-
-
 }

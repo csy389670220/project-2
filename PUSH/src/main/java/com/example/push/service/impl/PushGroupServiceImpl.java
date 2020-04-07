@@ -14,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.net.URLEncoder;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class PushGroupServiceImpl implements PushGroupService {
@@ -129,7 +132,12 @@ public class PushGroupServiceImpl implements PushGroupService {
                 resultMap = ResultMapUtil.fail("关键字不能为空");
                 return  resultMap;
             }
-            String param = "topicCode=" + topicCode+"&topicName="+topicName;
+            if(CheckUtil.containsSpecialSymbols(topicCode)){
+                resultMap = ResultMapUtil.fail("群组编码不能包含特殊符号");
+                return  resultMap;
+            }
+            //部分字段进行url URLEncoder.encode编码
+            String param = "topicCode=" + topicCode+"&topicName="+URLEncoder.encode(topicName,"utf-8");
             String result = PushHttpRequest.sendPost(addGroupUrl, param, cookie);
             //返回数据不为空,转成json对象
             JSONObject jsStr = JSONObject.parseObject(result);
@@ -251,7 +259,8 @@ public class PushGroupServiceImpl implements PushGroupService {
                 return resultMap;
             }
 
-            String param = "topic="+topic+"&title="+title+"&content=" + content;
+            //部分字段进行url编码
+            String param = "topic="+topic+"&title="+ URLEncoder.encode(title,"utf-8")+"&content=" + URLEncoder.encode(content,"utf-8");
             String result = PushHttpRequest.sendGet(sendTopicMessageUrl, param, cookie);
             //返回数据不为空,转成json对象
             JSONObject jsStr = JSONObject.parseObject(result);
@@ -271,4 +280,5 @@ public class PushGroupServiceImpl implements PushGroupService {
         }
         return resultMap;
     }
+
 }
