@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>devopX</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/css/common.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" style="overflow:auto">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>devopX
+                                <div class="page-title-subheading">
+                                    devopX群组信息列表
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                                <shiro:hasRole name="admin">
+                                    <button type="button" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false"
+                                            onclick="pushGroup_add()" class="btn-shadow  btn btn-info">
+                                        新增群组
+                                    </button>
+                                </shiro:hasRole>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <h5 class="card-title"></h5>
+                            <div id="box">
+                                <table class="mb-0 table table-bordered" id="tab">
+                                    <thead>
+                                    <tr>
+                                        <th>群组名称</th>
+                                        <th>群组编码</th>
+                                        <th>创建时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="gradeU" th:each="pushGroup:${pushGrouplist}">
+                                        <td th:text="${pushGroup.topicName}"></td>
+                                        <td th:text="${pushGroup.topicCode}"></td>
+                                        <td th:text="${#dates.format(pushGroup.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+                                        <td>
+                                            <button class="btn btn-info"
+                                                    th:onclick="query_QR_code([[${pushGroup.id}]],[[${pushGroup.topicCode}]])">
+                                                查看二维码
+                                            </button>
+                                            <shiro:hasRole name="admin">
+                                                <button class="btn btn-danger"
+                                                        th:onclick="pushGroup_del([[${pushGroup.id}]])">删除
+                                                </button>
+                                            </shiro:hasRole>
+                                            <button class="btn btn-warning"
+                                                    th:onclick="query_subscriber([[${pushGroup.id}]])">订阅人
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="app-main__inner">
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <h5 class="card-title">发送订阅信息试一试</h5>
+                            <div class="form-row">
+                                <div class="col-md-3">
+                                    <div class="position-relative form-group">
+                                        <label class="">
+                                            <h5>你的token</h5>
+                                            <span id="sysToken" th:text="${sysToken}" style="color: #01AAED;font-size: 20px;"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-3">
+                                    <div class="position-relative form-group">
+                                        <label for="topic" class="">群组编码</label>
+                                        <input name="topic" id="topic" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-3">
+                                    <div class="position-relative form-group">
+                                        <label for="title" class="">消息标题</label>
+                                        <input name="title" id="title" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-3">
+                                    <div class="position-relative form-group">
+                                        <label for="content" class="">消息内容</label>
+                                        <textarea name="content" id="content" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-3">
+                                    <div class="position-relative form-group">
+                                        <button type="button" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false"
+                                                onclick="sendTopicMessage()" class="btn-shadow  btn btn-info">
+                                            发送
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_sources :: base_js"></div>
+<div th:replace="common/common_sources :: jebox"></div>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serverPlan_Menu", "PUSH_Menu");
+        scroll("tab", "box", 1);
+    });
+
+
+    //查看二维码
+    function query_QR_code(id, topicCode) {
+        $.ajax({
+            url: "getQRCode",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: {"id": id, "topicCode": topicCode},
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    jeBox({
+                        title: false,
+                        closeBtn: false,
+                        type: 'iframe',
+                        padding: "0",
+                        boxSize: ['430px', '430px'],
+                        content: result.data,
+                        maskClose: true
+                    })
+                    jeBox.msg('微信扫一扫,点击任意处关闭', {time: 2});
+                } else {
+                    jeBox.msg('获取二维码错误', {icon: 3, time: 2, maskLock: true, maskClose: true});
+                }
+            },
+            error: function (err) {
+                jeBox.msg('获取二维码错误', {icon: 3, time: 2, maskLock: true, maskClose: true});
+                console.log(err);
+            }
+        });
+
+    }
+
+    //跳转新增页面
+    function pushGroup_add() {
+        ipsSystem.doGet("/push/pushAddView")
+    }
+
+
+    //删除群组信息
+    function pushGroup_del(id) {
+        //弹出对话框进一步确认是否需要删除
+        jeBox({
+            cell: "del_info",
+            title: "删除",
+            //boxSize:["400px","150px"],
+            padding: "5px 30px",
+            content: '<p style="text-align: center;">是否需要继续删除信息</p>',
+            maskLock: true,
+            btnAlign: "right",
+            button: [
+                {
+                    name: '取消'
+                },
+                {
+                    //确定删除，请求后台删除数据
+                    name: '删除',
+                    callback: function (index) {
+                        var param = {"id": id};
+                        $.ajax({
+                            url: "delGroup",
+                            type: "post",    //不区分大小写
+                            traditional: true,
+                            data: param,
+                            datatype: 'json',
+                            success: function (result) {
+                                if (result.code == "success") {
+                                    jeBox.msg(result.data, {
+                                        icon: 2,
+                                        time: 2,
+                                        maskLock: true,            // 是否开启遮罩层
+                                        maskClose: true,         // 点击遮罩层是否可以关闭
+                                        endfun: function () {
+                                            ipsSystem.doGet("/push/pushView");
+                                        }
+                                    });
+                                    jeBox.close(index);
+                                } else {
+                                    jeBox.msg(result.data, {
+                                        icon: 3,
+                                        time: 2,
+                                        maskLock: true,            // 是否开启遮罩层
+                                        maskClose: true         // 点击遮罩层是否可以关闭
+                                    });
+                                    jeBox.close(index);
+                                }
+
+                            },
+                            error: function (err) {
+                                jeBox.msg('删除信息系统错误', {icon: 3, time: 2});
+                                jeBox.close(index);
+                                console.log(err);
+                            }
+                        });
+                    }
+                }
+            ]
+        })
+    }
+
+    //查询订阅人信息列表
+    function query_subscriber(pushGroupId) {
+        //iframe层
+        jeBox({
+            title: "订阅人列表",
+            type: 'iframe',
+            padding: "0",
+            boxSize: ["450px", "80%"],
+            content: "/push/pushSubViev?pushGroupId=" + pushGroupId,
+            maskLock: true
+        })
+    }
+
+    //发送订阅信息到push+后台，微信用户会收到信息
+    function sendTopicMessage() {
+        var sendTopicMessage_list = ["topic", "title", "content"];
+        var checkInfo = {"群组编码": "topic", "消息标题": "title", "消息内容": "content"};
+        var check = checkKeywordsEmpty(checkInfo);
+        if (!check) {
+            return;
+        }
+        //组装请求数据json
+        var param ={"topic":$("#topic").val(),"title":$("#title").val(),"content":$("#content").val(),"sysToken":$("#sysToken").text()}
+        console.log(param);
+        $.ajax({
+            url: "sendTopicMessage",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result, index) {
+                if (result.code == "success") {
+                    jeBox.msg(result.data, {
+                        icon: 2,
+                        time: 2,
+                        maskLock: true,            // 是否开启遮罩层
+                        maskClose: true         // 点击遮罩层是否可以关闭
+                    });
+                    jeBox.close(index);
+                } else {
+                    jeBox.msg(result.data, {
+                        icon: 3,
+                        time: 2,
+                        maskLock: true,            // 是否开启遮罩层
+                        maskClose: true         // 点击遮罩层是否可以关闭
+                    });
+                    jeBox.close(index);
+                }
+
+            },
+            error: function (err) {
+                jeBox.msg('发送订阅信息，系统错误', {icon: 3, time: 2});
+                jeBox.close(index);
+                console.log(err);
+            }
+        });
+    }
+</script>
+</body>
+</html>
