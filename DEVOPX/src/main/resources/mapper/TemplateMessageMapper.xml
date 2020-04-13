@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.push.mapper.TemplateMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.example.push.model.TemplateMessage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="push_group_id" property="pushGroupId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="message_uuid" property="messageUuid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, push_group_id, title, content, creat_time, message_uuid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from template_message
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from template_message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.push.model.TemplateMessage" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into template_message (push_group_id, title, content, 
+      creat_time, message_uuid)
+    values (#{pushGroupId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{creatTime,jdbcType=TIMESTAMP}, #{messageUuid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.push.model.TemplateMessage" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into template_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pushGroupId != null" >
+        push_group_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+      <if test="messageUuid != null" >
+        message_uuid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pushGroupId != null" >
+        #{pushGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageUuid != null" >
+        #{messageUuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.push.model.TemplateMessage" >
+    update template_message
+    <set >
+      <if test="pushGroupId != null" >
+        push_group_id = #{pushGroupId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageUuid != null" >
+        message_uuid = #{messageUuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.push.model.TemplateMessage" >
+    update template_message
+    set push_group_id = #{pushGroupId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      message_uuid = #{messageUuid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getMessage" resultMap="BaseResultMap" parameterType="com.example.push.model.TemplateMessage" >
+    select
+    <include refid="Base_Column_List" />
+    from template_message
+    where id = #{id,jdbcType=INTEGER} and message_uuid = #{messageUuid,jdbcType=INTEGER}
+  </select>
+
+  <select id="getHistoryPushByOpenIdAndGroupId" resultMap="BaseResultMap" parameterType="string" >
+    select
+    t.id,t.title,t.content,t.creat_time,t.message_uuid
+    from
+    template_message t
+    left join   push_subscriber s
+    on s.PUSH_GROUP_ID=t.PUSH_GROUP_ID
+    where s.OPEN_ID=#{openId,jdbcType=VARCHAR}
+     AND s.PUSH_GROUP_ID=#{groupId,jdbcType=VARCHAR}
+     AND t.creat_time>DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+    order by t.creat_time desc
+  </select>
+
+  <delete id="delHistoryByGropuId" parameterType="java.lang.Integer" >
+    delete from template_message
+    where PUSH_GROUP_ID = #{pushGroupId,jdbcType=INTEGER}
+  </delete>
+
+
+</mapper>
