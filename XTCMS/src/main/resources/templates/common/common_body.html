@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<body><!--界面顶部显示区域-->
+
+<div th:fragment="body_top" id="top">
+    <div class="app-header header-shadow">
+        <div class="app-header__logo">
+            <div class="logo-src"></div>
+            <div class="header__pane ml-auto">
+                <div>
+                    <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
+                            data-class="closed-sidebar"><span class="hamburger-box"><span
+                            class="hamburger-inner"></span></span></button>
+                </div>
+            </div>
+        </div>
+        <div class="app-header__mobile-menu">
+            <div>
+                <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav"><span
+                        class="hamburger-box"><span class="hamburger-inner"></span></span></button>
+            </div>
+        </div>
+        <div class="app-header__menu"><span><button type="button"
+                                                    class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav"><span
+                class="btn-icon-wrapper"><i class="fa fa-ellipsis-v fa-w-6"></i></span></button></span></div>
+        <div class="app-header__content">
+            <div class="app-header-left">
+                <div class="search-wrapper">
+                    <div class="input-holder"><input type="text" class="search-input" placeholder="Type to search">
+                        <button class="search-icon"><span></span></button>
+                    </div>
+                    <button class="close"></button>
+                </div>
+            </div>
+            <div class="app-header-right">
+                <div class="header-btn-lg pr-0">
+                    <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                            <div class="widget-content-left  ml-3 header-user-info">
+                                <ul class="header-menu nav">
+                                    <li th:hidden="${chinaName}==null" class="nav-item"><a class="nav-link"><i
+                                            class="nav-link-icon fa fa-user-md"> </i><span th:text="${chinaName}" ></span></a></li>
+                                    <li th:hidden="${loginName}==null" class="btn-group nav-item"><a href="javascript:void(window.location.href='/logout');" class="nav-link"><i
+                                            class="nav-link-icon fa fa-power-off"></i>注销</a></li>
+                                    <li th:hidden="${loginName}!=null" class="dropdown nav-item"><a href="javascript:void(window.location.href='/login');" class="nav-link"><i
+                                            class="nav-link-icon fa fa-cog"></i>登录</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 隐藏域-->
+        <div>
+            <!--登录用户ID-->
+            <input type="hidden" id="sysId" th:value="${sysId}"/>
+            <!--登录用户名称-->
+            <input type="hidden" id="loginName" th:value="${loginName}"/>
+        </div>
+    </div>
+</div>
+
+<!-- 左侧菜单栏目块 -->
+<div th:fragment="body_left" class="leftMeun" id="leftMeun">
+    <script type="text/javascript" th:src="@{/thirdparty/system/assets/scripts/main.js}"></script>
+    <div th:replace="common/common_sources :: jebox"></div>
+    <div class="app-sidebar sidebar-shadow">
+        <div class="app-header__logo">
+            <div class="logo-src1"></div>
+            <div class="header__pane ml-auto">
+                <div>
+                    <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
+                            data-class="closed-sidebar">
+                                    <span class="hamburger-box">
+                                        <span class="hamburger-inner"></span>
+                                    </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="app-header__mobile-menu">
+            <div>
+                <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                </button>
+            </div>
+        </div>
+        <div class="app-header__menu">
+                        <span>
+                            <button type="button"
+                                    class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                                <span class="btn-icon-wrapper">
+                                    <i class="fa fa-ellipsis-v fa-w-6"></i>
+                                </span>
+                            </button>
+                        </span>
+        </div>
+        <div class="scrollbar-sidebar">
+            <div class="app-sidebar__inner">
+                <ul class="vertical-nav-menu">
+                    <li class="app-sidebar__heading">菜单栏</li>
+                    <li>
+                        <a href="/index" id="home_Menu">
+                            <i class="metismenu-icon pe-7s-home"></i>
+                            首页
+                        </a>
+                    </li>
+                    <li class="mm-active">
+                        <a href="#">
+                            <i class="metismenu-icon pe-7s-right-arrow"></i>
+                            服务器规划
+                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                        </a>
+                        <ul id="serverPlan_Menu" >
+                            <li>
+                                <a href="/push/pushView" id="PUSH_Menu" >
+                                    <i class="metismenu-icon"></i>
+                                    devopX
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
