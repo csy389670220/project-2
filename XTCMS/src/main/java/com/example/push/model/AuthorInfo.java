@@ -23,6 +23,7 @@ public class AuthorInfo {
     private String ageDistribute;//年龄分布
     private String activeDistribute;//活跃度分布
     private String phoneDistribute;//设备分布
+    private String cityDistribute;//省份分布
 
     public String getNick_name() {
         return nick_name;
@@ -174,5 +175,13 @@ public class AuthorInfo {
 
     public void setPhoneDistribute(String phoneDistribute) {
         this.phoneDistribute = phoneDistribute;
+    }
+
+    public String getCityDistribute() {
+        return cityDistribute;
+    }
+
+    public void setCityDistribute(String cityDistribute) {
+        this.cityDistribute = cityDistribute;
     }
 }

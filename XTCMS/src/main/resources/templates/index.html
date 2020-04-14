@@ -12,149 +12,147 @@
 </head>
 
 <body>
-<div class="app-main__outer">
-    <div class="app-main__inner">
-        <div class="app-page-title">
-            <div class="page-title-wrapper">
-                <div class="page-title-heading" style=" margin-top: 37px; margin-left: 21px;">
-                    <div class="page-title-icon">
-                        <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
-                        </i>
-                    </div>
-                    <div>星图达人
-                        <div class="page-title-subheading">
-                            星图达人工具页面 to Una
-                        </div>
+<div class="app-main__inner">
+    <div class="app-page-title">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading" style=" margin-top: 37px; margin-left: 21px;">
+                <div class="page-title-icon">
+                    <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                    </i>
+                </div>
+                <div>星图达人
+                    <div class="page-title-subheading">
+                        星图达人工具页面 to Una
                     </div>
                 </div>
-                <div class="page-title-actions">
-                    <div class="d-inline-block dropdown">
-                        <button id="XTbtn" type="button" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false"
-                                onclick="loginXT()" class="btn-shadow  btn btn-info">
-                            登录星图
-                        </button>
-                        <button id="XTCMSbtn" style="display: none" type="button" data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                                onclick="showXTCMS()" class="btn-shadow  btn btn-info">
-                            工具页面
-                        </button>
-                    </div>
+            </div>
+            <div class="page-title-actions">
+                <div class="d-inline-block dropdown">
+                    <button id="XTbtn" type="button" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false"
+                            onclick="loginXT()" class="btn-shadow  btn btn-info">
+                        登录星图
+                    </button>
+                    <button id="XTCMSbtn" style="display: none" type="button" data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            onclick="showXTCMS()" class="btn-shadow  btn btn-info">
+                        工具页面
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <iframe id="xingtu" style="display:none " src='https://star.toutiao.com' width='100%' height='600px'>
-    </iframe>
+<iframe id="xingtu" style="display:none " src='https://star.toutiao.com' width='100%' height='600px'>
+</iframe>
 
-    <div id="myDiv" class="app-main__inner">
-        <div class="col-lg-12">
-            <div class="main-card mb-3 card">
-                <div class="card-body" style="    margin-left: 192px;">
-                    <div class="form-row">
-                        <div class="col-md-3">
-                            <div class="position-relative form-group">
-                                <label class="">内容类型</label>
-                                <select type="select" id="query_contentType" class="custom-select">
-                                    <option value="1">颜值达人</option>
-                                    <option value="2">剧情搞笑</option>
-                                    <option value="3">美妆</option>
-                                    <option value="4">时尚</option>
-                                    <option value="5"> 萌宠</option>
-                                    <option value="6"> 音乐</option>
-                                    <option value="7">舞蹈</option>
-                                    <option value="8">美食</option>
-                                    <option value="9">游戏</option>
-                                    <option value="10">旅行</option>
-                                    <option value="11">汽车</option>
-                                    <option value="12">生活</option>
-                                    <option value="13">测评</option>
-                                    <option value="14">二次元</option>
-                                    <option value="15">母婴亲子</option>
-                                    <option value="16">数码科技</option>
-                                    <option value="17">教育培训</option>
-                                    <option value="18">运动健身</option>
-                                    <option value="19">家居家装</option>
-                                    <option value="20">才艺技能</option>
-                                    <option value="21">影视娱乐</option>
-                                    <option value="22">艺术文化</option>
-                                    <option value="23">财经投资</option>
-                                    <option value="24">情感</option>
-                                    <option value="25">三农</option>
-                                    <option value="26">园艺</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="position-relative form-group">
-                                <label class="">报价</label>
-                                <select type="select" id="query_price" class="custom-select">
-                                    <option value="1">全部</option>
-                                    <option value="2">10W以上</option>
-                                    <option value="3">5W-10W</option>
-                                    <option value="4">1W-5W</option>
-                                    <option value="5">0.5W-1W</option>
-                                    <option value="6">0.2W-0.5W</option>
-                                    <option value="7">0.2以下</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="position-relative form-group">
-                                <label class="">粉丝数</label>
-                                <select type="select" id="query_fans" class="custom-select">
-                                    <option value="1">全部</option>
-                                    <option value="2">1000W以上</option>
-                                    <option value="3">500W-1000W</option>
-                                    <option value="3">300W-500W</option>
-                                    <option value="4">100W-300W</option>
-                                    <option value="5">10W-100W</option>
-                                    <option value="7">10W以下</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="position-relative form-group">
-                                <label class=""></label>
-                                <p><input type="checkbox" name="isCp"  id="isCp"  value="CP"  style="margin-top: 19px; margin-left: 36px;"/>情侶</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="position-relative form-group">
-                                <button type="button"
-                                        data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false"
-                                        onclick="queryMessage()" class="btn-shadow  btn btn-info">
-                                    查询
-                                </button>
-                            </div>
+<div id="myDiv" class="app-main__inner">
+    <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+            <div class="card-body" style="    margin-left: 192px;">
+                <div class="form-row">
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label class="">内容类型</label>
+                            <select type="select" id="query_contentType" class="custom-select">
+                                <option value="1">颜值达人</option>
+                                <option value="2">剧情搞笑</option>
+                                <option value="3">美妆</option>
+                                <option value="4">时尚</option>
+                                <option value="5"> 萌宠</option>
+                                <option value="6"> 音乐</option>
+                                <option value="7">舞蹈</option>
+                                <option value="8">美食</option>
+                                <option value="9">游戏</option>
+                                <option value="10">旅行</option>
+                                <option value="11">汽车</option>
+                                <option value="12">生活</option>
+                                <option value="13">测评</option>
+                                <option value="14">二次元</option>
+                                <option value="15">母婴亲子</option>
+                                <option value="16">数码科技</option>
+                                <option value="17">教育培训</option>
+                                <option value="18">运动健身</option>
+                                <option value="19">家居家装</option>
+                                <option value="20">才艺技能</option>
+                                <option value="21">影视娱乐</option>
+                                <option value="22">艺术文化</option>
+                                <option value="23">财经投资</option>
+                                <option value="24">情感</option>
+                                <option value="25">三农</option>
+                                <option value="26">园艺</option>
+                            </select>
                         </div>
                     </div>
-                    <div id="box">
-                        <table class="mb-0 table table-bordered" id="tab">
-                            <thead>
-                            <tr>
-                                <th>用户名称</th>
-                                <th>抖音ID</th>
-                                <th>性别</th>
-                                <th>城市</th>
-                                <th>主页链接</th>
-                                <th>标签</th>
-                                <th>粉丝量（单位：万）</th>
-                                <th>预期CPM</th>
-                                <th>预期播放量</th>
-                                <th>作品互动率</th>
-                                <th>价格(1-20S视频)</th>
-                                <th>价格(21-60S视频)</th>
-                            </tr>
-                            </thead>
-                            <tbody id="tableBody">
-
-                            </tbody>
-                        </table>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label class="">报价</label>
+                            <select type="select" id="query_price" class="custom-select">
+                                <option value="1">全部</option>
+                                <option value="2">10W以上</option>
+                                <option value="3">5W-10W</option>
+                                <option value="4">1W-5W</option>
+                                <option value="5">0.5W-1W</option>
+                                <option value="6">0.2W-0.5W</option>
+                                <option value="7">0.2以下</option>
+                            </select>
+                        </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label class="">粉丝数</label>
+                            <select type="select" id="query_fans" class="custom-select">
+                                <option value="1">全部</option>
+                                <option value="2">1000W以上</option>
+                                <option value="3">500W-1000W</option>
+                                <option value="3">300W-500W</option>
+                                <option value="4">100W-300W</option>
+                                <option value="5">10W-100W</option>
+                                <option value="7">10W以下</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative form-group">
+                            <label class=""></label>
+                            <button style="margin-top: 30px; margin-left: 127px;" type="button"
+                                    onclick="downExcel()" class="btn-shadow  btn btn-info">
+                                下载
+                            </button>
+                            <button style="margin-top: 30px; margin-left: 5px;" type="button"
+                                    data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false"
+                                    onclick="queryMessage()" class="btn-shadow  btn btn-info">
+                                查询
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="box">
+                    <span id="countNum"></span>
+                    <table class="mb-0 table table-bordered" id="tab">
+                        <thead>
+                        <tr>
+                            <th>用户名称</th>
+                            <th>抖音ID</th>
+                            <th>性别</th>
+                            <th>城市</th>
+                            <th>主页链接</th>
+                            <th>标签</th>
+                            <th>粉丝量（单位：万）</th>
+                            <th>预期CPM</th>
+                            <th>预期播放量</th>
+                            <th>作品互动率</th>
+                            <th>价格(1-20S视频)</th>
+                            <th>价格(21-60S视频)</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tableBody">
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -342,15 +340,13 @@
                 break;
         }
         var isCp = $('#isCp').is(':checked');
-        if(isCp){
+        if (isCp) {
             alert(isCp);
         }
-        console.log(get_author_list_url);
         $.ajax({
             url: get_author_list_url,
             type: "get",    //不区分大小写
             success: function (result) {
-                console.log(result);
                 if (result.msg == "成功") {
                     var str = "";//把数据组装起来
                     var list = result.data.authors;
@@ -375,11 +371,12 @@
                             "</td><td>" + tagsStr +
                             "</td><td>" + parseInt(list[i].follower / 10000) +
                             "</td><td>" + list[i].expected_cpm +
-                            "</td><td>" + list[i].expected_play_num +
+                            "</td><td>" + parseInt(list[i].expected_play_num / 10000) +
                             "</td><td>" + list[i].personal_interate_rate +
                             "</td><td>" + price1 +
                             "</td><td>" + price2 + "</td></tr>";
                     }
+                    $("#countNum").text("共有达人" + result.data.pagination.total_count + "位");
                     $("#tableBody").append(str);//把拼好的样式填到指定的位置，一个Ajax的表格刷新功能就完成了
                 }
             },
@@ -388,7 +385,323 @@
         });
     }
 
+    //按钮下载EXCEL
+    function downExcel() {
+        var url = getAuthorListUrl(1);
+        //预调一次，查看该查询条件有多少数据
+        $.ajax({
+            url: url,
+            type: "get",    //不区分大小写
+            success: function (result) {
+                if (result.msg == "成功") {
+                    //掉用成功，根据总数调用API获取全部数据
+                    var total_count = result.data.pagination.total_count; //总数
+                    getExcelData(total_count);
+                }
+            },
+            error: function (err) {
+            }
+        });
 
+    }
+
+    //获取需要下载Excel数据
+    function getExcelData(total_count) {
+        var excelArrayList = [];
+        var countPage = Math.ceil(total_count / 20)
+        for (var i = 1; i < countPage + 1; i++) {
+            var url = getAuthorListUrl(i);
+            $.ajax({
+                url: url,
+                type: "get",    //不区分大小写
+                async: false, // 同步
+                success: function (result) {
+                    //下载excel
+                    var jsonData = getJsonArrayList(result);
+                    for( var i in jsonData)
+                    {
+                        excelArrayList.push(jsonData[i]);
+                    }
+                },
+                error: function (err) {
+                }
+            });
+        }
+        ipsSystem.doPost("/master/getExcel", {param: JSON.stringify(excelArrayList)})
+    }
+
+    //拼接请求星图API获取列表集合URL limit-查询数据的数量
+    function getAuthorListUrl(page) {
+        var get_author_list_url = "https://star.toutiao.com/v/api/demand/author_list/?limit=20&need_detail=true&page=" + page + "&platform_source=1&task_category=1&order_by=score";
+
+        /*
+        标签说明:
+        颜值达人72 73
+        剧情搞笑97 73
+        美妆1 73
+        时尚6 73
+        萌宠11 73
+        音乐41 73
+        舞蹈46 73
+        美食48 73
+        游戏23 73
+        旅行27 73
+        汽车31 73
+        生活36 73
+        测评15 73
+        二次元25 73
+        母婴亲子55 73
+        数码科技64 73
+        教育培训68 73
+        运动健身60 73
+        家居家装75 73
+        才艺技能79 73
+        影视娱乐85 73
+        艺术文化87 73
+        财经投资91 73
+        情感100 73
+        三农95 73
+        园艺102 73*/
+        var tag = $("#query_contentType").val();//内容类型
+        switch (tag) {
+            case "1":
+                get_author_list_url += "&tag=72";
+                break;
+            case "2":
+                get_author_list_url += "&tag=97";
+                break;
+            case "3":
+                get_author_list_url += "&tag=1";
+                break;
+            case "4":
+                get_author_list_url += "&tag=6";
+                break;
+            case "5":
+                get_author_list_url += "&tag=11";
+                break;
+            case "6":
+                get_author_list_url += "&tag=41";
+                break;
+            case "7":
+                get_author_list_url += "&tag=46";
+                break;
+            case "8":
+                get_author_list_url += "&tag=48";
+                break;
+            case "9":
+                get_author_list_url += "&tag=23";
+                break;
+            case "10":
+                get_author_list_url += "&tag=27";
+                break;
+            case "11":
+                get_author_list_url += "&tag=31";
+                break;
+            case "12":
+                get_author_list_url += "&tag=36";
+                break;
+            case "13":
+                get_author_list_url += "&tag=15";
+                break;
+            case "14":
+                get_author_list_url += "&tag=25";
+                break;
+            case "15":
+                get_author_list_url += "&tag=55";
+                break;
+            case "16":
+                get_author_list_url += "&tag=64";
+                break;
+            case "17":
+                get_author_list_url += "&tag=68";
+                break;
+            case "18":
+                get_author_list_url += "&tag=60";
+                break;
+            case "19":
+                get_author_list_url += "&tag=75";
+                break;
+            case "20":
+                get_author_list_url += "&tag=79";
+                break;
+            case "21":
+                get_author_list_url += "&tag=85";
+                break;
+            case "22":
+                get_author_list_url += "&tag=87";
+                break;
+            case "23":
+                get_author_list_url += "&tag=91";
+                break;
+            case "24":
+                get_author_list_url += "&tag=100";
+                break;
+            case "25":
+                get_author_list_url += "&tag=95";
+                break;
+            case "26":
+                get_author_list_url += "&tag=105";
+                break;
+        }
+        var fans = $("#query_fans").val();//粉丝数量
+        switch (fans) {
+            case "1":
+                break;
+            case "2":
+                get_author_list_url += "&fans_min=10000000";
+                break;
+            case "3":
+                get_author_list_url += "&fans_min=5000000&fans_max=10000000";
+                break;
+            case "4":
+                get_author_list_url += "&fans_min=3000000&fans_max=5000000";
+                break;
+            case "5":
+                get_author_list_url += "&fans_min=1000000&fans_max=3000000";
+                break;
+            case "6":
+                get_author_list_url += "&fans_min=100000&fans_max=1000000";
+                break;
+            case "7":
+                get_author_list_url += "&fans_max=100000";
+                break;
+        }
+        var price_min = $("#query_price").val();//价格
+        switch (price_min) {
+            case "1":
+                break;
+            case "2":
+                get_author_list_url += "&price_min=100000";
+                break;
+            case "3":
+                get_author_list_url += "&price_max=100000&price_min=50000";
+                break;
+            case "4":
+                get_author_list_url += "&price_max=50000&price_min=10000";
+                break;
+            case "5":
+                get_author_list_url += "&price_max=10000&price_min=5000";
+                break;
+            case "6":
+                get_author_list_url += "&price_max=5000&price_min=2000";
+                break;
+            case "7":
+                get_author_list_url += "&price_max=2000";
+                break;
+        }
+        var isCp = $('#isCp').is(':checked');
+        if (isCp) {
+            alert(isCp);
+        }
+        return get_author_list_url;
+    }
+
+    //将调用API接口获取的数据拼接成json数组
+    function getJsonArrayList(result) {
+        var dateList = [];
+        var list = result.data.authors;
+        for (var i = 0; i < list.length; i++) {
+            //判断是否入驻
+            if (list[i].is_star) {
+                var gender = list[i].gender;
+                var genderStr = '';
+                if (gender == '1') {
+                    genderStr += "男";
+                } else {
+                    genderStr += "女";
+                }
+                var tagsStr = eval("'" + list[i].tags + "'");
+                var price_info = list[i].price_info;
+                var price1 = price_info[0].price;
+                var price2 = price_info[1].price;
+                var json = {};
+                json.nick_name = list[i].nick_name;
+                json.short_id = list[i].short_id;
+                json.gender = genderStr;
+                json.city = list[i].province + list[i].city;
+                json.tags = tagsStr;
+                json.follower = parseInt(list[i].follower / 10000);
+                json.expected_cpm = list[i].expected_cpm + "0";
+                json.expected_play_num = parseInt(list[i].expected_play_num / 10000);
+                json.personal_interate_rate = list[i].personal_interate_rate;
+                json.price_1 = price1;
+                json.price_2 = price2;
+                json.homepage = "https://www.iesdouyin.com/share/user/" + list[i].short_id;
+                //达人画像信息
+                var portrayJson = getPortrayJson(list[i].id)
+                json.fansDistribute = portrayJson.fansDistribute;
+                json.sexDistribute = portrayJson.sexDistribute;
+                json.ageDistribute = portrayJson.ageDistribute;
+                json.activeDistribute = portrayJson.activeDistribute;
+                json.phoneDistribute = portrayJson.phoneDistribute;
+                json.cityDistribute = portrayJson.cityDistribute;
+                dateList.push(json);
+            }
+        }
+        return dateList;
+    }
+
+    //获取达人画像信息
+    function getPortrayJson(id) {
+        var portrayJson = get_fans_distribution(id);
+        var fansDistribute = get_daily_fans(id);
+        portrayJson.fansDistribute = fansDistribute;
+        //console.log("getpPortrayJson>>" + JSON.stringify(portrayJson));
+        return portrayJson;
+    }
+
+    //获取粉丝趋势
+    function get_daily_fans(id) {
+        var fansDistribute = "";
+        var author_daily_fans_url = "https://star.toutiao.com/v/api/demand/author_daily_fans/?author_id=" + id + "&platform_source=1&start_date=2020-01-14&end_date=2020-04-14"
+        $.ajax({
+            url: author_daily_fans_url,
+            type: "get",    //不区分大小写
+            async: false, // 同步
+            success: function (result) {
+                if (result.msg == '成功') {
+                    fansDistribute = result.data.description;
+                }
+            }
+        });
+        return fansDistribute;
+    }
+
+    //获取达人粉丝画像
+    function get_fans_distribution(id) {
+        var json = {};
+        var author_fans_distribution_url = "https://star.toutiao.com/v/api/demand/author_fans_distribution/?author_id=" + id + "&scope=0&platform_source=1";
+        console.log("开始休眠");
+        sleep(5000);
+        console.log("休眠结束")
+        $.ajax({
+            url: author_fans_distribution_url,
+            type: "get",    //不区分大小写
+            async: false, // 同步
+            success: function (result) {
+                if (result.msg == '成功') {
+                    json.sexDistribute = result.data[0].description;
+                    json.ageDistribute = result.data[1].description;
+                    json.cityDistribute = result.data[2].description;
+                    json.phoneDistribute = result.data[3].description;
+                    json.activeDistribute = result.data[4].description;
+                }
+
+            }
+        });
+        console.log("get_fans_distribution json >>" + JSON.stringify(json));
+        return json;
+    }
+
+    function sleep(numberMillis) {
+        var now = new Date();
+        var exitTime = now.getTime() + numberMillis;
+        while (true) {
+            now = new Date();
+            if (now.getTime() > exitTime)
+                return;
+        }
+    }
 </script>
 </body>
 </html>
