@@ -103,3 +103,38 @@ CREATE TABLE `push_group` (
   PRIMARY KEY (`ID`),
   UNIQUE KEY `TOPIC_CODE` (`TOPIC_CODE`,`CREATE_USER`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8;
+
+
+
+
+
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : 172.19.222.44_3306_local
+Source Server Version : 50620
+Source Host           : 172.19.222.44:3306
+Source Database       : ips
+
+Target Server Type    : MYSQL
+Target Server Version : 50620
+File Encoding         : 65001
+
+Date: 2020-04-14 15:05:49
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for template_message
+-- ----------------------------
+DROP TABLE IF EXISTS `template_message`;
+CREATE TABLE `template_message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `push_group_id` int(11) NOT NULL COMMENT '群组ID',
+  `title` varchar(100) DEFAULT NULL COMMENT '标题',
+  `content` varchar(255) DEFAULT NULL COMMENT '内容',
+  `creat_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `message_uuid` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;

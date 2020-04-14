@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>push订阅人</title>
     <meta name="msapplication-tap-highlight" content="no">
-    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/devopx/thirdparty/system/main.css}"/>
 </head>
 
 <body>
@@ -72,7 +72,7 @@
                     callback: function (index) {
                         var param = {"id": id};
                         $.ajax({
-                            url: "delPushSub",
+                            url: "delDevopxSub",
                             type: "post",    //不区分大小写
                             traditional: true,
                             data: param,
@@ -85,7 +85,7 @@
                                         maskLock: true,            // 是否开启遮罩层
                                         maskClose: true,         // 点击遮罩层是否可以关闭
                                         endfun: function () {
-                                            ipsSystem.doGet("/push/pushSubViev?pushGroupId="+pushGroupId);
+                                            ipsSystem.doGet("/devopx/devopxSubViev?pushGroupId="+pushGroupId);
                                         }
                                     });
                                     jeBox.close(index);

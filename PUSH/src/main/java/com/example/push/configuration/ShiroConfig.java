@@ -77,9 +77,9 @@ public class ShiroConfig {
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         //配置不登录可以访问的资源，anon 表示资源都可以匿名访问
         // 静态资源生效
-        filterChainDefinitionMap.put("/thirdparty/**", "anon");
+        filterChainDefinitionMap.put("/push/thirdparty/**", "anon");
         //解锁用户专用 测试用的
-        filterChainDefinitionMap.put("/unlockAccount","anon");
+        filterChainDefinitionMap.put("/push/unlockAccount","anon");
         // 设置登录的URL为匿名访问，因为一开始没有用户验证
         filterChainDefinitionMap.put("/push/login", "anon");
         //logout是shiro提供的过滤器

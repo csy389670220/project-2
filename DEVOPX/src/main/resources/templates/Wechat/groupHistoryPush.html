@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="msapplication-tap-highlight" content="no">
-    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/devopx/thirdparty/system/css/bootstrap.css}"/>
 </head>
 <body>
 <div class="push-container">
@@ -26,7 +26,7 @@
                 <td ><span th:text="${templateMessage.content}"></span></td>
                 <td th:text="${#dates.format(templateMessage.creatTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td >
-                    <a th:href="@{/push/shortMessage(id=${templateMessage.id},messageUuid=${templateMessage.messageUuid})}">详情</a>
+                    <a th:href="@{/devopx/shortMessage(id=${templateMessage.id},messageUuid=${templateMessage.messageUuid})}">详情</a>
                 </td>
 
             </tr>

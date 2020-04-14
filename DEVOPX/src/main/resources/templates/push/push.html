@@ -7,8 +7,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>devopX</title>
     <meta name="msapplication-tap-highlight" content="no">
-    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/main.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/thirdparty/system/css/common.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/devopx/thirdparty/system/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/devopx/thirdparty/system/css/common.css}"/>
 </head>
 
 <body>
@@ -193,7 +193,7 @@
 
     //跳转新增页面
     function pushGroup_add() {
-        ipsSystem.doGet("/push/pushAddView")
+        ipsSystem.doGet("/devopx/devopxAddView")
     }
 
 
@@ -231,7 +231,7 @@
                                         maskLock: true,            // 是否开启遮罩层
                                         maskClose: true,         // 点击遮罩层是否可以关闭
                                         endfun: function () {
-                                            ipsSystem.doGet("/push/pushView");
+                                            ipsSystem.doGet("/devopx/devopxView");
                                         }
                                     });
                                     jeBox.close(index);
@@ -266,7 +266,7 @@
             type: 'iframe',
             padding: "0",
             boxSize: ["450px", "80%"],
-            content: "/push/pushSubViev?pushGroupId=" + pushGroupId,
+            content: "/devopx/devopxSubViev?pushGroupId=" + pushGroupId,
             maskLock: true
         })
     }

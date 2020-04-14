@@ -199,7 +199,7 @@ public class WechatPoatManServiceImpl implements WechatPostManService {
         }
 
 
-       logger.info("群发模板信息成功，群组id:{},模板id:{}",pushGroup.getId(),templateMessage.getId());
+       logger.info("群发模板信息成功，群组id:{},模板消息id:{}",pushGroup.getId(),templateMessage.getId());
         resultMap= ResultMapUtil.success("发送成功");
         return resultMap;
     }

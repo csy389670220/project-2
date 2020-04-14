@@ -18,8 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
 
 /**
  * @author: Farben
@@ -27,7 +25,6 @@ import java.util.UUID;
  * @create: 2019/12/17-13:36
  **/
 @Controller
-@RequestMapping("push")
 public class PushController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(PushController.class);
 
@@ -38,7 +35,7 @@ public class PushController extends BaseController {
      * 模块：devopX插件
      * devopX首页
      */
-    @RequestMapping(value = "/pushView", method = RequestMethod.GET)
+    @RequestMapping(value = "/devopxView", method = RequestMethod.GET)
     public ModelAndView queryPushView() {
         ModelAndView view = new ModelAndView("push/push");
         Map<String, Object> result = pushGroupService.getAllGroup();
@@ -52,7 +49,7 @@ public class PushController extends BaseController {
      * 模块：devopX插件
      * 跳转到devopX新增页面
      */
-    @RequestMapping(value = "/pushAddView", method = RequestMethod.GET)
+    @RequestMapping(value = "/devopxAddView", method = RequestMethod.GET)
     public ModelAndView pushAddView() {
         ModelAndView view = new ModelAndView("push/pushAdd");
         linkSysInfo(view);
@@ -123,7 +120,7 @@ public class PushController extends BaseController {
      * 模块：devopX插件
      * 跳转订阅人信息列表
      */
-    @RequestMapping(value = "/pushSubViev", method = RequestMethod.GET)
+    @RequestMapping(value = "/devopxSubViev", method = RequestMethod.GET)
     public ModelAndView pushSubViev(String pushGroupId) {
         ModelAndView view = new ModelAndView("push/pushSubscriber");
         List<PushSubscriber> result = pushGroupService.getSubList(pushGroupId);
@@ -136,7 +133,7 @@ public class PushController extends BaseController {
      * 模块：devopX插件
      * 根据id删除订阅人信息接口
      */
-    @RequestMapping(value = "/delPushSub", method = RequestMethod.POST)
+    @RequestMapping(value = "/delDevopxSub", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> delPushSub(PushSubscriber pushSubscriber) {
         Map<String, Object> result = pushGroupService.delPushSub(pushSubscriber);

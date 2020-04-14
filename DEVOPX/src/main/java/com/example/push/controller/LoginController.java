@@ -26,26 +26,12 @@ import javax.servlet.http.HttpServletRequest;
  * @create: 2019/8/30-13:36
  **/
 @Controller
-public class LoginController {
+public class LoginController  extends BaseController{
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     SysUserMapper sysUserMapper;
-    /**
-     * 访问项目根路径
-     *
-     * @return
-     */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String root() {
-        Subject subject = SecurityUtils.getSubject();
-        String loginName=(String) subject.getPrincipal();
-        if (loginName == null){
-            return "redirect:login";
-        }else{
-            return "redirect:index";
-        }
-    }
+
 
     /**
      * 跳转到login页面

@@ -40,9 +40,9 @@
                                 <ul class="header-menu nav">
                                     <li th:hidden="${chinaName}==null" class="nav-item"><a class="nav-link"><i
                                             class="nav-link-icon fa fa-user-md"> </i><span th:text="${chinaName}" ></span></a></li>
-                                    <li th:hidden="${loginName}==null" class="btn-group nav-item"><a href="javascript:void(window.location.href='/logout');" class="nav-link"><i
+                                    <li th:hidden="${loginName}==null" class="btn-group nav-item"><a href="javascript:void(window.location.href='/devopx/logout');" class="nav-link"><i
                                             class="nav-link-icon fa fa-power-off"></i>注销</a></li>
-                                    <li th:hidden="${loginName}!=null" class="dropdown nav-item"><a href="javascript:void(window.location.href='/login');" class="nav-link"><i
+                                    <li th:hidden="${loginName}!=null" class="dropdown nav-item"><a href="javascript:void(window.location.href='/devopx/login');" class="nav-link"><i
                                             class="nav-link-icon fa fa-cog"></i>登录</a></li>
                                 </ul>
                             </div>
@@ -103,7 +103,7 @@
                 <ul class="vertical-nav-menu">
                     <li class="app-sidebar__heading">菜单栏</li>
                     <li>
-                        <a href="/index" id="home_Menu">
+                        <a href="/devopx/index" id="home_Menu">
                             <i class="metismenu-icon pe-7s-home"></i>
                             首页
                         </a>
@@ -116,7 +116,7 @@
                         </a>
                         <ul id="serverPlan_Menu" >
                             <li>
-                                <a href="/push/pushView" id="PUSH_Menu" >
+                                <a href="/devopx/devopxView" id="PUSH_Menu" >
                                     <i class="metismenu-icon"></i>
                                     devopX
                                 </a>

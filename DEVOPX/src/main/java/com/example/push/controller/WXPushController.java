@@ -29,7 +29,6 @@ import java.util.Map;
  * @create: 2019/12/17-13:36
  **/
 @Controller
-@RequestMapping("/Wechat")
 public class WXPushController extends BaseController {
     private static final Logger logger = LoggerFactory.getLogger(WXPushController.class);
 
@@ -46,7 +45,7 @@ public class WXPushController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "/validate", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/Wechat/validate", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String validate(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         boolean isGet = request.getMethod().toLowerCase().equals("get");
@@ -170,7 +169,7 @@ public class WXPushController extends BaseController {
      * @param state 固定字段
      * @return
      */
-    @RequestMapping(value = "/getMySubGroup")
+    @RequestMapping(value = "/Wechat/getMySubGroup")
     public ModelAndView getGroupList(String code,String state) {
         ModelAndView view = new ModelAndView("Wechat/subGroups");
         //1.根据页面授权码获取用户openId
@@ -188,7 +187,7 @@ public class WXPushController extends BaseController {
      * @param groupId  群组ID
      * @return
      */
-    @RequestMapping(value = "/getHistoryPush")
+    @RequestMapping(value = "/Wechat/getHistoryPush")
     public ModelAndView getHistoryPush(String openId,String groupId) {
         ModelAndView view = new ModelAndView("Wechat/groupHistoryPush");
         //根据openid，群组ID获取数据填充页面

@@ -61,7 +61,7 @@ public class ShiroConfig {
         //必须设置 SecurityManager,Shiro的核心安全接口
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         //这里的/login是后台的接口名,非页面，如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-        shiroFilterFactoryBean.setLoginUrl("/");
+        shiroFilterFactoryBean.setLoginUrl("/devopx/login");
         //未授权界面,该配置无效，并不会进行页面跳转
         shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
 
@@ -77,20 +77,19 @@ public class ShiroConfig {
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         //配置不登录可以访问的资源，anon 表示资源都可以匿名访问
         // 静态资源生效
-        filterChainDefinitionMap.put("/thirdparty/**", "anon");
+        filterChainDefinitionMap.put("/devopx/thirdparty/**", "anon");
         //解锁用户专用 测试用的
-        filterChainDefinitionMap.put("/unlockAccount","anon");
+        filterChainDefinitionMap.put("/devopx/unlockAccount","anon");
         // 设置登录的URL为匿名访问，因为一开始没有用户验证
-        filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/devopx/login", "anon");
         //logout是shiro提供的过滤器
-        filterChainDefinitionMap.put("/logout", "logout");
+        filterChainDefinitionMap.put("/devopx/logout", "logout");
         //授权匿名用户url
-        filterChainDefinitionMap.put("/index", "anon");
-        filterChainDefinitionMap.put("/Wechat/**", "anon");
+        filterChainDefinitionMap.put("/devopx/Wechat/**", "anon");
         //跳转模板信息url忽略
-        filterChainDefinitionMap.put("/push/shortMessage", "anon");
+        filterChainDefinitionMap.put("/devopx/shortMessage", "anon");
         //暴露发送模本信息触发接口
-        filterChainDefinitionMap.put("/push/sendTopicMessage", "anon");
+        filterChainDefinitionMap.put("/devopx/sendTopicMessage", "anon");
         //其他资源都需要认证  authc 表示需要认证才能进行访问 user表示配置记住我或认证通过可以访问的地址
         filterChainDefinitionMap.put("/**", "kickout,user");
 
@@ -442,7 +441,7 @@ public class ShiroConfig {
         ShiroLogoutFilter shiroLogoutFilter = new ShiroLogoutFilter();
         shiroLogoutFilter.setKickoutSessionControlFilter(kickoutSessionControlFilter());
         //配置登出后重定向的地址
-        shiroLogoutFilter.setRedirectUrl("/login");
+        shiroLogoutFilter.setRedirectUrl("/devopx/login");
         return shiroLogoutFilter;
     }
 
