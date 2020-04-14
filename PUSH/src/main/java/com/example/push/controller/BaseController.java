@@ -3,6 +3,7 @@ package com.example.push.controller;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @create: 2019/8/21-10:13
  **/
 @Controller
+@RequestMapping("push")
 public class BaseController {
 
     /**

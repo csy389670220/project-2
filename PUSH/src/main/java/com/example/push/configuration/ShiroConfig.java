@@ -61,9 +61,9 @@ public class ShiroConfig {
         //必须设置 SecurityManager,Shiro的核心安全接口
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         //这里的/login是后台的接口名,非页面，如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
-        shiroFilterFactoryBean.setLoginUrl("/");
+        shiroFilterFactoryBean.setLoginUrl("/push/login");
         //未授权界面,该配置无效，并不会进行页面跳转
-        shiroFilterFactoryBean.setUnauthorizedUrl("/unauthorized");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/push/unauthorized");
 
         //自定义拦截器限制并发人数,参考博客：
         LinkedHashMap<String, Filter> filtersMap = new LinkedHashMap<>();
@@ -81,15 +81,9 @@ public class ShiroConfig {
         //解锁用户专用 测试用的
         filterChainDefinitionMap.put("/unlockAccount","anon");
         // 设置登录的URL为匿名访问，因为一开始没有用户验证
-        filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/push/login", "anon");
         //logout是shiro提供的过滤器
-        filterChainDefinitionMap.put("/logout", "logout");
-        //授权匿名用户url
-        filterChainDefinitionMap.put("/index", "anon");
-        filterChainDefinitionMap.put("/serverPlan/**", "anon");
-        filterChainDefinitionMap.put("/systemenv/**", "anon");
-        filterChainDefinitionMap.put("/serviceDep/**", "anon");
-        filterChainDefinitionMap.put("/push/**", "anon");
+        filterChainDefinitionMap.put("/push/logout", "logout");
 
         //其他资源都需要认证  authc 表示需要认证才能进行访问 user表示配置记住我或认证通过可以访问的地址
         filterChainDefinitionMap.put("/**", "kickout,user");

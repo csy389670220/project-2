@@ -39,7 +39,7 @@ public class ShiroRealm extends AuthorizingRealm {
         //获取用户名 密码 第二种方式
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) authenticationToken;
         String username = usernamePasswordToken.getUsername();
-        String password = new String(usernamePasswordToken.getPassword());
+        Object password = usernamePasswordToken.getPassword();
 
         //从数据库查询用户信息
         SysUser user = this.sysUserMapper.selectByLoginName(username);

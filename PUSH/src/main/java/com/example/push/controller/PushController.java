@@ -19,7 +19,6 @@ import java.util.Map;
  * @create: 2019/12/17-13:36
  **/
 @Controller
-@RequestMapping("push")
 public class PushController extends BaseController{
     private static final Logger logger = LoggerFactory.getLogger(PushController.class);
 
