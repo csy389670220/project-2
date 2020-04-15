@@ -15,6 +15,9 @@ import com.example.push.model.TemplateMessage;
 import com.example.push.service.PushGroupService;
 import com.example.push.service.WechatPostManService;
 import com.example.push.util.CheckUtil;
+import com.example.push.util.MathUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import net.sf.jsqlparser.expression.StringValue;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.util.StringUtils;
@@ -46,16 +49,22 @@ public class PushGroupServiceImpl implements PushGroupService {
     TemplateMessageMapper templateMessageMapper;
 
     @Override
-    public Map<String, Object> getAllGroup() {
+    public Map<String, Object> getGroupList(PushGroup pushGroup,Integer pageNum,Integer pageSize) {
         Map<String, Object> resultMap;
         // 从session获取操作用户ID，sysId
         Integer sysId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("sysId");
+        pushGroup.setCreateUser(sysId);
         try {
-            List<PushGroup> p = pushGroupMapper.selectBySysIdKey(sysId);
+            PageHelper.startPage(pageNum, pageSize);
+            List<PushGroup> p = pushGroupMapper.selectivePushGroup(pushGroup);
+            PageInfo pageInfo = new PageInfo(p);
+            long total = pageInfo.getTotal();//总数
+            int pages= MathUtil.getPages(total,pageSize);
             resultMap = ResultMapUtil.success(p);
+            resultMap.put("pages",pages);
         } catch (Exception e) {
             resultMap = ResultMapUtil.fail(null);
-            logger.error("getAllGroup查询错误：{}", e);
+            logger.error("getGroupList查询错误：{}", e);
         }
         return resultMap;
     }
@@ -228,15 +237,21 @@ public class PushGroupServiceImpl implements PushGroupService {
     }
 
     @Override
-    public List<PushSubscriber> getSubList(String pushGroupId) {
-        List<PushSubscriber> list;
+    public Map<String, Object>  getSubList(String pushGroupId,Integer pageNum,Integer pageSize) {
+        Map<String, Object> resultMap;
         try {
-            list = pushSubscriberMapper.selectByPushGroupId(pushGroupId);
+            PageHelper.startPage(pageNum, pageSize);
+            List<PushSubscriber> list = pushSubscriberMapper.selectByPushGroupId(pushGroupId);
+            PageInfo pageInfo = new PageInfo(list);
+            long total = pageInfo.getTotal();//总数
+            int pages= MathUtil.getPages(total,pageSize);
+            resultMap=ResultMapUtil.success(list);
+            resultMap.put("pages",pages);
         } catch (Exception e) {
             logger.error("getSubList查询群组订阅人列表错误，群组ID:{},错误:{}", pushGroupId, e);
-            list = new ArrayList<>();
+            resultMap=ResultMapUtil.fail(null);
         }
-        return list;
+        return resultMap;
     }
 
     @Override

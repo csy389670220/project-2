@@ -242,3 +242,44 @@ function checkKeywordsEmpty(keywords) {
     return true;
 }
 
+
+/**
+ * 初始化分页插件
+ * @param pagelimitId  插件ID
+ * @param currentPage  当前页码
+ * @param totalPages   总页数
+ * @param numberOfPages  pagesize
+ * @param boxId     需要属性table的id
+ * @param loadUrl   分页请求url
+ * @param parma     分页数据
+ */
+function bootstrapPaginatorInit(pagelimitId,currentPage,totalPages,numberOfPages,boxId,loadUrl,parma) {
+    var element = $('#'+pagelimitId);//对应下面ul的ID
+    var options = {
+        currentPage: currentPage,//当前的请求页面页码。
+        totalPages: totalPages,//一共多少页。
+        size: "normal",//应该是页眉的大小。
+        bootstrapMajorVersion: 3,//bootstrap的版本要求。
+        alignment: "right",
+        numberOfPages: numberOfPages,//一页列出多少数据。
+        onPageClicked: function (event, originalEvent, type, page) {
+            parma.pageNum=page;
+            $('#'+boxId).load(loadUrl, parma);
+        },
+        itemTexts: function (type, page, current) {//如下的代码是将页眉显示的中文显示我们自定义的中文。
+            switch (type) {
+                case "first":
+                    return "首页";
+                case "prev":
+                    return "上一页";
+                case "next":
+                    return "下一页";
+                case "last":
+                    return "末页";
+                case "page":
+                    return page;
+            }
+        }
+    }
+    element.bootstrapPaginator(options);
+}

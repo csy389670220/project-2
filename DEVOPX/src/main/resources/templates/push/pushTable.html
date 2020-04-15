@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+</head>
+
+<body>
+<table class="mb-0 table table-bordered" id="tab">
+    <thead>
+    <tr>
+        <th>群组名称</th>
+        <th>群组编码</th>
+        <th>创建时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="gradeU" th:each="pushGroup:${pushGrouplist}">
+        <td th:text="${pushGroup.topicName}"></td>
+        <td th:text="${pushGroup.topicCode}"></td>
+        <td th:text="${#dates.format(pushGroup.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td>
+            <button class="btn btn-info"
+                    th:onclick="query_QR_code([[${pushGroup.id}]],[[${pushGroup.topicCode}]])">
+                查看二维码
+            </button>
+            <shiro:hasRole name="admin">
+                <button class="btn btn-danger"
+                        th:onclick="pushGroup_del([[${pushGroup.id}]])">删除
+                </button>
+            </shiro:hasRole>
+            <button class="btn btn-warning"
+                    th:onclick="query_subscriber([[${pushGroup.id}]])">订阅人
+            </button>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

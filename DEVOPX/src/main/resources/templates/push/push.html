@@ -9,6 +9,7 @@
     <meta name="msapplication-tap-highlight" content="no">
     <link rel="stylesheet" type="text/css" th:href="@{/devopx/thirdparty/system/main.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/devopx/thirdparty/system/css/common.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/devopx/thirdparty/system/css/bootstrap.css}"/>
 </head>
 
 <body>
@@ -36,13 +37,11 @@
                         </div>
                         <div class="page-title-actions">
                             <div class="d-inline-block dropdown">
-                                <shiro:hasRole name="admin">
                                     <button type="button" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false"
                                             onclick="pushGroup_add()" class="btn-shadow  btn btn-info">
                                         新增群组
                                     </button>
-                                </shiro:hasRole>
                             </div>
                         </div>
                     </div>
@@ -50,6 +49,27 @@
                 <div class="col-lg-12">
                     <div class="main-card mb-3 card">
                         <div class="card-body">
+                            <div class="form-row">
+                                <div class="col-md-2">
+                                    <div class="position-relative form-group">
+                                        <label for="query_topicName" class="">群组名称</label>
+                                        <input th:value="${queryTopicName}" name="query_topicName" id="query_topicName" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="position-relative form-group">
+                                        <label for="query_topicCode" class="">群组编码</label>
+                                        <input th:value="${queryTopicCode}" name="query_topicCode" id="query_topicCode" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div  style="text-align:right;margin-top: 30px;margin-right: 7px;">
+                                        <button type="button"  onclick="queryPushList()" class="btn-shadow  btn btn-info">
+                                            查询
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <h5 class="card-title"></h5>
                             <div id="box">
                                 <table class="mb-0 table table-bordered" id="tab">
@@ -84,6 +104,9 @@
                                     </tr>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div id="example" style="text-align: center">
+                                <ul id="pageLimit"></ul>
                             </div>
                         </div>
                     </div>
@@ -151,13 +174,30 @@
 </div>
 <div th:replace="common/common_sources :: base_js"></div>
 <div th:replace="common/common_sources :: jebox"></div>
+<div th:replace="common/common_sources :: bootstrapPaginator"></div>
 <script>
     $(document).ready(function () {
         //选中菜单栏
         ipsSystem.menu.active("serverPlan_Menu", "PUSH_Menu");
-        scroll("tab", "box", 1);
+
+        //分页插件初始化
+        var query_topicName = $("#query_topicName").val();
+        var query_topicCode = $("#query_topicCode").val();
+        var param={
+            "topicName": query_topicName,
+            "topicCode": query_topicCode
+        }
+        bootstrapPaginatorInit("pageLimit",1,[[${pages}]],10,"box","devopxViewPage",param);
+
+
     });
 
+    //条件查询页面列表
+    function queryPushList() {
+        var topicName=$("#query_topicName").val();
+        var topicCode=$("#query_topicCode").val()
+        ipsSystem.doPost("devopxView",{"topicName": topicName, "topicCode": topicCode})
+    }
 
     //查看二维码
     function query_QR_code(id, topicCode) {
@@ -265,7 +305,7 @@
             title: "订阅人列表",
             type: 'iframe',
             padding: "0",
-            boxSize: ["450px", "80%"],
+            boxSize: ["480px", "86%"],
             content: "/devopx/devopxSubViev?pushGroupId=" + pushGroupId,
             maskLock: true
         })

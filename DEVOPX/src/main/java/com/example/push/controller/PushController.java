@@ -32,18 +32,36 @@ public class PushController extends BaseController {
     PushGroupService pushGroupService;
 
     /**
-     * 模块：devopX插件
-     * devopX首页
+     * 模块：devopX
+     * devopX条件查询
      */
-    @RequestMapping(value = "/devopxView", method = RequestMethod.GET)
-    public ModelAndView queryPushView() {
+    @RequestMapping(value = "/devopxView")
+    public ModelAndView queryPushView(PushGroup pushGroup) {
         ModelAndView view = new ModelAndView("push/push");
-        Map<String, Object> result = pushGroupService.getAllGroup();
+        Map<String, Object> result = pushGroupService.getGroupList(pushGroup,1,PAGESIZE);
         view.addObject("pushGrouplist", result.get("data"));
+        view.addObject("pages", result.get("pages"));
+        //查询条件返回
+        view.addObject("queryTopicName", pushGroup.getTopicName());
+        view.addObject("queryTopicCode", pushGroup.getTopicCode());
         view.addObject("sysToken", SecurityUtils.getSubject().getSession().getAttribute("sysToken"));
         linkSysInfo(view);
         return view;
     }
+
+    /**
+     * 模块：devopX
+     * devopX列表分页查询
+     */
+    @RequestMapping(value = "/devopxViewPage")
+    public ModelAndView queryPushViewPage(PushGroup pushGroup,Integer pageNum) {
+        ModelAndView view = new ModelAndView("push/pushTable");
+        Map<String, Object> result = pushGroupService.getGroupList(pushGroup,pageNum,PAGESIZE);
+        view.addObject("pushGrouplist", result.get("data"));
+        linkSysInfo(view);
+        return view;
+    }
+
 
     /**
      * 模块：devopX插件
@@ -118,16 +136,30 @@ public class PushController extends BaseController {
 
     /**
      * 模块：devopX插件
-     * 跳转订阅人信息列表
+     * 查询订阅人信息列表
      */
-    @RequestMapping(value = "/devopxSubViev", method = RequestMethod.GET)
-    public ModelAndView pushSubViev(String pushGroupId) {
+    @RequestMapping(value = "/devopxSubViev")
+    public ModelAndView devopxSubViev(String pushGroupId) {
         ModelAndView view = new ModelAndView("push/pushSubscriber");
-        List<PushSubscriber> result = pushGroupService.getSubList(pushGroupId);
-        view.addObject("pushSublist", result);
+        Map<String, Object>  result = pushGroupService.getSubList(pushGroupId,1,PAGESIZE);
+        view.addObject("pushSublist", result.get("data"));
         view.addObject("pushGroupId", pushGroupId);
+        view.addObject("pages", result.get("pages"));
         return view;
     }
+
+    /**
+     * 模块：devopX插件
+     * 查询订阅人信息列表
+     */
+    @RequestMapping(value = "/devopxSubVievPage")
+    public ModelAndView devopxSubVievPage(Integer pushGroupId,Integer pageNum) {
+        ModelAndView view = new ModelAndView("push/pushSubscriberTable");
+        Map<String, Object>  result = pushGroupService.getSubList(String.valueOf(pushGroupId),pageNum,PAGESIZE);
+        view.addObject("pushSublist", result.get("data"));
+        return view;
+    }
+
 
     /**
      * 模块：devopX插件

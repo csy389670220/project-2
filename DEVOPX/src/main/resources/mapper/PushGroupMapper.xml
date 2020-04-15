@@ -134,19 +134,15 @@
     <include refid="Base_Column_List" />
     from push_group
     <where>
-      <if test="id != null" >
-        ID = #{id,jdbcType=VARCHAR}
+      <if test="topicName != null and topicName != ''" >
+        and TOPIC_NAME like CONCAT('%',CONCAT(#{topicName},'%'))
       </if>
-      <if test="topicName != null" >
-        and TOPIC_NAME = #{topicName,jdbcType=VARCHAR}
-      </if>
-      <if test="topicCode != null" >
+      <if test="topicCode != null and topicCode !=''" >
         and TOPIC_CODE = #{topicCode,jdbcType=VARCHAR}
       </if>
-      <if test="createUser != null" >
-        and  CREATE_USER = #{createUser,jdbcType=VARCHAR}
-      </if>
+        and  CREATE_USER = #{createUser,jdbcType=INTEGER}
     </where>
+    order by  CREATE_TIME desc
   </select>
 
   <select id="selectGroupByOpenId" resultMap="BaseResultMap" parameterType="String" >

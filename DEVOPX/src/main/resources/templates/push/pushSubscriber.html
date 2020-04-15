@@ -13,6 +13,7 @@
 <body>
 <div th:replace="common/common_sources :: base_js"></div>
 <div th:replace="common/common_sources :: jebox"></div>
+<div th:replace="common/common_sources :: bootstrapPaginator"></div>
 <div class="app-main__inner">
     <div class="col-lg-12" style="margin-top: 11px">
         <div class="main-card mb-3 card">
@@ -44,12 +45,27 @@
                         </tbody>
                     </table>
                 </div>
+                <div id="example" style="text-align: center;margin-top: 8px">
+                    <ul id="pageLimit"></ul>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+
+    $(document).ready(function () {
+        //初始化分页插件
+        var pushGroupId = [[${pushGroupId}]];
+        var param={
+            "pushGroupId": pushGroupId,
+        }
+        bootstrapPaginatorInit("pageLimit",1,[[${pages}]],10,"box","devopxSubVievPage",param);
+
+    });
+
+
     //删除方法
     function pushSub_del(id) {
         var pushGroupId = [[${pushGroupId}]];

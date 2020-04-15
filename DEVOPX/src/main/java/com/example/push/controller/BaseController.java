@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("devopx")
 public class BaseController {
 
+    public static  final int PAGESIZE=10;//分页查询，页面条目数量
+
     /**
      * 查询当前登录用户信息，渲染页面时带入
      * @param view

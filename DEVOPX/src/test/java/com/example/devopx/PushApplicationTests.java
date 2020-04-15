@@ -116,7 +116,7 @@ public class PushApplicationTests {
      */
     @Test
     public void getSysToken(){
-        String loginName="chuanzhubin";
+        String loginName="huangpeng";
         String uuid=String.valueOf(UUID.randomUUID());
         String time=String.valueOf(new Date().getTime());
         String token=MD5.encodeByMD5(loginName+uuid+time);

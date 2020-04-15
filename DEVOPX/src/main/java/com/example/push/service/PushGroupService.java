@@ -14,10 +14,10 @@ import java.util.Map;
  **/
 public interface PushGroupService {
     /**
-     * 根据系统id查询群组列表集合信息
+     * 根据查询条件查询群组列表集合信息
      * @return
      */
-    Map<String, Object> getAllGroup();
+    Map<String, Object> getGroupList(PushGroup pushGroup,Integer pageNum,Integer pageSize);
 
     /**
      * 新增群组信息
@@ -54,7 +54,7 @@ public interface PushGroupService {
      * @param pushGroupId  群组ID
      * @return
      */
-    List<PushSubscriber> getSubList(String pushGroupId);
+    Map<String, Object>  getSubList(String pushGroupId,Integer pageNum,Integer pageSize);
 
     /**
      * 删除订阅人信息

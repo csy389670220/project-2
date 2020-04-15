@@ -45,4 +45,5 @@ public interface PushGroupMapper {
      * @return
      */
     List<PushGroup> selectGroupByOpenId(@Param(value = "openId") String openId);
+
 }
