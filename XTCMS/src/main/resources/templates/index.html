@@ -57,6 +57,7 @@
                         <div class="position-relative form-group">
                             <label class="">内容类型</label>
                             <select type="select" id="query_contentType" class="custom-select">
+                                <option value="0">全部</option>
                                 <option value="1">颜值达人</option>
                                 <option value="2">剧情搞笑</option>
                                 <option value="3">美妆</option>
@@ -118,7 +119,7 @@
                         <div class="position-relative form-group">
                             <label class=""></label>
                             <button style="margin-top: 30px; margin-left: 127px;" type="button"
-                                    onclick="downExcel()" class="btn-shadow  btn btn-info">
+                                    onclick="downData()" class="btn-shadow  btn btn-info">
                                 下载
                             </button>
                             <button style="margin-top: 30px; margin-left: 5px;" type="button"
@@ -161,6 +162,7 @@
 <div th:replace="common/common_sources :: base_js"></div>
 <div th:replace="common/common_sources :: jebox"></div>
 <script>
+    var copyNum=0;//同步数据计数器
     //选中菜单栏
     ipsSystem.menu.active("", "home_Menu");
 
@@ -385,54 +387,257 @@
         });
     }
 
-    //按钮下载EXCEL
-    function downExcel() {
-        var url = getAuthorListUrl(1);
-        //预调一次，查看该查询条件有多少数据
+    //数据跑批入口
+    function downData() {
+
+        var tag = $("#query_contentType").val();//内容类型
+        if(tag==0){//查询全部标签
+             for(i=1;i<27;i++){
+                 var tagCode;
+                 console.log("全部数据跑批，当前tag:"+i+"开始")
+                 i+="";
+                 switch (i) {
+                     case "1":
+                         tagCode= "72";
+                         break;
+                     case "2":
+                         tagCode= "97";
+                         break;
+                     case "3":
+                         tagCode= "1";
+                         break;
+                     case "4":
+                         tagCode= "6";
+                         break;
+                     case "5":
+                         tagCode= "11";
+                         break;
+                     case "6":
+                         tagCode= "41";
+                         break;
+                     case "7":
+                         tagCode= "46";
+                         break;
+                     case "8":
+                         tagCode= "48";
+                         break;
+                     case "9":
+                         tagCode= "23";
+                         break;
+                     case "10":
+                         tagCode= "27";
+                         break;
+                     case "11":
+                         tagCode= "31";
+                         break;
+                     case "12":
+                         tagCode= "36";
+                         break;
+                     case "13":
+                         tagCode= "15";
+                         break;
+                     case "14":
+                         tagCode= "25";
+                         break;
+                     case "15":
+                         tagCode= "55";
+                         break;
+                     case "16":
+                         tagCode= "64";
+                         break;
+                     case "17":
+                         tagCode= "68";
+                         break;
+                     case "18":
+                         tagCode= "60";
+                         break;
+                     case "19":
+                         tagCode= "75";
+                         break;
+                     case "20":
+                         tagCode= "79";
+                         break;
+                     case "21":
+                         tagCode= "85";
+                         break;
+                     case "22":
+                         tagCode= "87";
+                         break;
+                     case "23":
+                         tagCode= "91";
+                         break;
+                     case "24":
+                         tagCode= "100";
+                         break;
+                     case "25":
+                         tagCode= "95";
+                         break;
+                     case "26":
+                         tagCode= "105";
+                         break;
+                 }
+                 getXTAuthorData(1,tagCode);
+                 console.log("全部数据跑批，当前tag:"+i+"结束");
+             }
+        }else {
+            switch (tag) {
+                case "1":
+                    tagCode= "72";
+                    break;
+                case "2":
+                    tagCode= "97";
+                    break;
+                case "3":
+                    tagCode= "1";
+                    break;
+                case "4":
+                    tagCode= "6";
+                    break;
+                case "5":
+                    tagCode= "11";
+                    break;
+                case "6":
+                    tagCode= "41";
+                    break;
+                case "7":
+                    tagCode= "46";
+                    break;
+                case "8":
+                    tagCode= "48";
+                    break;
+                case "9":
+                    tagCode= "23";
+                    break;
+                case "10":
+                    tagCode= "27";
+                    break;
+                case "11":
+                    tagCode= "31";
+                    break;
+                case "12":
+                    tagCode= "36";
+                    break;
+                case "13":
+                    tagCode= "15";
+                    break;
+                case "14":
+                    tagCode= "25";
+                    break;
+                case "15":
+                    tagCode= "55";
+                    break;
+                case "16":
+                    tagCode= "64";
+                    break;
+                case "17":
+                    tagCode= "68";
+                    break;
+                case "18":
+                    tagCode= "60";
+                    break;
+                case "19":
+                    tagCode= "75";
+                    break;
+                case "20":
+                    tagCode= "79";
+                    break;
+                case "21":
+                    tagCode= "85";
+                    break;
+                case "22":
+                    tagCode= "87";
+                    break;
+                case "23":
+                    tagCode= "91";
+                    break;
+                case "24":
+                    tagCode= "100";
+                    break;
+                case "25":
+                    tagCode= "95";
+                    break;
+                case "26":
+                    tagCode= "105";
+                    break;
+            }
+            getXTAuthorData(1,tagCode);
+        }
+
+
+    }
+
+    //获取星图数据
+    //countPage:需要访问API的页码  tagCode:查询code值
+    function getXTAuthorData( countPage,tagCode) {
+        copyNum+=1;//计数器+1
+        console.log("copyNum:"+copyNum);
+        var url = getAuthorListUrl(countPage,tagCode);
+        console.log("countPage:" + countPage + ",url:" + url);
+        /*if (copyNum%40==0) {//调用满40次开始休眠
+            console.log("开始休眠....")
+            sleep(3 * 60 * 1000);//休眠60s
+            console.log("休眠结束....")
+        }*/
+        console.log("开始休眠....")
+        sleep( 30 * 1000);//休眠60s
         $.ajax({
             url: url,
             type: "get",    //不区分大小写
+            async: false, // 同步
             success: function (result) {
-                if (result.msg == "成功") {
-                    //掉用成功，根据总数调用API获取全部数据
-                    var total_count = result.data.pagination.total_count; //总数
-                    getExcelData(total_count);
+                console.log("result.msg:" + result.msg);
+                if (result.code != 0) {
+                    console.log(result.msg + result.code + "中断同步!!!!");
+                    copyNum==0;// 跑批中断，计数器归0
+                    return;
                 }
+                console.log( "开始同步数据...");
+                //将数据传送到后台数据落地；
+                var resultMap=dataLanding(JSON.stringify(result),tagCode);
+                if(resultMap.code=="success"){
+                    if(resultMap.countPage==-1){
+                        console.log( "同步数据全部完毕，结束递归");
+                        copyNum=0;// 跑批中断，计数器归0
+                    }else {
+                        console.log( "同步数据完毕，进行下一次递归,countPage:"+resultMap.countPage);
+                        //开始递归
+                        getXTAuthorData(resultMap.countPage,tagCode);
+                    }
+                }else {
+                    console.log( "同步数据失败，计数器归0...");
+                    copyNum=0;// 跑批中断，计数器归0
+                }
+
             },
             error: function (err) {
+                console.log("getExcelData err:" + err);
             }
         });
-
+        //ipsSystem.doPost("/master/getExcel", {param: JSON.stringify(excelArrayList)})
     }
 
-    //获取需要下载Excel数据
-    function getExcelData(total_count) {
-        var excelArrayList = [];
-        var countPage = Math.ceil(total_count / 20)
-        for (var i = 1; i < countPage + 1; i++) {
-            var url = getAuthorListUrl(i);
-            $.ajax({
-                url: url,
-                type: "get",    //不区分大小写
-                async: false, // 同步
-                success: function (result) {
-                    //下载excel
-                    var jsonData = getJsonArrayList(result);
-                    for( var i in jsonData)
-                    {
-                        excelArrayList.push(jsonData[i]);
-                    }
-                },
-                error: function (err) {
-                }
-            });
-        }
-        ipsSystem.doPost("/master/getExcel", {param: JSON.stringify(excelArrayList)})
+    //调用星图接口成功的数据传送到后台数据落地
+    function dataLanding(param,tagCode) {
+        var resultMap;
+
+        $.ajax({
+            url: "master/loadingInfo",
+            type: "post",    //不区分大小写
+            async: false, // 同步
+            data:{"param":param,"tag": tagCode},
+            success: function (result) {
+                resultMap=result;
+            },
+            error: function (err) {
+                console.log("getExcelData err:" + err);
+            }
+        });
+        return resultMap;
     }
 
     //拼接请求星图API获取列表集合URL limit-查询数据的数量
-    function getAuthorListUrl(page) {
-        var get_author_list_url = "https://star.toutiao.com/v/api/demand/author_list/?limit=20&need_detail=true&page=" + page + "&platform_source=1&task_category=1&order_by=score";
+    function getAuthorListUrl(page,tagCode) {
+        var get_author_list_url = "https://star.toutiao.com/v/api/demand/author_list/?limit=30&need_detail=true&page=" + page + "&platform_source=1&task_category=1&order_by=score";
 
         /*
         标签说明:
@@ -462,87 +667,8 @@
         情感100 73
         三农95 73
         园艺102 73*/
-        var tag = $("#query_contentType").val();//内容类型
-        switch (tag) {
-            case "1":
-                get_author_list_url += "&tag=72";
-                break;
-            case "2":
-                get_author_list_url += "&tag=97";
-                break;
-            case "3":
-                get_author_list_url += "&tag=1";
-                break;
-            case "4":
-                get_author_list_url += "&tag=6";
-                break;
-            case "5":
-                get_author_list_url += "&tag=11";
-                break;
-            case "6":
-                get_author_list_url += "&tag=41";
-                break;
-            case "7":
-                get_author_list_url += "&tag=46";
-                break;
-            case "8":
-                get_author_list_url += "&tag=48";
-                break;
-            case "9":
-                get_author_list_url += "&tag=23";
-                break;
-            case "10":
-                get_author_list_url += "&tag=27";
-                break;
-            case "11":
-                get_author_list_url += "&tag=31";
-                break;
-            case "12":
-                get_author_list_url += "&tag=36";
-                break;
-            case "13":
-                get_author_list_url += "&tag=15";
-                break;
-            case "14":
-                get_author_list_url += "&tag=25";
-                break;
-            case "15":
-                get_author_list_url += "&tag=55";
-                break;
-            case "16":
-                get_author_list_url += "&tag=64";
-                break;
-            case "17":
-                get_author_list_url += "&tag=68";
-                break;
-            case "18":
-                get_author_list_url += "&tag=60";
-                break;
-            case "19":
-                get_author_list_url += "&tag=75";
-                break;
-            case "20":
-                get_author_list_url += "&tag=79";
-                break;
-            case "21":
-                get_author_list_url += "&tag=85";
-                break;
-            case "22":
-                get_author_list_url += "&tag=87";
-                break;
-            case "23":
-                get_author_list_url += "&tag=91";
-                break;
-            case "24":
-                get_author_list_url += "&tag=100";
-                break;
-            case "25":
-                get_author_list_url += "&tag=95";
-                break;
-            case "26":
-                get_author_list_url += "&tag=105";
-                break;
-        }
+        var tagStr="&tag="+tagCode
+        get_author_list_url+=tagStr;
         var fans = $("#query_fans").val();//粉丝数量
         switch (fans) {
             case "1":

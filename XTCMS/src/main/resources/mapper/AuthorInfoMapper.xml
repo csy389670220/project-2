@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.push.mapper.AuthorInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.example.push.model.AuthorInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="short_id" property="shortId" jdbcType="VARCHAR" />
+    <result column="info_id" property="infoId" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="follower" property="follower" jdbcType="VARCHAR" />
+    <result column="expected_cpm" property="expectedCpm" jdbcType="VARCHAR" />
+    <result column="expected_play_num" property="expectedPlayNum" jdbcType="VARCHAR" />
+    <result column="personal_interate_rate" property="personalInterateRate" jdbcType="VARCHAR" />
+    <result column="price_1" property="price1" jdbcType="VARCHAR" />
+    <result column="price_2" property="price2" jdbcType="VARCHAR" />
+    <result column="homepage" property="homepage" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="fans_distribute" property="fansDistribute" jdbcType="VARCHAR" />
+    <result column="sex_distribute" property="sexDistribute" jdbcType="VARCHAR" />
+    <result column="age_distribute" property="ageDistribute" jdbcType="VARCHAR" />
+    <result column="active_distribute" property="activeDistribute" jdbcType="VARCHAR" />
+    <result column="phone_distribute" property="phoneDistribute" jdbcType="VARCHAR" />
+    <result column="city_distribute" property="cityDistribute" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, nick_name, short_id, info_id, city, tags, follower, expected_cpm, expected_play_num, 
+    personal_interate_rate, price_1, price_2, homepage, gender, fans_distribute, sex_distribute, 
+    age_distribute, active_distribute, phone_distribute, city_distribute, creat_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from author_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from author_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.push.model.AuthorInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into author_info (nick_name, short_id, info_id, 
+      city, tags, follower, 
+      expected_cpm, expected_play_num, personal_interate_rate, 
+      price_1, price_2, homepage, 
+      gender, fans_distribute, sex_distribute, 
+      age_distribute, active_distribute, phone_distribute, 
+      city_distribute, creat_time)
+    values (#{nickName,jdbcType=VARCHAR}, #{shortId,jdbcType=VARCHAR}, #{infoId,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, #{follower,jdbcType=VARCHAR}, 
+      #{expectedCpm,jdbcType=VARCHAR}, #{expectedPlayNum,jdbcType=VARCHAR}, #{personalInterateRate,jdbcType=VARCHAR}, 
+      #{price1,jdbcType=VARCHAR}, #{price2,jdbcType=VARCHAR}, #{homepage,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=VARCHAR}, #{fansDistribute,jdbcType=VARCHAR}, #{sexDistribute,jdbcType=VARCHAR}, 
+      #{ageDistribute,jdbcType=VARCHAR}, #{activeDistribute,jdbcType=VARCHAR}, #{phoneDistribute,jdbcType=VARCHAR}, 
+      #{cityDistribute,jdbcType=VARCHAR}, #{creatTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.push.model.AuthorInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into author_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="shortId != null" >
+        short_id,
+      </if>
+      <if test="infoId != null" >
+        info_id,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="tags != null" >
+        tags,
+      </if>
+      <if test="follower != null" >
+        follower,
+      </if>
+      <if test="expectedCpm != null" >
+        expected_cpm,
+      </if>
+      <if test="expectedPlayNum != null" >
+        expected_play_num,
+      </if>
+      <if test="personalInterateRate != null" >
+        personal_interate_rate,
+      </if>
+      <if test="price1 != null" >
+        price_1,
+      </if>
+      <if test="price2 != null" >
+        price_2,
+      </if>
+      <if test="homepage != null" >
+        homepage,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="fansDistribute != null" >
+        fans_distribute,
+      </if>
+      <if test="sexDistribute != null" >
+        sex_distribute,
+      </if>
+      <if test="ageDistribute != null" >
+        age_distribute,
+      </if>
+      <if test="activeDistribute != null" >
+        active_distribute,
+      </if>
+      <if test="phoneDistribute != null" >
+        phone_distribute,
+      </if>
+      <if test="cityDistribute != null" >
+        city_distribute,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="shortId != null" >
+        #{shortId,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null" >
+        #{infoId,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="follower != null" >
+        #{follower,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedCpm != null" >
+        #{expectedCpm,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedPlayNum != null" >
+        #{expectedPlayNum,jdbcType=VARCHAR},
+      </if>
+      <if test="personalInterateRate != null" >
+        #{personalInterateRate,jdbcType=VARCHAR},
+      </if>
+      <if test="price1 != null" >
+        #{price1,jdbcType=VARCHAR},
+      </if>
+      <if test="price2 != null" >
+        #{price2,jdbcType=VARCHAR},
+      </if>
+      <if test="homepage != null" >
+        #{homepage,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="fansDistribute != null" >
+        #{fansDistribute,jdbcType=VARCHAR},
+      </if>
+      <if test="sexDistribute != null" >
+        #{sexDistribute,jdbcType=VARCHAR},
+      </if>
+      <if test="ageDistribute != null" >
+        #{ageDistribute,jdbcType=VARCHAR},
+      </if>
+      <if test="activeDistribute != null" >
+        #{activeDistribute,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneDistribute != null" >
+        #{phoneDistribute,jdbcType=VARCHAR},
+      </if>
+      <if test="cityDistribute != null" >
+        #{cityDistribute,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.push.model.AuthorInfo" >
+    update author_info
+    <set >
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="shortId != null" >
+        short_id = #{shortId,jdbcType=VARCHAR},
+      </if>
+      <if test="infoId != null" >
+        info_id = #{infoId,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null" >
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="follower != null" >
+        follower = #{follower,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedCpm != null" >
+        expected_cpm = #{expectedCpm,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedPlayNum != null" >
+        expected_play_num = #{expectedPlayNum,jdbcType=VARCHAR},
+      </if>
+      <if test="personalInterateRate != null" >
+        personal_interate_rate = #{personalInterateRate,jdbcType=VARCHAR},
+      </if>
+      <if test="price1 != null" >
+        price_1 = #{price1,jdbcType=VARCHAR},
+      </if>
+      <if test="price2 != null" >
+        price_2 = #{price2,jdbcType=VARCHAR},
+      </if>
+      <if test="homepage != null" >
+        homepage = #{homepage,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="fansDistribute != null" >
+        fans_distribute = #{fansDistribute,jdbcType=VARCHAR},
+      </if>
+      <if test="sexDistribute != null" >
+        sex_distribute = #{sexDistribute,jdbcType=VARCHAR},
+      </if>
+      <if test="ageDistribute != null" >
+        age_distribute = #{ageDistribute,jdbcType=VARCHAR},
+      </if>
+      <if test="activeDistribute != null" >
+        active_distribute = #{activeDistribute,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneDistribute != null" >
+        phone_distribute = #{phoneDistribute,jdbcType=VARCHAR},
+      </if>
+      <if test="cityDistribute != null" >
+        city_distribute = #{cityDistribute,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.push.model.AuthorInfo" >
+    update author_info
+    set nick_name = #{nickName,jdbcType=VARCHAR},
+      short_id = #{shortId,jdbcType=VARCHAR},
+      info_id = #{infoId,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      follower = #{follower,jdbcType=VARCHAR},
+      expected_cpm = #{expectedCpm,jdbcType=VARCHAR},
+      expected_play_num = #{expectedPlayNum,jdbcType=VARCHAR},
+      personal_interate_rate = #{personalInterateRate,jdbcType=VARCHAR},
+      price_1 = #{price1,jdbcType=VARCHAR},
+      price_2 = #{price2,jdbcType=VARCHAR},
+      homepage = #{homepage,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      fans_distribute = #{fansDistribute,jdbcType=VARCHAR},
+      sex_distribute = #{sexDistribute,jdbcType=VARCHAR},
+      age_distribute = #{ageDistribute,jdbcType=VARCHAR},
+      active_distribute = #{activeDistribute,jdbcType=VARCHAR},
+      phone_distribute = #{phoneDistribute,jdbcType=VARCHAR},
+      city_distribute = #{cityDistribute,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
