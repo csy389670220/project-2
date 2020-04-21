@@ -52,8 +52,13 @@ public class PushGroupServiceImpl implements PushGroupService {
         Map<String, Object> resultMap;
         // 从session获取操作用户ID，sysId
         Integer department = (Integer) SecurityUtils.getSubject().getSession().getAttribute("department");
-        //用户只能看本编组的群组信息
-        pushGroup.setCreateDepart(department);
+        //用户只能看本编组的群组信息,root例外
+        if(department==0){
+            pushGroup.setCreateDepart(null);
+        }else {
+            pushGroup.setCreateDepart(department);
+        }
+
         try {
             PageHelper.startPage(pageNum, pageSize);
             List<PushGroupVo> p = pushGroupMapper.selectivePushGroup(pushGroup);
@@ -121,7 +126,12 @@ public class PushGroupServiceImpl implements PushGroupService {
         Map<String, Object> resultMap;
         // 从session获取操作用户部门
         Integer department = (Integer) SecurityUtils.getSubject().getSession().getAttribute("department");
-        pushGroup.setCreateDepart(department);
+        //用户只能删除本组的群组信息,root例外
+        if(department==0){
+            pushGroup.setCreateDepart(null);
+        }else {
+            pushGroup.setCreateDepart(department);
+        }
         //删除群组信息
         int num = pushGroupMapper.deleteByPrimaryKey(pushGroup);
         if (num > 0) {
@@ -376,9 +386,19 @@ public class PushGroupServiceImpl implements PushGroupService {
         try {
             // 从session获取操作用户部门
             Integer department = (Integer) SecurityUtils.getSubject().getSession().getAttribute("department");
-            pushGroup.setCreateDepart(department);
-            pushGroupMapper.updatePushGroup(pushGroup);
-            resultMap=ResultMapUtil.success("更新成功");
+            if(department==0){
+                pushGroup.setCreateDepart(null);
+            }else {
+                pushGroup.setCreateDepart(department);
+            }
+            int num=pushGroupMapper.updatePushGroup(pushGroup);
+            if(num>0){
+                resultMap=ResultMapUtil.success("更新成功");
+            }else {
+                resultMap=ResultMapUtil.success("更新失败");
+                logger.info("updateGroup更新失败,num:{}",num);
+            }
+
         } catch (Exception e) {
             resultMap=ResultMapUtil.fail("更新错误");
             logger.error("updateGroup系统错误",e);
