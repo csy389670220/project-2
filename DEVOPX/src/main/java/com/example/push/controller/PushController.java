@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,7 +37,7 @@ public class PushController extends BaseController {
     @RequestMapping(value = "/devopxView")
     public ModelAndView queryPushView(PushGroup pushGroup) {
         ModelAndView view = new ModelAndView("push/push");
-        Map<String, Object> result = pushGroupService.getGroupList(pushGroup,1,PAGESIZE);
+        Map<String, Object> result = pushGroupService.getGroupList(pushGroup, 1, PAGESIZE);
         view.addObject("pushGrouplist", result.get("data"));
         view.addObject("pages", result.get("pages"));
         //查询条件返回
@@ -54,9 +53,9 @@ public class PushController extends BaseController {
      * devopX列表分页查询
      */
     @RequestMapping(value = "/devopxViewPage")
-    public ModelAndView queryPushViewPage(PushGroup pushGroup,Integer pageNum) {
+    public ModelAndView queryPushViewPage(PushGroup pushGroup, Integer pageNum) {
         ModelAndView view = new ModelAndView("push/pushTable");
-        Map<String, Object> result = pushGroupService.getGroupList(pushGroup,pageNum,PAGESIZE);
+        Map<String, Object> result = pushGroupService.getGroupList(pushGroup, pageNum, PAGESIZE);
         view.addObject("pushGrouplist", result.get("data"));
         linkSysInfo(view);
         return view;
@@ -141,7 +140,7 @@ public class PushController extends BaseController {
     @RequestMapping(value = "/devopxSubViev")
     public ModelAndView devopxSubViev(String pushGroupId) {
         ModelAndView view = new ModelAndView("push/pushSubscriber");
-        Map<String, Object>  result = pushGroupService.getSubList(pushGroupId,1,PAGESIZE);
+        Map<String, Object> result = pushGroupService.getSubList(pushGroupId, 1, PAGESIZE);
         view.addObject("pushSublist", result.get("data"));
         view.addObject("pushGroupId", pushGroupId);
         view.addObject("pages", result.get("pages"));
@@ -153,9 +152,9 @@ public class PushController extends BaseController {
      * 查询订阅人信息列表
      */
     @RequestMapping(value = "/devopxSubVievPage")
-    public ModelAndView devopxSubVievPage(Integer pushGroupId,Integer pageNum) {
+    public ModelAndView devopxSubVievPage(Integer pushGroupId, Integer pageNum) {
         ModelAndView view = new ModelAndView("push/pushSubscriberTable");
-        Map<String, Object>  result = pushGroupService.getSubList(String.valueOf(pushGroupId),pageNum,PAGESIZE);
+        Map<String, Object> result = pushGroupService.getSubList(String.valueOf(pushGroupId), pageNum, PAGESIZE);
         view.addObject("pushSublist", result.get("data"));
         return view;
     }
@@ -200,4 +199,27 @@ public class PushController extends BaseController {
         return view;
     }
 
+    /**
+     * 打开更新群组信息页面
+     *
+     * @param pushGroup
+     * @return
+     */
+    @RequestMapping(value = "/devopxUpdateViev")
+    public ModelAndView devopxUpdateViev(PushGroup pushGroup) {
+        ModelAndView view = new ModelAndView("push/pushUpdate");
+        Map<String, Object> result = pushGroupService.selectGroupById(pushGroup.getId());
+        view.addObject("pushGroup", result.get("data"));
+        view.addObject("queryTopicName", pushGroup.getTopicName());
+        view.addObject("queryTopicCode", pushGroup.getTopicCode());
+        linkSysInfo(view);
+        return view;
+    }
+
+    @RequestMapping(value = "/updateGroup")
+    @ResponseBody
+    public Map<String, Object> updateGroup(PushGroup pushGroup) {
+
+        return pushGroupService.updateGroup(pushGroup);
+    }
 }

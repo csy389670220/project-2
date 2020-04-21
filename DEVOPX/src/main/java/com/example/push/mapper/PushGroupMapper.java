@@ -1,12 +1,13 @@
 package com.example.push.mapper;
 
 import com.example.push.model.PushGroup;
+import com.example.push.model.view.PushGroupVo;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface PushGroupMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(PushGroup record);
 
     int insert(PushGroup record);
 
@@ -37,7 +38,7 @@ public interface PushGroupMapper {
     /**
      * 多关键字查询群组
      */
-    List<PushGroup> selectivePushGroup(PushGroup pushGroup);
+    List<PushGroupVo> selectivePushGroup(PushGroup PushGroup);
 
     /**
      * 根据openId，查询此微信用户订阅列表
@@ -45,5 +46,12 @@ public interface PushGroupMapper {
      * @return
      */
     List<PushGroup> selectGroupByOpenId(@Param(value = "openId") String openId);
+
+    /**
+     * 更新群组信息
+     * 用户只能更新同一部门编组的信息
+     * @param pushGroup
+     */
+    int updatePushGroup(PushGroup pushGroup);
 
 }

@@ -27,9 +27,9 @@
                                 <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
                                 </i>
                             </div>
-                            <div>群组新增
+                            <div>群组修改
                                 <div class="page-title-subheading">
-                                    群组新增页面
+                                    群组信息修改
                                 </div>
                             </div>
                         </div>
@@ -53,12 +53,29 @@
                                         <div class="col-md-3">
                                             <div class="position-relative form-group">
                                                 <label for="topicName" class="">群组名称</label>
-                                                <input name="topicName" id="topicName" class="form-control">
+                                                <input id="topicId"  type="hidden" th:value="${pushGroup.id}">
+                                                <input name="topicName" id="topicName" th:value="${pushGroup.topicName}" class="form-control">
+                                                <input id="topicName_old" type="hidden" th:value="${pushGroup.topicName}" >
                                             </div>
                                         </div>
                                     </div>
-
-                                    <button class="mt-2 btn btn-primary" onclick="push_add()">确 定</button>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label class="">群组编码</label>
+                                                <input disabled="disabled" th:value="${pushGroup.topicCode}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label  class="">创建时间	</label>
+                                                <input disabled="disabled" th:value="${#dates.format(pushGroup.createTime,'yyyy-MM-dd HH:mm:ss')}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="mt-2 btn btn-primary" onclick="push_update()">确 定</button>
                                 </div>
                             </div>
                         </div>
@@ -69,6 +86,13 @@
     </div>
 </div>
 </div>
+
+<!--隐藏域-->
+<div>
+    <input id="queryTopicName" th:value="${queryTopicName}" type="hidden">
+    <input id="queryTopicCode" th:value="${queryTopicCode}"  type="hidden">
+</div>
+
 <div th:replace="common/common_sources :: base_js"></div>
 <script>
     $(document).ready(function () {
@@ -76,57 +100,48 @@
         ipsSystem.menu.active("serverPlan_Menu", "PUSH_Menu");
     });
 
-    //新增模块，字段key集合
-    var push_add_list=["topicCode","topicName"];
-
-    //返回
-    function push_back() {
-        ipsSystem.doGet("/devopx/devopxView");
-    }
-
-
     //群组信息新增
-    function push_add() {
+    function push_update() {
         //验证关键字
         var checkInfo={"群组名称":"topicName"};
         var check= checkKeywordsEmpty(checkInfo);
         if(!check){
             return;
         }
+
+        if($("#topicName").val()==$("#topicName_old").val()){
+            jeBox.msg("参数值未变动", {icon: 1,time: 2,maskLock: true, maskClose: true });
+            return;
+        }
         //组装请求数据json
-        var param=bilidParam(push_add_list,push_add_list);
+        var topicName=$("#topicName").val();
+        var param={"id":$("#topicId").val(),"topicName":topicName};
         $.ajax({
-            url: "addGroup",
+            url: "updateGroup",
             type: "post",    //不区分大小写
             traditional: true,
             data: param,
             datatype: 'json',
             success: function (result) {
                 if (result.code == "success") {
-                    clearAdd();
+                    $("#topicName_old").val(topicName);
                     jeBox.msg(result.data, {icon: 2,time: 2,maskLock: true, maskClose: true });
+
                 } else {
                     jeBox.msg(result.data, {icon: 3,time: 2,maskLock: true, maskClose: true });
                 }
 
             },
             error: function (err) {
-                jeBox.msg('新增系统错误', {icon: 3,time: 2,maskLock: true, maskClose: true });
+                jeBox.msg('更新系统错误', {icon: 3,time: 2,maskLock: true, maskClose: true });
                 console.log(err);
             }
         });
     }
-
-
-
-
-    /**
-     * 清空新增面板输入框
-     */
-    function  clearAdd() {
-        for(var i=0;i<push_add_list.length;i++){
-            $("#"+push_add_list[i]).val("");
-        }
+    
+    function push_back() {
+        var param={"topicName":$("#queryTopicName").val(),"topicCode":$("#queryTopicCode").val()};
+        ipsSystem.doPost("/devopx/devopxView",param);
     }
 
 </script>

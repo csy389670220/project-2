@@ -1,4 +1,4 @@
-package com.example.devopx;
+package com.example.push;
 
 import com.example.push.mapper.PushGroupMapper;
 import com.example.push.mapper.PushSubscriberMapper;
@@ -8,6 +8,7 @@ import com.example.push.model.PushGroup;
 import com.example.push.model.PushSubscriber;
 import com.example.push.model.SysUser;
 import com.example.push.model.TemplateMessage;
+import com.example.push.model.view.PushGroupVo;
 import com.example.push.redis.RedisRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,9 +33,12 @@ public class MapperTest {
     TemplateMessageMapper templateMessageMapper;
     @Autowired
     RedisRunner redisRunner;
+
+
     @Test
     public void pushGroupMapperInsertTest() {
         PushGroup p = new PushGroup();
+        p.setCreateDepart(1);
         p.setCreateUser(1);
         p.setCreateTime(new Date());
         p.setTopicName("测试");
@@ -132,5 +136,14 @@ public class MapperTest {
 //    public void redisRunnerTest(){
 //        redisRunner.set("mykey","111111");
 //    }
+
+    @Test
+    public void selectivePushGroup(){
+        PushGroup p=new PushGroup();
+        p.setId(150);
+        p.setCreateDepart(1);
+        int num = pushGroupMapper.deleteByPrimaryKey(p);
+        System.out.println(">>>>>>>>>>>>"+num);
+    }
 }
 

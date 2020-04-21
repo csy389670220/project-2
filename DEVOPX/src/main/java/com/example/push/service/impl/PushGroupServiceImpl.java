@@ -12,15 +12,14 @@ import com.example.push.model.PushGroup;
 import com.example.push.model.PushSubscriber;
 import com.example.push.model.SysUser;
 import com.example.push.model.TemplateMessage;
+import com.example.push.model.view.PushGroupVo;
 import com.example.push.service.PushGroupService;
 import com.example.push.service.WechatPostManService;
 import com.example.push.util.CheckUtil;
 import com.example.push.util.MathUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import net.sf.jsqlparser.expression.StringValue;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,19 +48,20 @@ public class PushGroupServiceImpl implements PushGroupService {
     TemplateMessageMapper templateMessageMapper;
 
     @Override
-    public Map<String, Object> getGroupList(PushGroup pushGroup,Integer pageNum,Integer pageSize) {
+    public Map<String, Object> getGroupList(PushGroup pushGroup, Integer pageNum, Integer pageSize) {
         Map<String, Object> resultMap;
         // 从session获取操作用户ID，sysId
-        Integer sysId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("sysId");
-        pushGroup.setCreateUser(sysId);
+        Integer department = (Integer) SecurityUtils.getSubject().getSession().getAttribute("department");
+        //用户只能看本编组的群组信息
+        pushGroup.setCreateDepart(department);
         try {
             PageHelper.startPage(pageNum, pageSize);
-            List<PushGroup> p = pushGroupMapper.selectivePushGroup(pushGroup);
+            List<PushGroupVo> p = pushGroupMapper.selectivePushGroup(pushGroup);
             PageInfo pageInfo = new PageInfo(p);
             long total = pageInfo.getTotal();//总数
-            int pages= MathUtil.getPages(total,pageSize);
+            int pages = MathUtil.getPages(total, pageSize);
             resultMap = ResultMapUtil.success(p);
-            resultMap.put("pages",pages);
+            resultMap.put("pages", pages);
         } catch (Exception e) {
             resultMap = ResultMapUtil.fail(null);
             logger.error("getGroupList查询错误：{}", e);
@@ -75,10 +75,13 @@ public class PushGroupServiceImpl implements PushGroupService {
         Map<String, Object> resultMap;
         // 从session获取操作用户ID，sysId
         Integer sysId = (Integer) SecurityUtils.getSubject().getSession().getAttribute("sysId");
+        // 从session获取操作用户部门
+        Integer department = (Integer) SecurityUtils.getSubject().getSession().getAttribute("department");
         Date now = new Date();
         //群组信息设置
         pushGroup.setCreateTime(now);
         pushGroup.setCreateUser(sysId);
+        pushGroup.setCreateDepart(department);
         //随机生成群组编码
         pushGroup.setTopicCode(creatOnlyTopicCode());
         //1.本地存储
@@ -116,13 +119,16 @@ public class PushGroupServiceImpl implements PushGroupService {
     @Transactional(rollbackFor = Exception.class)
     public Map<String, Object> delGroup(PushGroup pushGroup) throws Exception {
         Map<String, Object> resultMap;
+        // 从session获取操作用户部门
+        Integer department = (Integer) SecurityUtils.getSubject().getSession().getAttribute("department");
+        pushGroup.setCreateDepart(department);
         //删除群组信息
-        int num = pushGroupMapper.deleteByPrimaryKey(pushGroup.getId());
+        int num = pushGroupMapper.deleteByPrimaryKey(pushGroup);
         if (num > 0) {
             //1.删除群组名下订阅信息
             int subNum = pushSubscriberMapper.deleteByPushGroupId(String.valueOf(pushGroup.getId()));
             //2.删除群组历史推送信息
-             templateMessageMapper.delHistoryByGropuId(pushGroup.getId());
+            templateMessageMapper.delHistoryByGropuId(pushGroup.getId());
 
             resultMap = ResultMapUtil.success("删除群组信息成功");
             logger.info("删除群组信息成功");
@@ -237,19 +243,19 @@ public class PushGroupServiceImpl implements PushGroupService {
     }
 
     @Override
-    public Map<String, Object>  getSubList(String pushGroupId,Integer pageNum,Integer pageSize) {
+    public Map<String, Object> getSubList(String pushGroupId, Integer pageNum, Integer pageSize) {
         Map<String, Object> resultMap;
         try {
             PageHelper.startPage(pageNum, pageSize);
             List<PushSubscriber> list = pushSubscriberMapper.selectByPushGroupId(pushGroupId);
             PageInfo pageInfo = new PageInfo(list);
             long total = pageInfo.getTotal();//总数
-            int pages= MathUtil.getPages(total,pageSize);
-            resultMap=ResultMapUtil.success(list);
-            resultMap.put("pages",pages);
+            int pages = MathUtil.getPages(total, pageSize);
+            resultMap = ResultMapUtil.success(list);
+            resultMap.put("pages", pages);
         } catch (Exception e) {
             logger.error("getSubList查询群组订阅人列表错误，群组ID:{},错误:{}", pushGroupId, e);
-            resultMap=ResultMapUtil.fail(null);
+            resultMap = ResultMapUtil.fail(null);
         }
         return resultMap;
     }
@@ -279,7 +285,7 @@ public class PushGroupServiceImpl implements PushGroupService {
         try {
             //1.根据token查询认证信息
             SysUser sysUser = sysUserMapper.selectUserByToken(sysToken);
-            if(CheckUtil.isEmpty(sysUser.getId())){
+            if (CheckUtil.isEmpty(sysUser.getId())) {
                 logger.info("sendTopicMessage错误，token错误");
                 resultMap = ResultMapUtil.fail("token错误");
                 return resultMap;
@@ -288,7 +294,7 @@ public class PushGroupServiceImpl implements PushGroupService {
             PushGroup p = new PushGroup();
             p.setCreateUser(sysUser.getId());
             p.setTopicCode(topic);
-            List<PushGroup> pushGroup = pushGroupMapper.selectivePushGroup(p);
+            List<PushGroupVo> pushGroup = pushGroupMapper.selectivePushGroup(p);
             if (pushGroup.size() != 1) {
                 logger.info("sendTopicMessage错误，无法定位唯一群组信息");
                 resultMap = ResultMapUtil.fail("发送失败，无法获取群组信息");
@@ -310,14 +316,14 @@ public class PushGroupServiceImpl implements PushGroupService {
     @Override
     public Map<String, Object> getTemplateMessage(Integer id, String messageUuid) {
         Map<String, Object> resultMap;
-        try{
+        try {
             TemplateMessage t = new TemplateMessage();
             t.setId(id);
             t.setMessageUuid(messageUuid);
             resultMap = ResultMapUtil.success(templateMessageMapper.getMessage(t));
-        }catch (Exception e){
-            logger.error("getTemplateMessage系统错误:{}",e);
-            resultMap=ResultMapUtil.fail(new TemplateMessage());
+        } catch (Exception e) {
+            logger.error("getTemplateMessage系统错误:{}", e);
+            resultMap = ResultMapUtil.fail(new TemplateMessage());
         }
         return resultMap;
     }
@@ -325,13 +331,13 @@ public class PushGroupServiceImpl implements PushGroupService {
     @Override
     public Map<String, Object> getSubGroupByOpenId(String openId) {
         Map<String, Object> resultMap;
-        List<PushGroup> list=new ArrayList();
-        try{
-            list=pushGroupMapper.selectGroupByOpenId(openId);
-            resultMap=ResultMapUtil.success(list);
-        }catch (Exception e){
-            logger.error("getSubGroupByOpenId系统错误:{}",e);
-            resultMap=ResultMapUtil.fail(list);
+        List<PushGroup> list = new ArrayList();
+        try {
+            list = pushGroupMapper.selectGroupByOpenId(openId);
+            resultMap = ResultMapUtil.success(list);
+        } catch (Exception e) {
+            logger.error("getSubGroupByOpenId系统错误:{}", e);
+            resultMap = ResultMapUtil.fail(list);
         }
         return resultMap;
     }
@@ -339,20 +345,50 @@ public class PushGroupServiceImpl implements PushGroupService {
     @Override
     public Map<String, Object> getHistoryPush(String openId, String groupId) {
         Map<String, Object> resultMap;
-        List<TemplateMessage> list=new ArrayList();
-        try{
+        List<TemplateMessage> list = new ArrayList();
+        try {
             //查询最近7天记录
-            list=templateMessageMapper.getHistoryPushByOpenIdAndGroupId(openId,groupId);
-            resultMap=ResultMapUtil.success(list);
-        }catch (Exception e){
-            logger.error("getHistoryPush系统错误:{}",e);
-            resultMap=ResultMapUtil.fail(list);
+            list = templateMessageMapper.getHistoryPushByOpenIdAndGroupId(openId, groupId);
+            resultMap = ResultMapUtil.success(list);
+        } catch (Exception e) {
+            logger.error("getHistoryPush系统错误:{}", e);
+            resultMap = ResultMapUtil.fail(list);
+        }
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> selectGroupById(Integer pushGroupId) {
+        Map<String, Object> resultMap;
+        try {
+            PushGroup p = pushGroupMapper.selectByPrimaryKey(pushGroupId);
+            resultMap = ResultMapUtil.success(p);
+        } catch (Exception e) {
+            resultMap = ResultMapUtil.fail(new PushGroup());
+            logger.error("selectGroupById系统错误：{}", e);
+        }
+        return resultMap;
+    }
+
+    @Override
+    public Map<String, Object> updateGroup(PushGroup pushGroup) {
+        Map<String, Object> resultMap;
+        try {
+            // 从session获取操作用户部门
+            Integer department = (Integer) SecurityUtils.getSubject().getSession().getAttribute("department");
+            pushGroup.setCreateDepart(department);
+            pushGroupMapper.updatePushGroup(pushGroup);
+            resultMap=ResultMapUtil.success("更新成功");
+        } catch (Exception e) {
+            resultMap=ResultMapUtil.fail("更新错误");
+            logger.error("updateGroup系统错误",e);
         }
         return resultMap;
     }
 
     /**
      * 生成11位code码
+     *
      * @return
      */
     private static String creatOnlyTopicCode() {

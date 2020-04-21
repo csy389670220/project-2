@@ -1,110 +1,123 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.example.push.mapper.PushGroupMapper" >
-  <resultMap id="BaseResultMap" type="com.example.push.model.PushGroup" >
-    <id column="ID" property="id" jdbcType="INTEGER" />
-    <result column="TOPIC_NAME" property="topicName" jdbcType="VARCHAR" />
-    <result column="TOPIC_CODE" property="topicCode" jdbcType="VARCHAR" />
-    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
-    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="Q_R_CODE" property="qRCode" jdbcType="VARCHAR" />
-    <result column="Q_R_CODE_UPDATE_TIME" property="qRCodeUpdateTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    ID, TOPIC_NAME, TOPIC_CODE, CREATE_USER, CREATE_TIME, Q_R_CODE, Q_R_CODE_UPDATE_TIME
+<mapper namespace="com.example.push.mapper.PushGroupMapper">
+    <resultMap id="BaseResultMap" type="com.example.push.model.PushGroup">
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="TOPIC_NAME" property="topicName" jdbcType="VARCHAR"/>
+        <result column="TOPIC_CODE" property="topicCode" jdbcType="VARCHAR"/>
+        <result column="CREATE_DEPART" property="createDepart" jdbcType="INTEGER"/>
+        <result column="CREATE_USER" property="createUser" jdbcType="INTEGER"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="Q_R_CODE" property="qRCode" jdbcType="VARCHAR"/>
+        <result column="Q_R_CODE_UPDATE_TIME" property="qRCodeUpdateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, TOPIC_NAME, TOPIC_CODE,CREATE_DEPART, CREATE_USER, CREATE_TIME, Q_R_CODE, Q_R_CODE_UPDATE_TIME
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from push_group
-    where ID = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from push_group
-    where ID = #{id,jdbcType=INTEGER}
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from push_group
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="com.example.push.model.PushGroup">
+     delete from push_group
+        <where>
+            ID = #{id,jdbcType=INTEGER}
+            <if test="createDepart != null and createDepart !=''">
+                and CREATE_DEPART = #{createDepart,jdbcType=INTEGER}
+            </if>
+        </where>
   </delete>
-  <insert id="insert" parameterType="com.example.push.model.PushGroup" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into push_group (TOPIC_NAME, TOPIC_CODE, CREATE_USER, 
-      CREATE_TIME, Q_R_CODE, Q_R_CODE_UPDATE_TIME
-      )
-    values (#{topicName,jdbcType=VARCHAR}, #{topicCode,jdbcType=VARCHAR}, #{createUser,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{qRCode,jdbcType=VARCHAR}, #{qRCodeUpdateTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.example.push.model.PushGroup" >
-    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-    insert into push_group
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="topicName != null" >
-        TOPIC_NAME,
-      </if>
-      <if test="topicCode != null" >
-        TOPIC_CODE,
-      </if>
-      <if test="createUser != null" >
-        CREATE_USER,
-      </if>
-      <if test="createTime != null" >
-        CREATE_TIME,
-      </if>
-      <if test="qRCode != null" >
-        Q_R_CODE,
-      </if>
-      <if test="qRCodeUpdateTime != null" >
-        Q_R_CODE_UPDATE_TIME,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="topicName != null" >
-        #{topicName,jdbcType=VARCHAR},
-      </if>
-      <if test="topicCode != null" >
-        #{topicCode,jdbcType=VARCHAR},
-      </if>
-      <if test="createUser != null" >
-        #{createUser,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="qRCode != null" >
-        #{qRCode,jdbcType=VARCHAR},
-      </if>
-      <if test="qRCodeUpdateTime != null" >
-        #{qRCodeUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.push.model.PushGroup" >
-    update push_group
-    <set >
-      <if test="topicName != null" >
-        TOPIC_NAME = #{topicName,jdbcType=VARCHAR},
-      </if>
-      <if test="topicCode != null" >
-        TOPIC_CODE = #{topicCode,jdbcType=VARCHAR},
-      </if>
-      <if test="createUser != null" >
-        CREATE_USER = #{createUser,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="qRCode != null" >
-        Q_R_CODE = #{qRCode,jdbcType=VARCHAR},
-      </if>
-      <if test="qRCodeUpdateTime != null" >
-        Q_R_CODE_UPDATE_TIME = #{qRCodeUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where ID = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.push.model.PushGroup" >
+    <insert id="insert" parameterType="com.example.push.model.PushGroup">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into push_group (TOPIC_NAME, TOPIC_CODE, CREATE_DEPART,CREATE_USER,
+        CREATE_TIME, Q_R_CODE, Q_R_CODE_UPDATE_TIME
+        )
+        values (#{topicName,jdbcType=VARCHAR}, #{topicCode,jdbcType=VARCHAR},
+        #{createDepart,jdbcType=INTEGER},#{createUser,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP}, #{qRCode,jdbcType=VARCHAR}, #{qRCodeUpdateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.example.push.model.PushGroup">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into push_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="topicName != null">
+                TOPIC_NAME,
+            </if>
+            <if test="topicCode != null">
+                TOPIC_CODE,
+            </if>
+            <if test="createDepart != null">
+                CREATE_DEPART,
+            </if>
+            <if test="createUser != null">
+                CREATE_USER,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="qRCode != null">
+                Q_R_CODE,
+            </if>
+            <if test="qRCodeUpdateTime != null">
+                Q_R_CODE_UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="topicName != null">
+                #{topicName,jdbcType=VARCHAR},
+            </if>
+            <if test="topicCode != null">
+                #{topicCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createDepart != null">
+                #{createDepart,jdbcType=INTEGER},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="qRCode != null">
+                #{qRCode,jdbcType=VARCHAR},
+            </if>
+            <if test="qRCodeUpdateTime != null">
+                #{qRCodeUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.push.model.PushGroup">
+        update push_group
+        <set>
+            <if test="topicName != null">
+                TOPIC_NAME = #{topicName,jdbcType=VARCHAR},
+            </if>
+            <if test="topicCode != null">
+                TOPIC_CODE = #{topicCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createUser != null">
+                CREATE_USER = #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="qRCode != null">
+                Q_R_CODE = #{qRCode,jdbcType=VARCHAR},
+            </if>
+            <if test="qRCodeUpdateTime != null">
+                Q_R_CODE_UPDATE_TIME = #{qRCodeUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.push.model.PushGroup">
     update push_group
     set TOPIC_NAME = #{topicName,jdbcType=VARCHAR},
       TOPIC_CODE = #{topicCode,jdbcType=VARCHAR},
@@ -115,41 +128,63 @@
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectBySysIdKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
-    from push_group
-    where CREATE_USER = #{createUser,jdbcType=INTEGER}
-  </select>
+    <select id="selectBySysIdKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from push_group
+        where CREATE_USER = #{createUser,jdbcType=INTEGER}
+    </select>
 
-  <select id="selectByTopicCode" resultMap="BaseResultMap" parameterType="string" >
-    select
-    <include refid="Base_Column_List" />
-    from push_group
-    where TOPIC_CODE = #{topicCode,jdbcType=VARCHAR}
-  </select>
+    <select id="selectByTopicCode" resultMap="BaseResultMap" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>
+        from push_group
+        where TOPIC_CODE = #{topicCode,jdbcType=VARCHAR}
+    </select>
 
-  <select id="selectivePushGroup" resultMap="BaseResultMap" parameterType="com.example.push.model.PushGroup" >
-    select
-    <include refid="Base_Column_List" />
-    from push_group
-    <where>
-      <if test="topicName != null and topicName != ''" >
-        and TOPIC_NAME like CONCAT('%',CONCAT(#{topicName},'%'))
-      </if>
-      <if test="topicCode != null and topicCode !=''" >
-        and TOPIC_CODE = #{topicCode,jdbcType=VARCHAR}
-      </if>
-        and  CREATE_USER = #{createUser,jdbcType=INTEGER}
-    </where>
-    order by  CREATE_TIME desc
-  </select>
+    <select id="selectivePushGroup" resultType="com.example.push.model.view.PushGroupVo"
+            parameterType="com.example.push.model.PushGroup">
+        select
+        p.ID id,p.TOPIC_NAME topicName,p.TOPIC_CODE topicCode,p.CREATE_DEPART createDepart,p.CREATE_USER
+        createUser,p.CREATE_TIME createTime,p.Q_R_CODE qRCode,p.Q_R_CODE_UPDATE_TIME qRCodeUpdateTime,
+        d.DEPART_NAME departName,s.CHINA_NAME createName
+        from push_group p
+        left join sys_department d on p.CREATE_DEPART=d.id
+        left join sys_user s on p.CREATE_USER=s.id
+        <where>
+            <if test="topicName != null and topicName != ''">
+                and p.TOPIC_NAME like CONCAT('%',CONCAT(#{topicName},'%'))
+            </if>
+            <if test="topicCode != null and topicCode !=''">
+                and p.TOPIC_CODE = #{topicCode,jdbcType=VARCHAR}
+            </if>
+            <if test="createDepart != null and createDepart !=''">
+                and p.CREATE_DEPART = #{createDepart,jdbcType=INTEGER}
+            </if>
+        </where>
+        order by p.CREATE_TIME desc
+    </select>
 
-  <select id="selectGroupByOpenId" resultMap="BaseResultMap" parameterType="String" >
+    <select id="selectGroupByOpenId" resultMap="BaseResultMap" parameterType="String">
     select
     p.ID,p.TOPIC_NAME,p.TOPIC_CODE,p.CREATE_USER,p.CREATE_TIME,p.CREATE_TIME,p.Q_R_CODE_UPDATE_TIME
     from (select PUSH_GROUP_ID  from push_subscriber where OPEN_ID = #{openId,jdbcType=VARCHAR}) s left join push_group p
     on s.PUSH_GROUP_ID=p.ID
   </select>
 
+
+    <update id="updatePushGroup" parameterType="com.example.push.model.PushGroup">
+        update push_group
+        <set>
+            <if test="topicName != null">
+                TOPIC_NAME = #{topicName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <where>
+            ID = #{id,jdbcType=INTEGER}
+            <if test="createDepart != null and createDepart !=''">
+                and CREATE_DEPART = #{createDepart,jdbcType=INTEGER}
+            </if>
+        </where>
+    </update>
 </mapper>

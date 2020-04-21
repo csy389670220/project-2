@@ -41,7 +41,7 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
-        <!--<table tableName="sys_user" domainObjectName="SysUser"
+       <!-- <table tableName="sys_user" domainObjectName="SysUser"
         enableCountByExample="false" enableUpdateByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false"
         selectByExampleQueryId="false">
@@ -62,11 +62,19 @@
             <generatedKey column="ID" sqlStatement="Mysql" identity="true"/>
         </table>-->
 
-        <table tableName="TEMPLATE_MESSAGE" domainObjectName="TemplateMessage"
+        <!--<table tableName="TEMPLATE_MESSAGE" domainObjectName="TemplateMessage"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false"-->
+               <!--enableDeleteByExample="false" enableSelectByExample="false"-->
+               <!--selectByExampleQueryId="false">-->
+            <!--<generatedKey column="ID" sqlStatement="Mysql" identity="true"/>-->
+        <!--</table>-->
+
+        <table tableName="sys_department" domainObjectName="Department"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <generatedKey column="ID" sqlStatement="Mysql" identity="true"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
+
     </context>
 </generatorConfiguration>

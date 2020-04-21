@@ -37,11 +37,11 @@
                         </div>
                         <div class="page-title-actions">
                             <div class="d-inline-block dropdown">
-                                    <button type="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false"
-                                            onclick="pushGroup_add()" class="btn-shadow  btn btn-info">
-                                        新增群组
-                                    </button>
+                                <button type="button" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false"
+                                        onclick="pushGroup_add()" class="btn-shadow  btn btn-info">
+                                    新增群组
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -53,18 +53,21 @@
                                 <div class="col-md-2">
                                     <div class="position-relative form-group">
                                         <label for="query_topicName" class="">群组名称</label>
-                                        <input th:value="${queryTopicName}" name="query_topicName" id="query_topicName" class="form-control">
+                                        <input th:value="${queryTopicName}" name="query_topicName" id="query_topicName"
+                                               class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="position-relative form-group">
                                         <label for="query_topicCode" class="">群组编码</label>
-                                        <input th:value="${queryTopicCode}" name="query_topicCode" id="query_topicCode" class="form-control">
+                                        <input th:value="${queryTopicCode}" name="query_topicCode" id="query_topicCode"
+                                               class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <div  style="text-align:right;margin-top: 30px;margin-right: 7px;">
-                                        <button type="button"  onclick="queryPushList()" class="btn-shadow  btn btn-info">
+                                    <div style="text-align:right;margin-top: 30px;margin-right: 7px;">
+                                        <button type="button" onclick="queryPushList()"
+                                                class="btn-shadow  btn btn-info">
                                             查询
                                         </button>
                                     </div>
@@ -75,29 +78,36 @@
                                 <table class="mb-0 table table-bordered" id="tab">
                                     <thead>
                                     <tr>
-                                        <th>群组名称</th>
-                                        <th>群组编码</th>
-                                        <th>创建时间</th>
-                                        <th>操作</th>
+                                        <th >群组名称</th>
+                                        <th >群组编码</th>
+                                        <th >所属编组</th>
+                                        <th >创建人</th>
+                                        <th >创建时间</th>
+                                        <th style="width: 300px;">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr class="gradeU" th:each="pushGroup:${pushGrouplist}">
                                         <td th:text="${pushGroup.topicName}"></td>
                                         <td th:text="${pushGroup.topicCode}"></td>
+                                        <td th:text="${pushGroup.departName}"></td>
+                                        <td th:text="${pushGroup.createName}"></td>
                                         <td th:text="${#dates.format(pushGroup.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                                         <td>
                                             <button class="btn btn-info"
                                                     th:onclick="query_QR_code([[${pushGroup.id}]],[[${pushGroup.topicCode}]])">
                                                 查看二维码
                                             </button>
-                                            <shiro:hasRole name="admin">
-                                                <button class="btn btn-danger"
-                                                        th:onclick="pushGroup_del([[${pushGroup.id}]])">删除
-                                                </button>
-                                            </shiro:hasRole>
                                             <button class="btn btn-warning"
                                                     th:onclick="query_subscriber([[${pushGroup.id}]])">订阅人
+                                            </button>
+                                           <!-- <shiro:hasRole name="admin">
+                                            </shiro:hasRole>-->
+                                            <button class="btn btn-primary"
+                                                    th:onclick="pushGroup_update([[${pushGroup.id}]])">修改
+                                            </button>
+                                            <button class="btn btn-danger"
+                                                    th:onclick="pushGroup_del([[${pushGroup.id}]])">删除
                                             </button>
                                         </td>
 
@@ -183,20 +193,20 @@
         //分页插件初始化
         var query_topicName = $("#query_topicName").val();
         var query_topicCode = $("#query_topicCode").val();
-        var param={
+        var param = {
             "topicName": query_topicName,
             "topicCode": query_topicCode
         }
-        bootstrapPaginatorInit("pageLimit",1,[[${pages}]],10,"box","devopxViewPage",param);
+        bootstrapPaginatorInit("pageLimit", 1, [[${pages}]], 10, "box", "devopxViewPage", param);
 
 
     });
 
     //条件查询页面列表
     function queryPushList() {
-        var topicName=$("#query_topicName").val();
-        var topicCode=$("#query_topicCode").val()
-        ipsSystem.doPost("devopxView",{"topicName": topicName, "topicCode": topicCode})
+        var topicName = $("#query_topicName").val();
+        var topicCode = $("#query_topicCode").val()
+        ipsSystem.doPost("devopxView", {"topicName": topicName, "topicCode": topicCode})
     }
 
     //查看二维码
@@ -359,6 +369,13 @@
                 console.log(err);
             }
         });
+    }
+    
+    
+    //更新群组信息
+    function pushGroup_update(pushGroupId) {
+        var param={"id":pushGroupId,"topicName":$("#query_topicName").val(),"topicCode":$("#query_topicCode").val()};
+        ipsSystem.doPost("/devopx/devopxUpdateViev",param)
     }
 </script>
 </body>

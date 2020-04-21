@@ -94,4 +94,18 @@ public interface PushGroupService {
      * @param groupId
      */
     Map<String, Object> getHistoryPush(String openId,String groupId);
+
+    /**
+     * 根据群组ID查询群组信息
+     * @param pushGroupId
+     * @return
+     */
+    Map<String, Object>  selectGroupById(Integer pushGroupId);
+
+    /**
+     * 更新群组信息
+     * @param pushGroup
+     * @return
+     */
+    Map<String, Object> updateGroup(PushGroup pushGroup);
 }

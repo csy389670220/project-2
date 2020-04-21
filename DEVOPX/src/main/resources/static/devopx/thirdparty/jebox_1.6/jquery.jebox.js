@@ -464,7 +464,7 @@
             }()));
     };
     //最常用提示层
-    jeBox.open = function () {
+    /*jeBox.open = function () {
         return jeBox($.extend({
             title:false,
             closeBtn:false,
@@ -477,7 +477,7 @@
             options = options || {};
             return options;
         }()));
-    };
+    };*/
     jeBox.alert = function (content, options, yes) {
         var type = $.isFunction(options);
         if (type) yes = options;

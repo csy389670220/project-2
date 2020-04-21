@@ -1,4 +1,4 @@
-package com.example.devopx;
+package com.example.push;
 
 import com.example.push.export.Constant;
 import com.example.push.redis.RedisRunner;
@@ -10,13 +10,10 @@ import com.example.push.util.PushHttpRequest;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,8 +36,8 @@ public class PushApplicationTests {
      */
     @Test
     public void mybatisInfoTest() {
-        String userName="whale";
-        String pass="whale123";
+        String userName="root";
+        String pass="root";
         //加密
         byte[] userName16= AESUtil.encrypt(userName, Constant.SYS_SALT);
         byte[] pass16=AESUtil.encrypt(pass, Constant.SYS_SALT);

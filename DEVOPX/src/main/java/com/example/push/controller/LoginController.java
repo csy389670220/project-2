@@ -2,6 +2,7 @@ package com.example.push.controller;
 
 import com.example.push.mapper.SysUserMapper;
 import com.example.push.model.SysUser;
+import com.example.push.model.view.SysUserVo;
 import com.example.push.util.CheckUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -57,19 +58,24 @@ public class LoginController  extends BaseController{
         String loginName=(String) subject.getPrincipal();
         Integer sysId= (Integer) SecurityUtils.getSubject().getSession().getAttribute("sysId");
         String chinaName= (String) SecurityUtils.getSubject().getSession().getAttribute("chinaName");
+        String departName= (String) SecurityUtils.getSubject().getSession().getAttribute("departName");
         //非匿名登录条件下，sysId为空需要查询数据库更新数据
         if(CheckUtil.isEmpty(sysId)&&!CheckUtil.isEmpty(loginName)){
-            SysUser user =sysUserMapper.selectByLoginName(loginName);
+            SysUserVo user =sysUserMapper.selectVoByLoginName(loginName);
             sysId=user.getId();
             chinaName=user.getChinaName();
+            departName=user.getDepartName();
             SecurityUtils.getSubject().getSession().setAttribute("sysId",sysId);
             SecurityUtils.getSubject().getSession().setAttribute("chinaName",chinaName);
+            SecurityUtils.getSubject().getSession().setAttribute("department",user.getDepartment());
+            SecurityUtils.getSubject().getSession().setAttribute("departName",departName);
             SecurityUtils.getSubject().getSession().setAttribute("sysToken",user.getSysToken());
         }
 
         ModelAndView view = new ModelAndView("index");
         view.addObject("loginName", loginName);
         view.addObject("chinaName", chinaName);
+        view.addObject("departName", departName);
         return view;
     }
 

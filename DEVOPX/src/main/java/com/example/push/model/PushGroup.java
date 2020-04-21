@@ -9,6 +9,8 @@ public class PushGroup {
 
     private String topicCode;
 
+    private Integer createDepart;
+
     private Integer createUser;
 
     private Date createTime;
@@ -71,5 +73,13 @@ public class PushGroup {
 
     public void setqRCodeUpdateTime(Date qRCodeUpdateTime) {
         this.qRCodeUpdateTime = qRCodeUpdateTime;
+    }
+
+    public Integer getCreateDepart() {
+        return createDepart;
+    }
+
+    public void setCreateDepart(Integer createDepart) {
+        this.createDepart = createDepart;
     }
 }

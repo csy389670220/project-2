@@ -205,4 +205,10 @@ public class PushHttpRequest {
         return result;
     }
 
+
+    public static void main(String[] args) {
+        String url="http://47.116.56.91:8585/jenkins/job/andiod_python/buildWithParameters";
+        String param="token=token&source=DEV_2.4.33&BRANCH_NAME=release_2.4.33&JENKINS_flavor=iDealST2&JENKINS_version=2.4.33&JENKINS_versionCode=34";
+        sendGet(url,param,null);
+    }
 }
