@@ -159,10 +159,11 @@
         </div>
     </div>
 </div>
+
 <div th:replace="common/common_sources :: base_js"></div>
 <div th:replace="common/common_sources :: jebox"></div>
 <script>
-    var copyNum=0;//同步数据计数器
+    var all_is_Over=0;//全部接口爬虫完毕计数器 总共26个接口
     //选中菜单栏
     ipsSystem.menu.active("", "home_Menu");
 
@@ -389,12 +390,19 @@
 
     //数据跑批入口
     function downData() {
+        var selectTag = $("#query_contentType").val();//内容类型
+        console.log("all_is_Over数值:"+all_is_Over);
+        //全部接口全部数据，全部爬虫完毕
+        if(all_is_Over>=26){
+            console.log("downDataIs Over")
+            //结束递归
+            return;
+        }
 
-        var tag = $("#query_contentType").val();//内容类型
-        if(tag==0){//查询全部标签
+        if(selectTag==0){//查询全部标签
+            //循环爬虫全部接口
              for(i=1;i<27;i++){
                  var tagCode;
-                 console.log("全部数据跑批，当前tag:"+i+"开始")
                  i+="";
                  switch (i) {
                      case "1":
@@ -476,136 +484,48 @@
                          tagCode= "105";
                          break;
                  }
+                 console.log("开始全部数据跑批，当前selectTag:"+i+",tagCode:"+tagCode)
                  getXTAuthorData(1,tagCode);
-                 console.log("全部数据跑批，当前tag:"+i+"结束");
+                 console.log("结束全部数据跑批，当前selectTag:"+i+",tagCode:"+tagCode);
              }
-        }else {
-            switch (tag) {
-                case "1":
-                    tagCode= "72";
-                    break;
-                case "2":
-                    tagCode= "97";
-                    break;
-                case "3":
-                    tagCode= "1";
-                    break;
-                case "4":
-                    tagCode= "6";
-                    break;
-                case "5":
-                    tagCode= "11";
-                    break;
-                case "6":
-                    tagCode= "41";
-                    break;
-                case "7":
-                    tagCode= "46";
-                    break;
-                case "8":
-                    tagCode= "48";
-                    break;
-                case "9":
-                    tagCode= "23";
-                    break;
-                case "10":
-                    tagCode= "27";
-                    break;
-                case "11":
-                    tagCode= "31";
-                    break;
-                case "12":
-                    tagCode= "36";
-                    break;
-                case "13":
-                    tagCode= "15";
-                    break;
-                case "14":
-                    tagCode= "25";
-                    break;
-                case "15":
-                    tagCode= "55";
-                    break;
-                case "16":
-                    tagCode= "64";
-                    break;
-                case "17":
-                    tagCode= "68";
-                    break;
-                case "18":
-                    tagCode= "60";
-                    break;
-                case "19":
-                    tagCode= "75";
-                    break;
-                case "20":
-                    tagCode= "79";
-                    break;
-                case "21":
-                    tagCode= "85";
-                    break;
-                case "22":
-                    tagCode= "87";
-                    break;
-                case "23":
-                    tagCode= "91";
-                    break;
-                case "24":
-                    tagCode= "100";
-                    break;
-                case "25":
-                    tagCode= "95";
-                    break;
-                case "26":
-                    tagCode= "105";
-                    break;
-            }
-            getXTAuthorData(1,tagCode);
+
+             // 接口全部轮训完毕后，如果没爬完数据继续递归.需要等待10分钟
+             console.log("downData一轮结束。开始休眠半小时....")
+             sleep( 30*60 * 1000);//休眠60s*/
+             console.log("开始完毕，继续下一轮接口爬虫：downData()")
+             downData();
         }
-
-
     }
 
     //获取星图数据
     //countPage:需要访问API的页码  tagCode:查询code值
     function getXTAuthorData( countPage,tagCode) {
-        copyNum+=1;//计数器+1
-        console.log("copyNum:"+copyNum);
         var url = getAuthorListUrl(countPage,tagCode);
-        console.log("countPage:" + countPage + ",url:" + url);
-        /*if (copyNum%40==0) {//调用满40次开始休眠
-            console.log("开始休眠....")
-            sleep(3 * 60 * 1000);//休眠60s
-            console.log("休眠结束....")
-        }*/
-        console.log("开始休眠....")
-        sleep( 30 * 1000);//休眠60s
+        //console.log("countPage:" + countPage + ",tagCode:"+tagCode+",url:" + url);
         $.ajax({
             url: url,
             type: "get",    //不区分大小写
             async: false, // 同步
             success: function (result) {
-                console.log("result.msg:" + result.msg);
+                //console.log("result.msg:" + result.msg);
                 if (result.code != 0) {
-                    console.log(result.msg + result.code + "中断同步!!!!");
-                    copyNum==0;// 跑批中断，计数器归0
+                    console.log(result.msg + ":"+result.code + ",中断同步!!!!");
                     return;
                 }
-                console.log( "开始同步数据...");
+                //console.log( "开始同步数据...");
                 //将数据传送到后台数据落地；
                 var resultMap=dataLanding(JSON.stringify(result),tagCode);
                 if(resultMap.code=="success"){
                     if(resultMap.countPage==-1){
                         console.log( "同步数据全部完毕，结束递归");
-                        copyNum=0;// 跑批中断，计数器归0
+                        all_is_Over+=1;//当前接口全部爬虫完毕，计数器+1
                     }else {
-                        console.log( "同步数据完毕，进行下一次递归,countPage:"+resultMap.countPage);
+                        //console.log( "同步数据完毕，进行下一次递归,countPage:"+resultMap.countPage);
                         //开始递归
                         getXTAuthorData(resultMap.countPage,tagCode);
                     }
                 }else {
                     console.log( "同步数据失败，计数器归0...");
-                    copyNum=0;// 跑批中断，计数器归0
                 }
 
             },
