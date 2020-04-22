@@ -4,32 +4,30 @@
 </head>
 
 <body>
-<table class="mb-0 table table-bordered" id="tab">
+<table class="mb-0 table table-bordered" id="tab" style="table-layout: fixed;">
     <thead>
-    <tr>
-        <th>群组名称</th>
-        <th>群组编码</th>
-        <th>创建时间</th>
-        <th>操作</th>
-    </tr>
+    <th style="width:1%" ><input  type="checkbox" onclick="checkAll(this)"/></th>
+    <th style="width:10%" >群组名称</th>
+    <th style="width:10%" >群组编码</th>
+    <th style="width:10%" >创建时间</th>
+    <th style="width:6%" >操作</th>
     </thead>
     <tbody>
     <tr class="gradeU" th:each="pushGroup:${pushGrouplist}">
+        <th ><input  type="checkbox" name="check_del"  th:value="${pushGroup.id}" /></th>
         <td th:text="${pushGroup.topicName}"></td>
         <td th:text="${pushGroup.topicCode}"></td>
         <td th:text="${#dates.format(pushGroup.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
         <td>
             <button class="btn btn-info"
                     th:onclick="query_QR_code([[${pushGroup.id}]],[[${pushGroup.topicCode}]])">
-                查看二维码
+                二维码
             </button>
-            <shiro:hasRole name="admin">
-                <button class="btn btn-danger"
-                        th:onclick="pushGroup_del([[${pushGroup.id}]])">删除
-                </button>
-            </shiro:hasRole>
             <button class="btn btn-warning"
                     th:onclick="query_subscriber([[${pushGroup.id}]])">订阅人
+            </button>
+            <button class="btn btn-primary"
+                    th:onclick="pushGroup_update([[${pushGroup.id}]])">详情
             </button>
         </td>
 

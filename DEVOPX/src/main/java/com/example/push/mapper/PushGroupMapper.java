@@ -54,4 +54,10 @@ public interface PushGroupMapper {
      */
     int updatePushGroup(PushGroup pushGroup);
 
+    /**
+     * 根据ID查询群组view信息
+     * @return
+     */
+    PushGroupVo selectVoByPrimaryKey(Integer id);
+
 }

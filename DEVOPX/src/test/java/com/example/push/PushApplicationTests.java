@@ -10,8 +10,10 @@ import com.example.push.util.PushHttpRequest;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
@@ -20,7 +22,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class PushApplicationTests {
 

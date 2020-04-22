@@ -70,6 +70,22 @@
                                     <div class="form-row">
                                         <div class="col-md-3">
                                             <div class="position-relative form-group">
+                                                <label class="">所属组</label>
+                                                <input disabled="disabled" th:value="${pushGroup.departName}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
+                                                <label class="">创建人</label>
+                                                <input disabled="disabled" th:value="${pushGroup.createName}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-3">
+                                            <div class="position-relative form-group">
                                                 <label  class="">创建时间	</label>
                                                 <input disabled="disabled" th:value="${#dates.format(pushGroup.createTime,'yyyy-MM-dd HH:mm:ss')}" class="form-control">
                                             </div>

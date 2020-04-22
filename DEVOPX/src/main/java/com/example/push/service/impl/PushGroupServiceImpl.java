@@ -371,7 +371,7 @@ public class PushGroupServiceImpl implements PushGroupService {
     public Map<String, Object> selectGroupById(Integer pushGroupId) {
         Map<String, Object> resultMap;
         try {
-            PushGroup p = pushGroupMapper.selectByPrimaryKey(pushGroupId);
+            PushGroupVo p = pushGroupMapper.selectVoByPrimaryKey(pushGroupId);
             resultMap = ResultMapUtil.success(p);
         } catch (Exception e) {
             resultMap = ResultMapUtil.fail(new PushGroup());

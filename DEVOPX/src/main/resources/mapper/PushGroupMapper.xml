@@ -187,4 +187,15 @@
             </if>
         </where>
     </update>
+
+    <select id="selectVoByPrimaryKey" resultType="com.example.push.model.view.PushGroupVo" parameterType="java.lang.Integer">
+        select
+        p.ID id,p.TOPIC_NAME topicName,p.TOPIC_CODE topicCode,p.CREATE_DEPART createDepart,p.CREATE_USER
+        createUser,p.CREATE_TIME createTime,p.Q_R_CODE qRCode,p.Q_R_CODE_UPDATE_TIME qRCodeUpdateTime,
+        d.DEPART_NAME departName,s.CHINA_NAME createName
+        from push_group p
+        left join sys_department d on p.CREATE_DEPART=d.id
+        left join sys_user s on p.CREATE_USER=s.id
+        where p.ID = #{id,jdbcType=INTEGER}
+    </select>
 </mapper>

@@ -37,11 +37,6 @@
                         </div>
                         <div class="page-title-actions">
                             <div class="d-inline-block dropdown">
-                                <button type="button" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false"
-                                        onclick="pushGroup_add()" class="btn-shadow  btn btn-info">
-                                    新增群组
-                                </button>
                             </div>
                         </div>
                     </div>
@@ -65,7 +60,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-8">
-                                    <div style="text-align:right;margin-top: 30px;margin-right: 7px;">
+                                    <div style="text-align:right;margin-top: 25px;margin-right: 904px;margin-bottom: 35px">
                                         <button type="button" onclick="queryPushList()"
                                                 class="btn-shadow  btn btn-info">
                                             查询
@@ -73,42 +68,55 @@
                                     </div>
                                 </div>
                             </div>
-                            <h5 class="card-title"></h5>
+                            <div class="form-row" style="margin-bottom: 11px">
+                                <div class="col-md-6">
+                                    <button type="button" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false"
+                                            onclick="pushGroup_add()" class="btn-shadow  btn btn-info">
+                                        新增群组
+                                    </button>
+                                    <button type="button" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false"
+                                            onclick="pushGroup_del()" class="btn-shadow  btn btn-danger">
+                                        删除
+                                    </button>
+                                </div>
+                            </div>
                             <div id="box">
-                                <table class="mb-0 table table-bordered" id="tab">
+                                <table class="mb-0 table table-bordered" id="tab" style="table-layout: fixed;">
                                     <thead>
                                     <tr>
-                                        <th >群组名称</th>
-                                        <th >群组编码</th>
-                                        <th >所属编组</th>
-                                        <th >创建人</th>
-                                        <th >创建时间</th>
-                                        <th style="width: 300px;">操作</th>
+                                        <th style="width:1%" ><input  type="checkbox" onclick="checkAll(this)"/></th>
+                                        <th style="width:10%" >群组名称</th>
+                                        <th style="width:10%" >群组编码</th>
+                                        <!--<th style="width:1%" >所属组</th>-->
+                                        <!--<th style="width:1%" >创建人</th>-->
+                                        <th style="width:10%" >创建时间</th>
+                                        <th style="width:6%" >操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr class="gradeU" th:each="pushGroup:${pushGrouplist}">
+                                        <th ><input  type="checkbox" name="check_del"  th:value="${pushGroup.id}" /></th>
                                         <td th:text="${pushGroup.topicName}"></td>
                                         <td th:text="${pushGroup.topicCode}"></td>
-                                        <td th:text="${pushGroup.departName}"></td>
-                                        <td th:text="${pushGroup.createName}"></td>
+                                        <!--<td th:text="${pushGroup.departName}"></td>-->
+                                        <!--<td th:text="${pushGroup.createName}"></td>-->
                                         <td th:text="${#dates.format(pushGroup.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                                         <td>
                                             <button class="btn btn-info"
                                                     th:onclick="query_QR_code([[${pushGroup.id}]],[[${pushGroup.topicCode}]])">
-                                                查看二维码
+                                                二维码
                                             </button>
                                             <button class="btn btn-warning"
                                                     th:onclick="query_subscriber([[${pushGroup.id}]])">订阅人
                                             </button>
-                                           <!-- <shiro:hasRole name="admin">
-                                            </shiro:hasRole>-->
                                             <button class="btn btn-primary"
-                                                    th:onclick="pushGroup_update([[${pushGroup.id}]])">修改
+                                                    th:onclick="pushGroup_update([[${pushGroup.id}]])">详情
                                             </button>
-                                            <button class="btn btn-danger"
-                                                    th:onclick="pushGroup_del([[${pushGroup.id}]])">删除
-                                            </button>
+                                            <!--<button class="btn btn-danger"-->
+                                                    <!--th:onclick="pushGroup_del([[${pushGroup.id}]])">删除-->
+                                            <!--</button>-->
                                         </td>
 
                                     </tr>
@@ -248,7 +256,23 @@
 
 
     //删除群组信息
-    function pushGroup_del(id) {
+    function pushGroup_del() {
+        //获取需要删除的id数组
+
+        var ids = '';
+//获取所有选中的值，将其用逗号隔开
+        $('input[name="check_del"]:checked').each(function(index,value) {
+            ids += $(this).val() +",";
+        });
+        if(!ids){
+            jeBox.msg("请选择您要删除的列", {
+                icon: 3,
+                time: 2,
+                maskLock: true,            // 是否开启遮罩层
+                maskClose: true         // 点击遮罩层是否可以关闭
+            });
+            return;
+        }
         //弹出对话框进一步确认是否需要删除
         jeBox({
             cell: "del_info",
@@ -266,7 +290,7 @@
                     //确定删除，请求后台删除数据
                     name: '删除',
                     callback: function (index) {
-                        var param = {"id": id};
+                        var param = {"ids": ids};
                         $.ajax({
                             url: "delGroup",
                             type: "post",    //不区分大小写
@@ -376,6 +400,12 @@
     function pushGroup_update(pushGroupId) {
         var param={"id":pushGroupId,"topicName":$("#query_topicName").val(),"topicCode":$("#query_topicCode").val()};
         ipsSystem.doPost("/devopx/devopxUpdateViev",param)
+    }
+
+
+    //点击全选或者全不选
+    function checkAll(checkbox) {
+        $("input[name='check_del']").prop("checked",$(checkbox).prop("checked"));
     }
 </script>
 </body>

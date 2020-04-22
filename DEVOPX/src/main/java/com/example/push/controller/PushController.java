@@ -108,10 +108,17 @@ public class PushController extends BaseController {
      */
     @RequestMapping(value = "/delGroup", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> delGroup(PushGroup pushGroup) {
+    public Map<String, Object> delGroup(String  ids) {
         Map<String, Object> result = null;
         try {
-            result = pushGroupService.delGroup(pushGroup);
+            //分割ID，依次调用删除业务接口
+            String[] idList=ids.split(",");
+            for (int i=0;i<idList.length;i++){
+                int id=Integer.parseInt(idList[i]);
+                PushGroup p=new PushGroup();
+                p.setId(id);
+                result = pushGroupService.delGroup(p);
+            }
         } catch (BusinessException bExe) {
             result = ResultMapUtil.fail(bExe.getErrMsg());
             logger.error("delGroup失败:{}", bExe.getErrMsg());
