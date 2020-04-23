@@ -1,13 +1,7 @@
 package com.example.push;
 
-import com.example.push.mapper.PushGroupMapper;
-import com.example.push.mapper.PushSubscriberMapper;
-import com.example.push.mapper.SysUserMapper;
-import com.example.push.mapper.TemplateMessageMapper;
-import com.example.push.model.PushGroup;
-import com.example.push.model.PushSubscriber;
-import com.example.push.model.SysUser;
-import com.example.push.model.TemplateMessage;
+import com.example.push.mapper.*;
+import com.example.push.model.*;
 import com.example.push.model.view.PushGroupVo;
 import com.example.push.redis.RedisRunner;
 import org.junit.Test;
@@ -17,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +28,10 @@ public class MapperTest {
     TemplateMessageMapper templateMessageMapper;
     @Autowired
     RedisRunner redisRunner;
-
+    @Autowired
+    SysUserRoleMapper sysUserRoleMapper;
+    @Autowired
+    SysRolePermMapper sysRolePermMapper;
 
     @Test
     public void pushGroupMapperInsertTest() {
@@ -145,5 +143,26 @@ public class MapperTest {
         int num = pushGroupMapper.deleteByPrimaryKey(p);
         System.out.println(">>>>>>>>>>>>"+num);
     }
+
+    @Test
+    public void selectRolesBySysId(){
+       List<SysRole> roles= sysUserRoleMapper.selectRolesBySysId(15);
+        for(SysRole s:roles){
+            System.out.println(">>>>>>>>>>>>"+s.getRoleCode());
+        }
+    }
+
+    @Test
+    public void selectPermsBySysId(){
+        List<Integer> ids=new ArrayList<>();
+        ids.add(2);
+        ids.add(3);
+        List<SysPermission> ps=sysRolePermMapper.selectPermsByRoleId(ids);
+        for(SysPermission p:ps){
+            System.out.println(p.getPerCode());
+        }
+    }
+
+
 }
 

@@ -6,6 +6,7 @@ import com.example.push.model.PushGroup;
 import com.example.push.model.PushSubscriber;
 import com.example.push.service.PushGroupService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class PushController extends BaseController {
      * devopX条件查询
      */
     @RequestMapping(value = "/devopxView")
+    @RequiresPermissions("DEVOPX_Q")
     public ModelAndView queryPushView(PushGroup pushGroup) {
         ModelAndView view = new ModelAndView("push/push");
         Map<String, Object> result = pushGroupService.getGroupList(pushGroup, 1, PAGESIZE);
@@ -53,6 +55,7 @@ public class PushController extends BaseController {
      * devopX列表分页查询
      */
     @RequestMapping(value = "/devopxViewPage")
+    @RequiresPermissions("DEVOPX_Q")
     public ModelAndView queryPushViewPage(PushGroup pushGroup, Integer pageNum) {
         ModelAndView view = new ModelAndView("push/pushTable");
         Map<String, Object> result = pushGroupService.getGroupList(pushGroup, pageNum, PAGESIZE);
@@ -67,6 +70,7 @@ public class PushController extends BaseController {
      * 跳转到devopX新增页面
      */
     @RequestMapping(value = "/devopxAddView", method = RequestMethod.GET)
+    @RequiresPermissions("DEVOPX_A")
     public ModelAndView pushAddView() {
         ModelAndView view = new ModelAndView("push/pushAdd");
         linkSysInfo(view);
@@ -80,6 +84,7 @@ public class PushController extends BaseController {
      */
     @RequestMapping(value = "/addGroup", method = RequestMethod.POST)
     @ResponseBody
+    @RequiresPermissions("DEVOPX_A")
     public Map<String, Object> addGroup(PushGroup pushGroup) {
         Map<String, Object> result = null;
         try {
@@ -108,6 +113,7 @@ public class PushController extends BaseController {
      */
     @RequestMapping(value = "/delGroup", method = RequestMethod.POST)
     @ResponseBody
+    @RequiresPermissions("DEVOPX_D")
     public Map<String, Object> delGroup(String  ids) {
         Map<String, Object> result = null;
         try {
@@ -135,6 +141,7 @@ public class PushController extends BaseController {
      */
     @RequestMapping(value = "/getQRCode", method = RequestMethod.POST)
     @ResponseBody
+    @RequiresPermissions("DEVOPX_Q")
     public Map<String, Object> getQRCode(PushGroup pushGroup) {
         Map<String, Object> result = pushGroupService.getQRCode(pushGroup);
         return result;
@@ -145,6 +152,7 @@ public class PushController extends BaseController {
      * 查询订阅人信息列表
      */
     @RequestMapping(value = "/devopxSubViev")
+    @RequiresPermissions("DEVOPX_Q")
     public ModelAndView devopxSubViev(String pushGroupId) {
         ModelAndView view = new ModelAndView("push/pushSubscriber");
         Map<String, Object> result = pushGroupService.getSubList(pushGroupId, 1, PAGESIZE);
@@ -156,9 +164,10 @@ public class PushController extends BaseController {
 
     /**
      * 模块：devopX插件
-     * 查询订阅人信息列表
+     * 查询订阅人信息列表分页
      */
     @RequestMapping(value = "/devopxSubVievPage")
+    @RequiresPermissions("DEVOPX_Q")
     public ModelAndView devopxSubVievPage(Integer pushGroupId, Integer pageNum) {
         ModelAndView view = new ModelAndView("push/pushSubscriberTable");
         Map<String, Object> result = pushGroupService.getSubList(String.valueOf(pushGroupId), pageNum, PAGESIZE);
@@ -173,6 +182,7 @@ public class PushController extends BaseController {
      */
     @RequestMapping(value = "/delDevopxSub", method = RequestMethod.POST)
     @ResponseBody
+    @RequiresPermissions("DEVOPX_D")
     public Map<String, Object> delPushSub(PushSubscriber pushSubscriber) {
         Map<String, Object> result = pushGroupService.delPushSub(pushSubscriber);
         return result;
@@ -213,6 +223,7 @@ public class PushController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/devopxUpdateViev")
+    @RequiresPermissions("DEVOPX_U")
     public ModelAndView devopxUpdateViev(PushGroup pushGroup) {
         ModelAndView view = new ModelAndView("push/pushUpdate");
         Map<String, Object> result = pushGroupService.selectGroupById(pushGroup.getId());
@@ -225,6 +236,7 @@ public class PushController extends BaseController {
 
     @RequestMapping(value = "/updateGroup")
     @ResponseBody
+    @RequiresPermissions("DEVOPX_U")
     public Map<String, Object> updateGroup(PushGroup pushGroup) {
 
         return pushGroupService.updateGroup(pushGroup);

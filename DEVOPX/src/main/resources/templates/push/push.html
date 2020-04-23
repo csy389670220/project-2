@@ -29,9 +29,9 @@
                                 <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
                                 </i>
                             </div>
-                            <div>devopX
+                            <div>devopX-pull功能
                                 <div class="page-title-subheading">
-                                    devopX群组信息列表
+                                    群组信息列表
                                 </div>
                             </div>
                         </div>
@@ -70,16 +70,20 @@
                             </div>
                             <div class="form-row" style="margin-bottom: 11px">
                                 <div class="col-md-6">
+                                    <shiro:hasPermission name="DEVOPX_A">
                                     <button type="button" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false"
                                             onclick="pushGroup_add()" class="btn-shadow  btn btn-info">
                                         新增群组
                                     </button>
+                                    </shiro:hasPermission>
+                                    <shiro:hasPermission name="DEVOPX_D">
                                     <button type="button" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false"
                                             onclick="pushGroup_del()" class="btn-shadow  btn btn-danger">
                                         删除
                                     </button>
+                                    </shiro:hasPermission>
                                 </div>
                             </div>
                             <div id="box">
@@ -111,12 +115,11 @@
                                             <button class="btn btn-warning"
                                                     th:onclick="query_subscriber([[${pushGroup.id}]])">订阅人
                                             </button>
+                                            <shiro:hasPermission name="DEVOPX_U">
                                             <button class="btn btn-primary"
                                                     th:onclick="pushGroup_update([[${pushGroup.id}]])">详情
                                             </button>
-                                            <!--<button class="btn btn-danger"-->
-                                                    <!--th:onclick="pushGroup_del([[${pushGroup.id}]])">删除-->
-                                            <!--</button>-->
+                                            </shiro:hasPermission>
                                         </td>
 
                                     </tr>

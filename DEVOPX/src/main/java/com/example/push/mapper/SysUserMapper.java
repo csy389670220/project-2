@@ -1,7 +1,11 @@
 package com.example.push.mapper;
 
+import com.example.push.model.SysPermission;
+import com.example.push.model.SysRole;
 import com.example.push.model.SysUser;
 import com.example.push.model.view.SysUserVo;
+
+import java.util.List;
 
 public interface SysUserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -24,13 +28,7 @@ public interface SysUserMapper {
      */
     SysUser selectByLoginName(String loginName);
 
-    /**
-     * 根据登录名查询角色
-     *
-     * @param loginName
-     * @return
-     */
-    String  selectRolesByLoginName(String loginName);
+
 
     /**
      * 根据token查询用户信息
@@ -47,4 +45,5 @@ public interface SysUserMapper {
      * @return
      */
     SysUserVo selectVoByLoginName (String loginName);
+
 }

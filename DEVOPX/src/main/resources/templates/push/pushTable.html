@@ -26,9 +26,11 @@
             <button class="btn btn-warning"
                     th:onclick="query_subscriber([[${pushGroup.id}]])">订阅人
             </button>
+            <shiro:hasPermission name="DEVOPX_U">
             <button class="btn btn-primary"
                     th:onclick="pushGroup_update([[${pushGroup.id}]])">详情
             </button>
+            </shiro:hasPermission>
         </td>
 
     </tr>

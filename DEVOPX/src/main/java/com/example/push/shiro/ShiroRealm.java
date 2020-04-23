@@ -2,7 +2,11 @@ package com.example.push.shiro;
 
 import com.example.push.export.Constant;
 import com.example.push.mapper.SysUserMapper;
+import com.example.push.model.SysPermission;
+import com.example.push.model.SysRole;
 import com.example.push.model.SysUser;
+import com.example.push.model.view.SysAuthorVo;
+import com.example.push.service.SysPermissionService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -22,6 +26,8 @@ public class ShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private SysUserMapper sysUserMapper;
+    @Autowired
+    private SysPermissionService sysPermissionService;
 
     /**
      * 验证用户身份
@@ -95,17 +101,28 @@ public class ShiroRealm extends AuthorizingRealm {
         //获取用户
         String loginName = (String) SecurityUtils.getSubject().getPrincipal();
         SimpleAuthorizationInfo authorizationInfo =  new SimpleAuthorizationInfo();
-        String role = this.sysUserMapper.selectRolesByLoginName(loginName);
-
+        //查询用户授权信息
+        SysAuthorVo author=sysPermissionService.getRoleByLoginName(loginName);
         /**
          * 根据loginName查询数据库，得到用户的权限信息
          * 暂时用户角色跟权限写死
          * 权限配置后续更新
          */
         //增加角色
-        authorizationInfo.addRole(role);
+        if(author.getRole().size()>0){
+            for(SysRole r:author.getRole()){
+                authorizationInfo.addRole(r.getRoleCode());
+            }
+        }
+
         //增加权限
-        //authorizationInfo.addStringPermission("query");
+        if(author.getPermission().size()>0){
+            for(SysPermission p:author.getPermission()){
+                authorizationInfo.addStringPermission(p.getPerCode());
+            }
+
+        }
+
         return authorizationInfo;
     }
 

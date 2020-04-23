@@ -31,7 +31,7 @@ import static com.example.push.util.PushHttpRequest.sendPost;
 
 @Service
 public class WechatPoatManServiceImpl implements WechatPostManService {
-    private static final Logger logger = LoggerFactory.getLogger(WechatPoatManServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(WechatPostManService.class);
     @Value("${appid}")
     private String appid;
     @Value("${secret}")
@@ -166,13 +166,13 @@ public class WechatPoatManServiceImpl implements WechatPostManService {
             json.put("url",messageUrl);
             JSONObject dataJson=new JSONObject();
             JSONObject contentJson=new JSONObject();
-            String content=templateMessage.getContent();
+            String title=templateMessage.getTitle();
             //内容信息过多，省略多余信息
-            if(content.length()>7){
-                content= content.substring(0,7);
-                content+="....";
+            if(title.length()>9){
+                title= title.substring(0,9);
+                title+="....";
             }
-            contentJson.put("value",content);
+            contentJson.put("value",title);
             contentJson.put("color","#173177");
             JSONObject timeJson=new JSONObject();
             timeJson.put("value",df.format(templateMessage.getCreatTime()));

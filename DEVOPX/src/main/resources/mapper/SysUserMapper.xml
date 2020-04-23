@@ -7,7 +7,6 @@
     <result column="CHINA_NAME" property="chinaName" jdbcType="VARCHAR" />
     <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
     <result column="DEPARTMENT" property="department" jdbcType="INTEGER" />
-    <result column="ROLES" property="roles" jdbcType="VARCHAR" />
     <result column="SYS_TOKEN" property="sysToken" jdbcType="VARCHAR" />
     <result column="STATUS" property="status" jdbcType="VARCHAR" />
     <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
@@ -16,7 +15,7 @@
     <result column="UPDATE_USER" property="updateUser" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, LOGIN_NAME, CHINA_NAME, PASSWORD, DEPARTMENT, ROLES, SYS_TOKEN, STATUS, CREATE_TIME, 
+    ID, LOGIN_NAME, CHINA_NAME, PASSWORD, DEPARTMENT, SYS_TOKEN, STATUS, CREATE_TIME,
     UPDATE_TIME, CREATE_USER, UPDATE_USER
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -34,11 +33,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into sys_user (LOGIN_NAME, CHINA_NAME, PASSWORD, 
-      DEPARTMENT, ROLES, SYS_TOKEN, 
+      DEPARTMENT, SYS_TOKEN,
       STATUS, CREATE_TIME, UPDATE_TIME, 
       CREATE_USER, UPDATE_USER)
     values (#{loginName,jdbcType=VARCHAR}, #{chinaName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{department,jdbcType=INTEGER}, #{roles,jdbcType=VARCHAR}, #{sysToken,jdbcType=VARCHAR},
+      #{department,jdbcType=INTEGER}, #{sysToken,jdbcType=VARCHAR},
       #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{createUser,jdbcType=INTEGER}, #{updateUser,jdbcType=INTEGER})
   </insert>
@@ -59,9 +58,6 @@
       </if>
       <if test="department != null" >
         DEPARTMENT,
-      </if>
-      <if test="roles != null" >
-        ROLES,
       </if>
       <if test="sysToken != null" >
         SYS_TOKEN,
@@ -94,9 +90,6 @@
       </if>
       <if test="department != null" >
         #{department,jdbcType=INTEGER},
-      </if>
-      <if test="roles != null" >
-        #{roles,jdbcType=VARCHAR},
       </if>
       <if test="sysToken != null" >
         #{sysToken,jdbcType=VARCHAR},
@@ -133,9 +126,6 @@
       <if test="department != null" >
         DEPARTMENT = #{department,jdbcType=INTEGER},
       </if>
-      <if test="roles != null" >
-        ROLES = #{roles,jdbcType=VARCHAR},
-      </if>
       <if test="sysToken != null" >
         SYS_TOKEN = #{sysToken,jdbcType=VARCHAR},
       </if>
@@ -163,7 +153,6 @@
       CHINA_NAME = #{chinaName,jdbcType=VARCHAR},
       PASSWORD = #{password,jdbcType=VARCHAR},
       DEPARTMENT = #{department,jdbcType=INTEGER},
-      ROLES = #{roles,jdbcType=VARCHAR},
       SYS_TOKEN = #{sysToken,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
@@ -180,12 +169,7 @@
     where LOGIN_NAME = #{loginName,jdbcType=VARCHAR}
   </select>
 
-  <select id="selectRolesByLoginName" resultType="String" parameterType="String">
-    select
-    ROLES
-    from sys_user
-    where LOGIN_NAME = #{loginName,jdbcType=VARCHAR}
-  </select>
+
 
   <select id="selectUserByToken" resultMap="BaseResultMap" parameterType="String" >
     select
@@ -197,11 +181,12 @@
 
   <select id="selectVoByLoginName" resultType="com.example.push.model.view.SysUserVo" parameterType="String">
     select
-    u.ID id, u.LOGIN_NAME loginName, u.CHINA_NAME chinaName, u.DEPARTMENT department, u.ROLES roles, u.SYS_TOKEN sysToken, u.STATUS status,u.CREATE_TIME createTime,
+    u.ID id, u.LOGIN_NAME loginName, u.CHINA_NAME chinaName, u.DEPARTMENT department, u.SYS_TOKEN sysToken, u.STATUS status,u.CREATE_TIME createTime,
     u.UPDATE_TIME updateTime, u.CREATE_USER createUser,u.UPDATE_USER updateUser,d.DEPART_NAME departName
     from sys_user u
     left join  sys_department d
     on u.DEPARTMENT=d.id
     where u.LOGIN_NAME = #{loginName,jdbcType=VARCHAR}
   </select>
+
 </mapper>

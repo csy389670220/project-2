@@ -13,8 +13,6 @@ public class SysUser {
 
     private Integer department;
 
-    private String roles;
-
     private String sysToken;
 
     private String status;
@@ -65,14 +63,6 @@ public class SysUser {
 
     public void setDepartment(Integer department) {
         this.department = department;
-    }
-
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles == null ? null : roles.trim();
     }
 
     public String getSysToken() {
