@@ -169,13 +169,13 @@ public class WechatPoatManServiceImpl implements WechatPostManService {
             String title=templateMessage.getTitle();
             String content=templateMessage.getContent();
             //内容信息过多，省略多余信息
-            if(title.length()>25){
-                title= title.substring(0,25);
-                title+="....";
+            if(title.length()>20){
+                title= title.substring(0,18);
+                title+="...";
             }
             if(content.length()>55){
                 content= content.substring(0,55);
-                content+="....";
+                content+="...";
             }
             contentJson.put("value",title);
             contentJson.put("color","#173177");

@@ -12,12 +12,12 @@
 <div class="push-container">
     <span>订阅列表</span>
     <div id="box">
-        <table class="mb-0 table table-bordered" id="tab">
+        <table class="mb-0 table table-bordered" id="tab" style="table-layout: fixed;">
             <thead>
             <tr>
                 <th>群组名称</th>
                 <th>群组编码</th>
-                <th>历史推送</th>
+                <th style="width: 130px">历史推送</th>
             </tr>
             </thead>
             <tbody id="tableBody">
@@ -26,9 +26,7 @@
                 <td th:text="${pushGroup.topicCode}"></td>
                 <td>
                     <a class="btn btn-info" th:href="@{getHistoryPush(openId=${openId},groupId=${pushGroup.id})}">详情</a>
-                    <button class="btn" style=""
-                            th:onclick="tdGroup([[${openId}]],[[${pushGroup.topicCode}]]);">退订
-                    </button>
+                    <button class="btn btn-warning" data-toggle="modal" data-target="#tdaidlog" th:onclick="tdGroupView([[${openId}]],[[${pushGroup.topicCode}]]);">退订 </button>
                 </td>
 
             </tr>
@@ -36,6 +34,38 @@
         </table>
     </div>
 </div>
+<!--隐藏域-->
+<input id="openId" type="hidden"/>
+<input id="td_topicCode" type="hidden"/>
+<div class="modal fade" id="tdaidlog" tabindex="-1" role="dialog" style="margin-top: 35%">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">确认是否退订</h4>
+            </div>
+            <div class="modal-footer" style="  margin-top: -1px;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="tdGroup()">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="message" tabindex="-1" role="dialog" style="margin-top: 35%">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">退订成功</h4>
+            </div>
+            <div class="modal-footer" style="  margin-top: -1px;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 </body>
 <style>
     * {
@@ -91,12 +121,20 @@
 <div th:replace="common/common_sources :: base_js"></div>
 <div th:replace="common/common_sources :: jebox"></div>
 <script>
+
+    //展示退订弹出框
+    function tdGroupView(openId, topicCode) {
+        $("#openId").val(openId)
+        $("#td_topicCode").val(topicCode)
+    }
     /**
      * 退订群组
      * @param openId
      * @param topicCode
      */
-    function tdGroup(openId, topicCode) {
+    function tdGroup() {
+        var openId=$("#openId").val();
+        var topicCode=$("#td_topicCode").val();
         var param = {"openId": openId, "topicCode": topicCode};
         $.ajax({
             url: "unsubscribe",
@@ -106,7 +144,9 @@
             datatype: 'json',
             success: function (result, index) {
                 if (result.code == "success") {
-                    alert("退订成功");
+                    $("#tdaidlog").modal('hide');
+
+                    $("#message").modal('show');
                     //更新列表
                     var param = {"openId": openId};
                     $("#box").load("queryMySubGroupb", param);
@@ -118,6 +158,8 @@
                 alert("退订系统错误");
             }
         });
+
+
     }
 </script>
 </html>

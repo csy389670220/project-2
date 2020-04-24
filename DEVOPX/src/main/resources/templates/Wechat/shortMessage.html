@@ -14,7 +14,8 @@
             style="font-size: 15px; font-weight: bold;color: #000000">devopX &nbsp;&nbsp;</span><span th:text="${#dates.format(templateMessage.creatTime,'yyyy-MM-dd HH:mm:ss')}"></span>
     </div>
     <div class="push-cont-wrap">
-        <div class="push-cont"><span th:text="${templateMessage.content}"></span></div>
+        <div class="push-cont" id="content_span">
+        </div>
     </div>
 </div>
 </body>
@@ -62,4 +63,18 @@
         line-height:30px;
     }
 </style>
+<div th:replace="common/common_sources :: base_js"></div>
+<div th:replace="common/common_sources :: jebox"></div>
+<script th:inline="javascript">
+    $(function() {
+        //分割文本，优化显示样式
+        var str=[[${templateMessage.content}]];
+        console.log(str)
+        var arr=str.split('\n');
+        for(var i=0;i<arr.length;i++){
+            var htmlStr="<span  style='display:inline-block;width:100%;word-wrap:break-word;white-space:normal;'>"+arr[i]+"</span>"
+            $("#content_span").append(htmlStr);
+        }
+    });
+</script>
 </html>
