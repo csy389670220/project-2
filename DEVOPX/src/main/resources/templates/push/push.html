@@ -29,7 +29,7 @@
                                 <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
                                 </i>
                             </div>
-                            <div>devopX-pull功能
+                            <div>pushX
                                 <div class="page-title-subheading">
                                     群组信息列表
                                 </div>
@@ -96,7 +96,7 @@
                                         <!--<th style="width:1%" >所属组</th>-->
                                         <!--<th style="width:1%" >创建人</th>-->
                                         <th style="width:10%" >创建时间</th>
-                                        <th style="width:6%" >操作</th>
+                                        <th style="width:100px" >操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -109,7 +109,7 @@
                                         <td th:text="${#dates.format(pushGroup.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                                         <td>
                                             <button class="btn btn-info"
-                                                    th:onclick="query_QR_code([[${pushGroup.id}]],[[${pushGroup.topicCode}]])">
+                                                    th:onclick="query_QR_code([[${pushGroup.id}]],[[${pushGroup.topicCode}]],[[${pushGroup.topicName}]])">
                                                 二维码
                                             </button>
                                             <button class="btn btn-warning"
@@ -221,12 +221,12 @@
     }
 
     //查看二维码
-    function query_QR_code(id, topicCode) {
+    function query_QR_code(id, topicCode,topicName) {
         $.ajax({
             url: "getQRCode",
             type: "post",    //不区分大小写
             traditional: true,
-            data: {"id": id, "topicCode": topicCode},
+            data: {"id": id, "topicCode": topicCode,"topicName":topicName},
             datatype: 'json',
             success: function (result) {
                 if (result.code == "success") {

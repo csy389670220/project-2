@@ -2,6 +2,7 @@ package com.example.push;
 
 import com.example.push.export.Constant;
 import com.example.push.redis.RedisRunner;
+import com.example.push.service.CmdbService;
 import com.example.push.service.PushGroupService;
 import com.example.push.shiro.MyByteSource;
 import com.example.push.util.AESUtil;
@@ -33,6 +34,8 @@ public class PushApplicationTests {
     @Autowired
     PushGroupService pushGroupService;
 
+    @Autowired
+    CmdbService cmdbService;
     /**
      * 数据库账号密码加解密测试
      */
@@ -133,4 +136,11 @@ public class PushApplicationTests {
         System.out.println("result>>>>>>"+result);
     }
 
+    /**
+     * 测试CMDB读取文件源导入数据库
+     */
+    @Test
+    public void saveServerInfo(){
+        cmdbService.saveServerInfo("C:\\Users\\Farben\\Desktop","prod");
+    }
 }

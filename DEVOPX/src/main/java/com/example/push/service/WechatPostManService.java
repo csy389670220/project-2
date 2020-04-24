@@ -49,7 +49,7 @@ public interface WechatPostManService {
      * @param openID
      * @param topicCode
      */
-    void  tdTopic(String openID,String topicCode);
+    Map<String, Object>  tdTopic(String openID,String topicCode);
 
     /**
      * 微信公众号菜单跳转授权页面，获取用户openID

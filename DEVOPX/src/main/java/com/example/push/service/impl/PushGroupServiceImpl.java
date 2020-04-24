@@ -168,7 +168,8 @@ public class PushGroupServiceImpl implements PushGroupService {
                 // 提前800s更新二维码
                 //调用二维码接口获取新的二维码，并且数据落地
                 logger.info("getQRCode二维码即将过期，获取最新二维码");
-                JSONObject result = wechatPostManService.createQrcode(pushGroup.getTopicCode());
+                String sceneStr=pushGroup.getTopicCode()+"_"+pushGroup.getId()+"_"+pushGroup.getTopicName();
+                JSONObject result = wechatPostManService.createQrcode(sceneStr);
                 Object errcode = result.get("errcode");
                 if (CheckUtil.isEmpty(errcode)) {
                     //errcode不存在，调用成功；

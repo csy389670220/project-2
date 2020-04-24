@@ -167,10 +167,15 @@ public class WechatPoatManServiceImpl implements WechatPostManService {
             JSONObject dataJson=new JSONObject();
             JSONObject contentJson=new JSONObject();
             String title=templateMessage.getTitle();
+            String content=templateMessage.getContent();
             //内容信息过多，省略多余信息
-            if(title.length()>9){
-                title= title.substring(0,9);
+            if(title.length()>25){
+                title= title.substring(0,25);
                 title+="....";
+            }
+            if(content.length()>55){
+                content= content.substring(0,55);
+                content+="....";
             }
             contentJson.put("value",title);
             contentJson.put("color","#173177");
@@ -178,7 +183,7 @@ public class WechatPoatManServiceImpl implements WechatPostManService {
             timeJson.put("value",df.format(templateMessage.getCreatTime()));
             timeJson.put("color","#173177");
             JSONObject memoJson=new JSONObject();
-            memoJson.put("value","群组:"+pushGroup.getTopicName()+"("+pushGroup.getTopicCode()+");点击查看详细消息,退订回复td"+pushGroup.getTopicCode());
+            memoJson.put("value",content);
             memoJson.put("color","#173177");
             dataJson.put("content",contentJson);
             dataJson.put("time",timeJson);
@@ -205,7 +210,8 @@ public class WechatPoatManServiceImpl implements WechatPostManService {
     }
 
     @Override
-    public void tdTopic(String openID, String topicCode) {
+    public  Map<String, Object> tdTopic(String openID, String topicCode) {
+        Map<String, Object> resultMap;
         try{
             //2边去空处理
             topicCode=topicCode.trim();
@@ -214,12 +220,17 @@ public class WechatPoatManServiceImpl implements WechatPostManService {
 
             if(num>0){
                 //删除成功通知订阅人退订成功
-                sentMessage(openID,"退订群组["+topicCode+"]成功");
+                resultMap=ResultMapUtil.success("退订成功");
+            }else {
+                resultMap=ResultMapUtil.fail("退订失败");
+                logger.info("tdTopic退订失败，num：{}",num);
             }
+
         }catch (Exception e){
             logger.error("tdTopi系统错误:{}",e);
-            sentMessage(openID,"退订失败");
+            resultMap=ResultMapUtil.fail("退订失败");
         }
+        return resultMap;
     }
 
     @Override

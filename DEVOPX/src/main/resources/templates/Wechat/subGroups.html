@@ -20,12 +20,15 @@
                 <th>历史推送</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="tableBody">
             <tr class="gradeU" th:each="pushGroup:${subGroupList}">
                 <td th:text="${pushGroup.topicName}"></td>
                 <td th:text="${pushGroup.topicCode}"></td>
                 <td>
-                    <a th:href="@{getHistoryPush(openId=${openId},groupId=${pushGroup.id})}">详情</a>
+                    <a class="btn btn-info" th:href="@{getHistoryPush(openId=${openId},groupId=${pushGroup.id})}">详情</a>
+                    <button class="btn" style=""
+                            th:onclick="tdGroup([[${openId}]],[[${pushGroup.topicCode}]]);">退订
+                    </button>
                 </td>
 
             </tr>
@@ -86,7 +89,35 @@
     }
 </style>
 <div th:replace="common/common_sources :: base_js"></div>
+<div th:replace="common/common_sources :: jebox"></div>
 <script>
-
+    /**
+     * 退订群组
+     * @param openId
+     * @param topicCode
+     */
+    function tdGroup(openId, topicCode) {
+        var param = {"openId": openId, "topicCode": topicCode};
+        $.ajax({
+            url: "unsubscribe",
+            type: "post",    //不区分大小写
+            traditional: true,
+            data: param,
+            datatype: 'json',
+            success: function (result, index) {
+                if (result.code == "success") {
+                    alert("退订成功");
+                    //更新列表
+                    var param = {"openId": openId};
+                    $("#box").load("queryMySubGroupb", param);
+                } else {
+                    alert("退订失败");
+                }
+            },
+            error: function (err) {
+                alert("退订系统错误");
+            }
+        });
+    }
 </script>
 </html>

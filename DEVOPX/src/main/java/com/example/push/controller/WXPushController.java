@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -96,6 +97,9 @@ public class WXPushController extends BaseController {
                         logger.info("触发扫一扫参数二维码事件，扫码用户openId：{},参数:{}", openId, param);
                         //解析二维码参数
                         PushGroup p = paramToModel(param, wxmsg.getEvent());
+                        if(CheckUtil.isEmpty(p)){
+                            break;
+                        }
                         // 1.存储用户订阅人数据
                         Map<String, Object> result = pushGroupService.addSubscriber(openId, String.valueOf(p.getId()));
                         // 2.通知用户订阅反馈
@@ -109,18 +113,19 @@ public class WXPushController extends BaseController {
 
                     }
                     break;
-                case "text":
-                    //1.退订业务
-                    String conten=wxmsg.getContent();
-                    int num=conten.indexOf("td");
-                    if(num==0&&conten.length()>2){
-                        String openID=wxmsg.getFromUserName();
-                        String topicCode=conten.substring(2,conten.length());
-                        logger.info("{}进行退订业务",openID);
-                        wechatPostManService.tdTopic(openID,topicCode);
-                    }
-
-                    break;
+                    //回复TD+群组编码退订功能此版本取消20200423
+//                case "text":
+//                    //1.退订业务
+//                    String conten=wxmsg.getContent();
+//                    int num=conten.indexOf("td");
+//                    if(num==0&&conten.length()>2){
+//                        String openID=wxmsg.getFromUserName();
+//                        String topicCode=conten.substring(2,conten.length());
+//                        logger.info("{}进行退订业务",openID);
+//                        wechatPostManService.tdTopic(openID,topicCode);
+//                    }
+//
+//                    break;
                 default:
                     logger.debug("event default");
                     break;
@@ -158,13 +163,14 @@ public class WXPushController extends BaseController {
             p.setTopicName(topicName);
         } catch (Exception e) {
             logger.error("解析二维码参数错误:{}", e);
+            return  null;
         }
         return p;
     }
 
 
     /**
-     * 查询此订阅人的订阅群组列表
+     * 微信公众号按钮跳转，查询此订阅人的订阅群组列表
      * @param code  微信页面授权code，根据code查询页面授权的微信用户openId
      * @param state 固定字段
      * @return
@@ -175,6 +181,17 @@ public class WXPushController extends BaseController {
         //1.根据页面授权码获取用户openId
         String openId=wechatPostManService.oauth2CodeGetOpenId(code);
         //2.根据openid获取数据填充页面
+        Map<String, Object>   map=pushGroupService.getSubGroupByOpenId(openId);
+        view.addObject("subGroupList",map.get("data"));
+        view.addObject("openId",openId);
+        return view;
+    }
+
+    @RequestMapping(value = "/Wechat/queryMySubGroupb")
+    @ResponseBody
+    public ModelAndView getGroupList(String openId) {
+        ModelAndView view = new ModelAndView("Wechat/subGroupTable");
+        //根据openid查询群组列表
         Map<String, Object>   map=pushGroupService.getSubGroupByOpenId(openId);
         view.addObject("subGroupList",map.get("data"));
         view.addObject("openId",openId);
@@ -195,6 +212,21 @@ public class WXPushController extends BaseController {
         view.addObject("historyPsuhs",map.get("data"));
         return view;
     }
+
+    /**
+     * 退订群组接口
+     * @param openId
+     * @param topicCode
+     * @return
+     */
+    @RequestMapping(value = "/Wechat/unsubscribe")
+    @ResponseBody
+    public  Map<String, Object>  unsubscribeGroup(String openId,String topicCode) {
+        logger.info("unsubscribeGroup init,openId:{},topicCode:{}",openId,topicCode);
+        Map<String, Object>  map=wechatPostManService.tdTopic(openId,topicCode);
+        return map;
+    }
+
 
 
 }
