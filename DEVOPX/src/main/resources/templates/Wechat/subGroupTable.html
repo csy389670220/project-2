@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<table class="mb-0 table table-bordered" id="tab" style="table-layout: fixed;">
+    <thead>
+    <tr>
+        <th>群组名称</th>
+        <th>群组编码</th>
+        <th style="width: 130px">历史推送</th>
+    </tr>
+    </thead>
+    <tbody id="tableBody">
+    <tr class="gradeU" th:each="pushGroup:${subGroupList}">
+        <td th:text="${pushGroup.topicName}"></td>
+        <td th:text="${pushGroup.topicCode}"></td>
+        <td>
+            <a class="btn btn-info" th:href="@{getHistoryPush(openId=${openId},groupId=${pushGroup.id})}">详情</a>
+            <button class="btn btn-warning" data-toggle="modal" data-target="#tdaidlog" th:onclick="tdGroupView([[${openId}]],[[${pushGroup.topicCode}]]);">退订 </button>
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

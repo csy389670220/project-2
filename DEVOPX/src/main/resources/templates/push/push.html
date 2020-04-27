@@ -102,7 +102,7 @@
                                     <tbody>
                                     <tr class="gradeU" th:each="pushGroup:${pushGrouplist}">
                                         <th ><input  type="checkbox" name="check_del"  th:value="${pushGroup.id}" /></th>
-                                        <td th:text="${pushGroup.topicName}"></td>
+                                        <td ><span th:text="${pushGroup.topicName}"></span></td>
                                         <td th:text="${pushGroup.topicCode}"></td>
                                         <!--<td th:text="${pushGroup.departName}"></td>-->
                                         <!--<td th:text="${pushGroup.createName}"></td>-->
@@ -199,7 +199,7 @@
 <script>
     $(document).ready(function () {
         //选中菜单栏
-        ipsSystem.menu.active("serverPlan_Menu", "PUSH_Menu");
+        ipsSystem.menu.active("DEVOPX_Menu", "PUSH_Menu");
 
         //分页插件初始化
         var query_topicName = $("#query_topicName").val();

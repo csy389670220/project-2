@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.push.mapper.CmdbMountInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.example.push.model.CmdbMountInfo" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SERVER_ID" property="serverId" jdbcType="INTEGER" />
+    <result column="MOUNT_PATH" property="mountPath" jdbcType="VARCHAR" />
+    <result column="USAGE_TOTAL" property="usageTotal" jdbcType="VARCHAR" />
+    <result column="DISK_USAGE_RATE" property="diskUsageRate" jdbcType="VARCHAR" />
+    <result column="UPDATE_CODE" property="updateCode" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SERVER_ID, MOUNT_PATH, USAGE_TOTAL, DISK_USAGE_RATE, UPDATE_CODE, CREATE_TIME, 
+    CREATE_USER
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cmdb_mount_info
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cmdb_mount_info
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.push.model.CmdbMountInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cmdb_mount_info (SERVER_ID, MOUNT_PATH, USAGE_TOTAL, 
+      DISK_USAGE_RATE, UPDATE_CODE, CREATE_TIME, 
+      CREATE_USER)
+    values (#{serverId,jdbcType=INTEGER}, #{mountPath,jdbcType=VARCHAR}, #{usageTotal,jdbcType=VARCHAR}, 
+      #{diskUsageRate,jdbcType=VARCHAR}, #{updateCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.push.model.CmdbMountInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cmdb_mount_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serverId != null" >
+        SERVER_ID,
+      </if>
+      <if test="mountPath != null" >
+        MOUNT_PATH,
+      </if>
+      <if test="usageTotal != null" >
+        USAGE_TOTAL,
+      </if>
+      <if test="diskUsageRate != null" >
+        DISK_USAGE_RATE,
+      </if>
+      <if test="updateCode != null" >
+        UPDATE_CODE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serverId != null" >
+        #{serverId,jdbcType=INTEGER},
+      </if>
+      <if test="mountPath != null" >
+        #{mountPath,jdbcType=VARCHAR},
+      </if>
+      <if test="usageTotal != null" >
+        #{usageTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="diskUsageRate != null" >
+        #{diskUsageRate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateCode != null" >
+        #{updateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.push.model.CmdbMountInfo" >
+    update cmdb_mount_info
+    <set >
+      <if test="serverId != null" >
+        SERVER_ID = #{serverId,jdbcType=INTEGER},
+      </if>
+      <if test="mountPath != null" >
+        MOUNT_PATH = #{mountPath,jdbcType=VARCHAR},
+      </if>
+      <if test="usageTotal != null" >
+        USAGE_TOTAL = #{usageTotal,jdbcType=VARCHAR},
+      </if>
+      <if test="diskUsageRate != null" >
+        DISK_USAGE_RATE = #{diskUsageRate,jdbcType=VARCHAR},
+      </if>
+      <if test="updateCode != null" >
+        UPDATE_CODE = #{updateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.push.model.CmdbMountInfo" >
+    update cmdb_mount_info
+    set SERVER_ID = #{serverId,jdbcType=INTEGER},
+      MOUNT_PATH = #{mountPath,jdbcType=VARCHAR},
+      USAGE_TOTAL = #{usageTotal,jdbcType=VARCHAR},
+      DISK_USAGE_RATE = #{diskUsageRate,jdbcType=VARCHAR},
+      UPDATE_CODE = #{updateCode,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <insert id ="insertSelectiveBatch" parameterType="java.util.List" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into cmdb_mount_info (SERVER_ID, MOUNT_PATH, USAGE_TOTAL,
+    DISK_USAGE_RATE)
+    values
+    <foreach collection ="list" item="mountInfo" index= "index" separator =",">
+      (#{mountInfo.serverId,jdbcType=INTEGER},
+       #{mountInfo.mountPath,jdbcType=VARCHAR},
+       #{mountInfo.usageTotal,jdbcType=VARCHAR},
+      #{mountInfo.diskUsageRate,jdbcType=VARCHAR})
+    </foreach>
+ </insert >
+
+
+  <select id="selectByServerId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from cmdb_mount_info
+    where SERVER_ID = #{serverId,jdbcType=INTEGER}
+  </select>
+</mapper>

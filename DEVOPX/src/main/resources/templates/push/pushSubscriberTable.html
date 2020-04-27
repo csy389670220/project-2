@@ -9,7 +9,7 @@
     <tr>
         <th>昵称</th>
         <th>openId</th>
-        <shiro:hasRole name="admin">
+        <shiro:hasPermission name="DEVOPX_D">
             <th style="width: 100px">操作</th>
         </shiro:hasRole>
     </tr>
@@ -18,7 +18,7 @@
     <tr class="gradeU" th:each="pushSub:${pushSublist}">
         <td th:text="${pushSub.nickName}"></td>
         <td th:text="${pushSub.openId}"></td>
-        <shiro:hasRole name="admin">
+        <shiro:hasPermission name="DEVOPX_D">
             <td>
                 <button class="btn btn-danger"
                         th:onclick="pushSub_del([[${pushSub.id}]])">删除

@@ -173,7 +173,7 @@
 
   <select id="selectUserByToken" resultMap="BaseResultMap" parameterType="String" >
     select
-    ID
+    <include refid="Base_Column_List" />
     from sys_user
     where SYS_TOKEN = #{sysToken,jdbcType=VARCHAR}
   </select>

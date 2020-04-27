@@ -169,8 +169,8 @@ public class WechatPoatManServiceImpl implements WechatPostManService {
             String title=templateMessage.getTitle();
             String content=templateMessage.getContent();
             //内容信息过多，省略多余信息
-            if(title.length()>20){
-                title= title.substring(0,18);
+            if(title.length()>30){
+                title= title.substring(0,30);
                 title+="...";
             }
             if(content.length()>55){

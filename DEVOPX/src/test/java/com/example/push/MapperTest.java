@@ -32,6 +32,8 @@ public class MapperTest {
     SysUserRoleMapper sysUserRoleMapper;
     @Autowired
     SysRolePermMapper sysRolePermMapper;
+    @Autowired
+    CmdbMountInfoMapper cmdbMountInfoMapper;
 
     @Test
     public void pushGroupMapperInsertTest() {
@@ -161,6 +163,25 @@ public class MapperTest {
         for(SysPermission p:ps){
             System.out.println(p.getPerCode());
         }
+    }
+
+    @Test
+    public void insertSelectiveBatch(){
+        List<CmdbMountInfo> list=new ArrayList<>();
+        CmdbMountInfo m1=new CmdbMountInfo();
+        CmdbMountInfo m2=new CmdbMountInfo();
+        m1.setServerId(1);
+        m1.setMountPath("/app");
+        m1.setUsageTotal("5G/20G");
+        m1.setDiskUsageRate("10%");
+        m2.setServerId(1);
+        m2.setMountPath("/home");
+        m2.setUsageTotal("5G/20G");
+        m2.setDiskUsageRate("17%");
+        list.add(m1);
+        list.add(m2);
+        cmdbMountInfoMapper.insertSelectiveBatch(list);
+
     }
 
 

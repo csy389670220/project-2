@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.push.mapper.CmdbServerInfoMapper">
+    <resultMap id="BaseResultMap" type="com.example.push.model.CmdbServerInfo">
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <result column="SERVER_NAME" property="serverName" jdbcType="VARCHAR"/>
+        <result column="MANAGE_IP" property="manageIp" jdbcType="VARCHAR"/>
+        <result column="BUSINESS_IP" property="businessIp" jdbcType="VARCHAR"/>
+        <result column="CPU" property="cpu" jdbcType="VARCHAR"/>
+        <result column="CPU_USAGE_RATE" property="cpuUsageRate" jdbcType="VARCHAR"/>
+        <result column="MEM" property="mem" jdbcType="VARCHAR"/>
+        <result column="MEM_USAGE_RATE" property="memUsageRate" jdbcType="VARCHAR"/>
+        <result column="DISK" property="disk" jdbcType="VARCHAR"/>
+        <result column="DISK_USAGE_RATE" property="diskUsageRate" jdbcType="VARCHAR"/>
+        <result column="SYSTEM_VER" property="systemVer" jdbcType="VARCHAR"/>
+        <result column="ENV" property="env" jdbcType="VARCHAR"/>
+        <result column="UPDATE_CODE" property="updateCode" jdbcType="VARCHAR"/>
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="CREATE_USER" property="createUser" jdbcType="VARCHAR"/>
+        <result column="UPDATE_USER" property="updateUser" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ID, SERVER_NAME, MANAGE_IP, BUSINESS_IP, CPU, CPU_USAGE_RATE, MEM, MEM_USAGE_RATE, 
+    DISK, DISK_USAGE_RATE, SYSTEM_VER, ENV, UPDATE_CODE, CREATE_TIME, UPDATE_TIME, CREATE_USER, 
+    UPDATE_USER
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cmdb_server_info
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cmdb_server_info
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.example.push.model.CmdbServerInfo">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into cmdb_server_info (SERVER_NAME, MANAGE_IP, BUSINESS_IP,
+        CPU, CPU_USAGE_RATE, MEM,
+        MEM_USAGE_RATE, DISK, DISK_USAGE_RATE,
+        SYSTEM_VER, ENV, UPDATE_CODE,
+        CREATE_TIME, UPDATE_TIME, CREATE_USER,
+        UPDATE_USER)
+        values (#{serverName,jdbcType=VARCHAR}, #{manageIp,jdbcType=VARCHAR}, #{businessIp,jdbcType=VARCHAR},
+        #{cpu,jdbcType=VARCHAR}, #{cpuUsageRate,jdbcType=VARCHAR}, #{mem,jdbcType=VARCHAR},
+        #{memUsageRate,jdbcType=VARCHAR}, #{disk,jdbcType=VARCHAR}, #{diskUsageRate,jdbcType=VARCHAR},
+        #{systemVer,jdbcType=VARCHAR}, #{env,jdbcType=VARCHAR}, #{updateCode,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR},
+        #{updateUser,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.example.push.model.CmdbServerInfo">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into cmdb_server_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="serverName != null">
+                SERVER_NAME,
+            </if>
+            <if test="manageIp != null">
+                MANAGE_IP,
+            </if>
+            <if test="businessIp != null">
+                BUSINESS_IP,
+            </if>
+            <if test="cpu != null">
+                CPU,
+            </if>
+            <if test="cpuUsageRate != null">
+                CPU_USAGE_RATE,
+            </if>
+            <if test="mem != null">
+                MEM,
+            </if>
+            <if test="memUsageRate != null">
+                MEM_USAGE_RATE,
+            </if>
+            <if test="disk != null">
+                DISK,
+            </if>
+            <if test="diskUsageRate != null">
+                DISK_USAGE_RATE,
+            </if>
+            <if test="systemVer != null">
+                SYSTEM_VER,
+            </if>
+            <if test="env != null">
+                ENV,
+            </if>
+            <if test="updateCode != null">
+                UPDATE_CODE,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="createUser != null">
+                CREATE_USER,
+            </if>
+            <if test="updateUser != null">
+                UPDATE_USER,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="serverName != null">
+                #{serverName,jdbcType=VARCHAR},
+            </if>
+            <if test="manageIp != null">
+                #{manageIp,jdbcType=VARCHAR},
+            </if>
+            <if test="businessIp != null">
+                #{businessIp,jdbcType=VARCHAR},
+            </if>
+            <if test="cpu != null">
+                #{cpu,jdbcType=VARCHAR},
+            </if>
+            <if test="cpuUsageRate != null">
+                #{cpuUsageRate,jdbcType=VARCHAR},
+            </if>
+            <if test="mem != null">
+                #{mem,jdbcType=VARCHAR},
+            </if>
+            <if test="memUsageRate != null">
+                #{memUsageRate,jdbcType=VARCHAR},
+            </if>
+            <if test="disk != null">
+                #{disk,jdbcType=VARCHAR},
+            </if>
+            <if test="diskUsageRate != null">
+                #{diskUsageRate,jdbcType=VARCHAR},
+            </if>
+            <if test="systemVer != null">
+                #{systemVer,jdbcType=VARCHAR},
+            </if>
+            <if test="env != null">
+                #{env,jdbcType=VARCHAR},
+            </if>
+            <if test="updateCode != null">
+                #{updateCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.push.model.CmdbServerInfo">
+        update cmdb_server_info
+        <set>
+            <if test="serverName != null">
+                SERVER_NAME = #{serverName,jdbcType=VARCHAR},
+            </if>
+            <if test="manageIp != null">
+                MANAGE_IP = #{manageIp,jdbcType=VARCHAR},
+            </if>
+            <if test="businessIp != null">
+                BUSINESS_IP = #{businessIp,jdbcType=VARCHAR},
+            </if>
+            <if test="cpu != null">
+                CPU = #{cpu,jdbcType=VARCHAR},
+            </if>
+            <if test="cpuUsageRate != null">
+                CPU_USAGE_RATE = #{cpuUsageRate,jdbcType=VARCHAR},
+            </if>
+            <if test="mem != null">
+                MEM = #{mem,jdbcType=VARCHAR},
+            </if>
+            <if test="memUsageRate != null">
+                MEM_USAGE_RATE = #{memUsageRate,jdbcType=VARCHAR},
+            </if>
+            <if test="disk != null">
+                DISK = #{disk,jdbcType=VARCHAR},
+            </if>
+            <if test="diskUsageRate != null">
+                DISK_USAGE_RATE = #{diskUsageRate,jdbcType=VARCHAR},
+            </if>
+            <if test="systemVer != null">
+                SYSTEM_VER = #{systemVer,jdbcType=VARCHAR},
+            </if>
+            <if test="env != null">
+                ENV = #{env,jdbcType=VARCHAR},
+            </if>
+            <if test="updateCode != null">
+                UPDATE_CODE = #{updateCode,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                CREATE_USER = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUser != null">
+                UPDATE_USER = #{updateUser,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.example.push.model.CmdbServerInfo">
+    update cmdb_server_info
+    set SERVER_NAME = #{serverName,jdbcType=VARCHAR},
+      MANAGE_IP = #{manageIp,jdbcType=VARCHAR},
+      BUSINESS_IP = #{businessIp,jdbcType=VARCHAR},
+      CPU = #{cpu,jdbcType=VARCHAR},
+      CPU_USAGE_RATE = #{cpuUsageRate,jdbcType=VARCHAR},
+      MEM = #{mem,jdbcType=VARCHAR},
+      MEM_USAGE_RATE = #{memUsageRate,jdbcType=VARCHAR},
+      DISK = #{disk,jdbcType=VARCHAR},
+      DISK_USAGE_RATE = #{diskUsageRate,jdbcType=VARCHAR},
+      SYSTEM_VER = #{systemVer,jdbcType=VARCHAR},
+      ENV = #{env,jdbcType=VARCHAR},
+      UPDATE_CODE = #{updateCode,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CREATE_USER = #{createUser,jdbcType=VARCHAR},
+      UPDATE_USER = #{updateUser,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectiveCmdbServerInfo" resultType="com.example.push.model.view.CmdbServerInfoVo"
+            parameterType="com.example.push.model.CmdbServerInfo">
+        select
+        ID id,SERVER_NAME serverName,MANAGE_IP manageIp,BUSINESS_IP businessIp,CPU cpu ,CPU_USAGE_RATE cpuUsageRate,MEM
+        mem,MEM_USAGE_RATE memUsageRate,
+        DISK disk,DISK_USAGE_RATE diskUsageRate,SYSTEM_VER systemVer,ENV env
+        from cmdb_server_info
+        <where>
+            <if test="serverName != null and serverName !=''">
+                and SERVER_NAME = #{serverName,jdbcType=VARCHAR}
+            </if>
+            <if test="env != null and env !=''">
+                and ENV = #{env,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by CREATE_TIME desc
+    </select>
+
+
+    <delete id="deleteByEnv" parameterType="java.lang.String">
+    delete from cmdb_server_info
+    where  ENV = #{env,jdbcType=VARCHAR}
+  </delete>
+
+</mapper>

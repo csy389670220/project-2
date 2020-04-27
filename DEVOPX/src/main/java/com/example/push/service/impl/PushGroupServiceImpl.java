@@ -52,12 +52,8 @@ public class PushGroupServiceImpl implements PushGroupService {
         Map<String, Object> resultMap;
         // 从session获取操作用户ID，sysId
         Integer department = (Integer) SecurityUtils.getSubject().getSession().getAttribute("department");
-        //用户只能看本编组的群组信息,root例外
-        if(department==0){
-            pushGroup.setCreateDepart(null);
-        }else {
-            pushGroup.setCreateDepart(department);
-        }
+        //root角色不受部门的数据隔离限制,root的department参数为0相当于null，不受条件限制
+        pushGroup.setCreateDepart(department);
 
         try {
             PageHelper.startPage(pageNum, pageSize);
@@ -126,12 +122,8 @@ public class PushGroupServiceImpl implements PushGroupService {
         Map<String, Object> resultMap;
         // 从session获取操作用户部门
         Integer department = (Integer) SecurityUtils.getSubject().getSession().getAttribute("department");
-        //用户只能删除本组的群组信息,root例外
-        if(department==0){
-            pushGroup.setCreateDepart(null);
-        }else {
-            pushGroup.setCreateDepart(department);
-        }
+        //root角色不受部门的数据隔离限制,root的department参数为0相当于null，不受条件限制
+        pushGroup.setCreateDepart(department);
         //删除群组信息
         int num = pushGroupMapper.deleteByPrimaryKey(pushGroup);
         if (num > 0) {
@@ -168,7 +160,7 @@ public class PushGroupServiceImpl implements PushGroupService {
                 // 提前800s更新二维码
                 //调用二维码接口获取新的二维码，并且数据落地
                 logger.info("getQRCode二维码即将过期，获取最新二维码");
-                String sceneStr=pushGroup.getTopicCode()+"_"+pushGroup.getId()+"_"+pushGroup.getTopicName();
+                String sceneStr = pushGroup.getTopicCode() + "_" + pushGroup.getId() + "_" + pushGroup.getTopicName();
                 JSONObject result = wechatPostManService.createQrcode(sceneStr);
                 Object errcode = result.get("errcode");
                 if (CheckUtil.isEmpty(errcode)) {
@@ -293,6 +285,8 @@ public class PushGroupServiceImpl implements PushGroupService {
     @Override
     public Map<String, Object> sendTopicMessage(String sysToken, String topic, String title, String content) {
         Map<String, Object> resultMap;
+        // 从session获取操作用户部门
+        Integer department = (Integer) SecurityUtils.getSubject().getSession().getAttribute("department");
         try {
             //1.根据token查询认证信息
             SysUser sysUser = sysUserMapper.selectUserByToken(sysToken);
@@ -303,7 +297,8 @@ public class PushGroupServiceImpl implements PushGroupService {
             }
             //2.根据认证信息+群组编码查询出唯一群组信息
             PushGroup p = new PushGroup();
-            p.setCreateUser(sysUser.getId());
+            //root角色不受部门的数据隔离限制,root的department参数为0相当于null，不受条件限制
+            p.setCreateDepart(department);
             p.setTopicCode(topic);
             List<PushGroupVo> pushGroup = pushGroupMapper.selectivePushGroup(p);
             if (pushGroup.size() != 1) {
@@ -387,22 +382,22 @@ public class PushGroupServiceImpl implements PushGroupService {
         try {
             // 从session获取操作用户部门
             Integer department = (Integer) SecurityUtils.getSubject().getSession().getAttribute("department");
-            if(department==0){
+            if (department == 0) {
                 pushGroup.setCreateDepart(null);
-            }else {
+            } else {
                 pushGroup.setCreateDepart(department);
             }
-            int num=pushGroupMapper.updatePushGroup(pushGroup);
-            if(num>0){
-                resultMap=ResultMapUtil.success("更新成功");
-            }else {
-                resultMap=ResultMapUtil.success("更新失败");
-                logger.info("updateGroup更新失败,num:{}",num);
+            int num = pushGroupMapper.updatePushGroup(pushGroup);
+            if (num > 0) {
+                resultMap = ResultMapUtil.success("更新成功");
+            } else {
+                resultMap = ResultMapUtil.success("更新失败");
+                logger.info("updateGroup更新失败,num:{}", num);
             }
 
         } catch (Exception e) {
-            resultMap=ResultMapUtil.fail("更新错误");
-            logger.error("updateGroup系统错误",e);
+            resultMap = ResultMapUtil.fail("更新错误");
+            logger.error("updateGroup系统错误", e);
         }
         return resultMap;
     }

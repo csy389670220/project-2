@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>CMDB</title>
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" type="text/css" th:href="@{/devopx/thirdparty/system/main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/devopx/thirdparty/system/css/common.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/devopx/thirdparty/system/css/bootstrap.css}"/>
+</head>
+
+<body>
+<div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <!--导航栏-->
+    <div th:replace="common/common_body :: body_top"></div>
+    <div class="app-main">
+        <!--菜单栏-->
+        <div th:replace="common/common_body :: body_left"></div>
+        <!--右侧主内容-->
+        <div class="app-main__outer" style="overflow:auto">
+            <div class="app-main__inner">
+                <div class="app-page-title">
+                    <div class="page-title-wrapper">
+                        <div class="page-title-heading">
+                            <div class="page-title-icon">
+                                <i class="pe-7s-note2 icon-gradient bg-sunny-morning">
+                                </i>
+                            </div>
+                            <div>CMDB
+                                <div class="page-title-subheading">
+                                    CMDB服务器列表
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-title-actions">
+                            <div class="d-inline-block dropdown">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="col-md-2">
+                                    <div class="position-relative form-group">
+                                        <label for="query_ServerName" class="">主机名</label>
+                                        <input  id="query_ServerName"  class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="position-relative form-group">
+                                        <label for="query_Env" class="">环境</label>
+                                        <select   id="query_Env"  class="form-control">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div style="text-align:right;margin-top: 25px;margin-right: 904px;margin-bottom: 35px">
+                                        <button type="button" onclick="query()"
+                                                class="btn-shadow  btn btn-info">
+                                            查询
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="box">
+                                <table class="mb-0 table table-bordered" id="tab" style="table-layout: fixed;">
+                                    <thead>
+                                    <tr>
+                                        <th style="width:10%" >主机名</th>
+                                        <th style="width:11%" >管理IP</th>
+                                        <th style="width:11%" >业务IP</th>
+                                        <th style="width:8%" >CPU</th>
+                                        <th style="width:8%" >CPU使用率</th>
+                                        <th style="width:8%" >内存(MEM)</th>
+                                        <th style="width:8%" >MEM利用率</th>
+                                        <th style="width:8%" >DISK</th>
+                                        <th style="width:8%" >DISK利用率</th>
+                                        <th style="width:27%" >系统版本</th>
+                                        <th style="width:13%" >挂载点</th>
+                                        <th style="width:10%" >Usage/Total</th>
+                                        <th style="width:10%" >空间利用率</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div id="example" style="text-align: center">
+                                <ul id="pageLimit"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div th:replace="common/common_sources :: base_js"></div>
+<div th:replace="common/common_sources :: jebox"></div>
+<div th:replace="common/common_sources :: bootstrapPaginator"></div>
+<script>
+    $(document).ready(function () {
+        //选中菜单栏
+        ipsSystem.menu.active("serverPlan_Menu", "CMDB_Menu");
+        queryAllEnv()
+        query();
+        scroll("tab","box",1);
+    });
+
+    //查询数据
+    function query() {
+        var query_ServerName=$("#query_ServerName").val();
+        var query_Env=$("#query_Env").val();
+        $.ajax({
+            url: "cmdbQueryServerInfo",
+            type: "post",    //不区分大小写
+            traditional: true,
+            async: false,//设置同步
+            data: {"serverName":query_ServerName,"env":query_Env},
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    //console.log("dataJson>>" + JSON.stringify(result.data[0]));
+                    var htmlStr="";
+                    for(var i=0;i<result.data.length;i++){
+                        var cmdbMountInfosSize=result.data[i].cmdbMountInfos.length;
+                        var businessIp=result.data[i].businessIp;
+                        if(businessIp==null||businessIp=="null"){
+                            businessIp="";
+                        }
+                        htmlStr+="<tr><td style='vertical-align: middle;' rowspan='"+cmdbMountInfosSize+"'>"+result.data[i].serverName+"</td>";
+                        htmlStr+="<td style='vertical-align: middle;' rowspan='"+cmdbMountInfosSize+"'>"+result.data[i].manageIp+"</td>";
+                        htmlStr+="<td style='vertical-align: middle;' rowspan='"+cmdbMountInfosSize+"'>"+businessIp+"</td>";
+                        htmlStr+="<td style='vertical-align: middle;' rowspan='"+cmdbMountInfosSize+"'>"+result.data[i].cpu+"</td>";
+                        htmlStr+="<td style='vertical-align: middle;' rowspan='"+cmdbMountInfosSize+"'>"+result.data[i].cpuUsageRate+"</td>";
+                        htmlStr+="<td style='vertical-align: middle;' rowspan='"+cmdbMountInfosSize+"'>"+result.data[i].mem+"</td>";
+                        htmlStr+="<td style='vertical-align: middle;' rowspan='"+cmdbMountInfosSize+"'>"+result.data[i].memUsageRate+"</td>";
+                        htmlStr+="<td style='vertical-align: middle;' rowspan='"+cmdbMountInfosSize+"'>"+result.data[i].disk+"</td>";
+                        htmlStr+="<td style='vertical-align: middle;' rowspan='"+cmdbMountInfosSize+"'>"+result.data[i].diskUsageRate+"</td>";
+                        htmlStr+="<td style='vertical-align: middle;' rowspan='"+cmdbMountInfosSize+"'>"+result.data[i].systemVer+"</td>";
+                        htmlStr+="<td>"+result.data[i].cmdbMountInfos[0].mountPath+"</td>";
+                        htmlStr+="<td>"+result.data[i].cmdbMountInfos[0].usageTotal+"</td>";
+                        htmlStr+="<td>"+result.data[i].cmdbMountInfos[0].diskUsageRate+"</td></tr>";
+                        for(var j=1;j<result.data[i].cmdbMountInfos.length;j++){
+                            htmlStr+="<tr><td>"+result.data[i].cmdbMountInfos[j].mountPath+"</td><td>"+result.data[i].cmdbMountInfos[j].usageTotal+"</td><td>"+result.data[i].cmdbMountInfos[j].diskUsageRate+"</td></tr>";
+                        }
+                    }
+                    $("#tbody").empty();
+                    $("#tbody").append(htmlStr);
+                } else {
+                    jeBox.msg('加载页面失败', {icon: 3, time: 2, maskLock: true, maskClose: true});
+                }
+            },
+            error: function (err) {
+                jeBox.msg('加载页面错误', {icon: 3, time: 2, maskLock: true, maskClose: true});
+                console.log(err);
+            }
+        });
+    }
+
+    //查询环境枚举
+    function queryAllEnv() {
+        $.ajax({
+            url: "queryAllEnv",
+            type: "post",    //不区分大小写
+            traditional: true,
+            async: false,//设置同步
+            data: {},
+            datatype: 'json',
+            success: function (result) {
+                if (result.code == "success") {
+                    //console.log("dataJson>>" + JSON.stringify(result));
+                    var strHtml="";
+                    $.each(result.data,function(key,values){
+                        strHtml+="<option value='"+key+"'>"+values+"</option>";
+                    });
+                    $("#query_Env").empty();
+                    $("#query_Env").append(strHtml)
+                } else {
+                    console.log("查询环境枚举失败！！！！！！！");
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

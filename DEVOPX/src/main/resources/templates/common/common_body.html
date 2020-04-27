@@ -116,6 +116,16 @@
                             服务器规划
                             <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                         </a>
+                        <ul id="serverPlan_Menu" >
+                            <shiro:hasPermission name="CMDB_SER_Q">
+                            <li>
+                                <a href="/devopx/cmdbQuery" id="CMDB_Menu" >
+                                    <i class="metismenu-icon"></i>
+                                    cmdb服务
+                                </a>
+                            </li>
+                            </shiro:hasPermission>
+                        </ul>
                     </li>
 
                     <li class="mm-active">
@@ -124,16 +134,16 @@
                             devopX
                             <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                         </a>
-                        <shiro:hasPermission name="DEVOPX_Q">
-                            <ul id="serverPlan_Menu" >
+                            <ul id="DEVOPX_Menu">
+                                <shiro:hasPermission name="DEVOPX_Q">
                                 <li>
                                     <a href="/devopx/devopxView" id="PUSH_Menu" >
                                         <i class="metismenu-icon"></i>
                                         pushX
                                     </a>
                                 </li>
+                                </shiro:hasPermission>
                             </ul>
-                        </shiro:hasPermission>
                     </li>
                 </ul>
             </div>

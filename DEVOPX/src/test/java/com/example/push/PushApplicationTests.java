@@ -1,6 +1,7 @@
 package com.example.push;
 
 import com.example.push.export.Constant;
+import com.example.push.model.CmdbServerInfo;
 import com.example.push.redis.RedisRunner;
 import com.example.push.service.CmdbService;
 import com.example.push.service.PushGroupService;
@@ -136,11 +137,33 @@ public class PushApplicationTests {
         System.out.println("result>>>>>>"+result);
     }
 
+
+    @Test
+    public void  queryServerInf0(){
+        Map<String, Object> map=cmdbService.queryServerInfo(new CmdbServerInfo());
+        System.out.println(">>>>>>>>>>>>>>"+map);
+    }
+
     /**
-     * 测试CMDB读取文件源导入数据库
+     * 创建系统用户
      */
     @Test
-    public void saveServerInfo(){
-        cmdbService.saveServerInfo("C:\\Users\\Farben\\Desktop","prod");
+    public void  createUser(){
+        String userName="chengsiyu";
+        String password="Qwer@134";
+        //加密方式
+        String hashAlgorithmName = "MD5";
+        //盐：为了即使相同的密码不同的盐加密后的结果也不同
+        ByteSource byteSalt = new MyByteSource(Constant.SYS_SALT);
+        //加密次数
+        int hashIterations = 2;
+        SimpleHash result = new SimpleHash(hashAlgorithmName, password, byteSalt, hashIterations);
+        System.out.println(">>>加密密码:"+result.toString());
+        //token
+        String uuid=String.valueOf(UUID.randomUUID());
+        String time=String.valueOf(new Date().getTime());
+        String token=MD5.encodeByMD5(userName+uuid+time);
+        System.out.println(">>>token:"+token);
     }
+
 }
