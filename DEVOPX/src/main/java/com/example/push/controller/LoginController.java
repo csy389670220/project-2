@@ -123,15 +123,5 @@ public class LoginController  extends BaseController{
     }
 
 
-    /**
-     * 跳转到无权限页面
-     *
-     * @return
-     */
-    @RequestMapping("/unauthorized")
-    public ModelAndView unauthorized() {
-        ModelAndView view = new ModelAndView("unauthorized");
-        return view;
-    }
 
 }

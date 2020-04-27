@@ -40,7 +40,6 @@ public class CmdbController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/cmdbDataLanding", method = RequestMethod.POST)
-    @RequiresPermissions("CMDB_SER_A")
     @ResponseBody
     public Map<String, Object>  saveServerInfo(@RequestParam("file") MultipartFile file, String token ) {
         Map<String, Object> result;

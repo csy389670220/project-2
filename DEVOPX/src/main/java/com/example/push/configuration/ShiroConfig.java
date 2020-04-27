@@ -206,8 +206,8 @@ public class ShiroConfig {
         SimpleMappingExceptionResolver simpleMappingExceptionResolver=new SimpleMappingExceptionResolver();
         Properties properties=new Properties();
         //这里的 /unauthorized 是页面，不是访问的路径
-        properties.setProperty("org.apache.shiro.authz.UnauthorizedException","/unauthorized");
-        properties.setProperty("org.apache.shiro.authz.UnauthenticatedException","/unauthorized");
+        properties.setProperty("org.apache.shiro.authz.UnauthorizedException","unauthorized");
+        properties.setProperty("org.apache.shiro.authz.UnauthenticatedException","unauthorized");
         simpleMappingExceptionResolver.setExceptionMappings(properties);
         return simpleMappingExceptionResolver;
     }
@@ -221,9 +221,9 @@ public class ShiroConfig {
         return new WebServerFactoryCustomizer<ConfigurableWebServerFactory>() {
             @Override
             public void customize(ConfigurableWebServerFactory factory) {
-                ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/unauthorized.html");
-                ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/404.html");
-                ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500.html");
+                ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/devopx/unauthorized.html");
+                ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/devopx/404.html");
+                ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/devopx/500.html");
                 factory.addErrorPages(error401Page, error404Page, error500Page);
             }
         };
