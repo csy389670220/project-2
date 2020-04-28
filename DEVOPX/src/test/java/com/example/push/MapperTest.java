@@ -34,7 +34,8 @@ public class MapperTest {
     SysRolePermMapper sysRolePermMapper;
     @Autowired
     CmdbMountInfoMapper cmdbMountInfoMapper;
-
+    @Autowired
+    JenkinsTriggerConfigMapper jenkinsTriggerConfigMapper;
     @Test
     public void pushGroupMapperInsertTest() {
         PushGroup p = new PushGroup();
@@ -184,6 +185,11 @@ public class MapperTest {
 
     }
 
-
+    @Test
+    public void  querySource(){
+        JenkinsTriggerConfig j=new JenkinsTriggerConfig();
+        j.setDepart("1");
+        jenkinsTriggerConfigMapper.querySource(j);
+    }
 }
 

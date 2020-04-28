@@ -149,7 +149,7 @@ public class PushApplicationTests {
      */
     @Test
     public void  createUser(){
-        String userName="chengsiyu";
+        String userName="luyaochuang";
         String password="Qwer@134";
         //加密方式
         String hashAlgorithmName = "MD5";

@@ -7,6 +7,7 @@ import com.example.push.model.SysRole;
 import com.example.push.model.SysUser;
 import com.example.push.model.view.SysAuthorVo;
 import com.example.push.service.SysPermissionService;
+import com.example.push.util.CheckUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -109,14 +110,14 @@ public class ShiroRealm extends AuthorizingRealm {
          * 权限配置后续更新
          */
         //增加角色
-        if(author.getRole().size()>0){
+        if(!CheckUtil.isEmpty(author.getRole())){
             for(SysRole r:author.getRole()){
                 authorizationInfo.addRole(r.getRoleCode());
             }
         }
 
         //增加权限
-        if(author.getPermission().size()>0){
+        if(!CheckUtil.isEmpty(author.getPermission())){
             for(SysPermission p:author.getPermission()){
                 authorizationInfo.addStringPermission(p.getPerCode());
             }

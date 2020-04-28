@@ -10,15 +10,13 @@ public enum EmCmdbServerEnvCode {
     //生产环境
     ENV_PRDO("prod","生产"),
     //会员环境
-    ENV_MEM("mem","会员"),
-    //新会员
-    ENV_NEWSIMYL("newsimyl","新会员"),
+    ENV_MEM("mem","会员联测"),
+    //模拟演练
+    ENV_NEWSIMYL("newsimyl","模拟演练"),
     //模拟
     ENV_SIM("sim","模拟"),
     //模拟数据
-    ENV_SIMDATA("simdata","模拟数据"),
-    //模拟演练
-    ENV_SIMYL("simyl","模拟演练"),
+    ENV_SIMDATA("simdata","数据迁移"),
     ENV_UAT1("uat1","UAT1"),
     ENV_UAT2("uat2","UAT2"),
     ENV_UAT3("uat3","UAT3"),

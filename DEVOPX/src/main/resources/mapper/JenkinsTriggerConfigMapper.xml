@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.push.mapper.JenkinsTriggerConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.example.push.model.JenkinsTriggerConfig" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="SOURCE" property="source" jdbcType="VARCHAR" />
+    <result column="JENKINS_FLAVOR" property="jenkinsFlavor" jdbcType="VARCHAR" />
+    <result column="JENKINS_VERSION" property="jenkinsVersion" jdbcType="VARCHAR" />
+    <result column="CREATE_USER" property="createUser" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_USERD" property="updateUserd" jdbcType="INTEGER" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="DEPART" property="depart" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, SOURCE, JENKINS_FLAVOR, JENKINS_VERSION, CREATE_USER, CREATE_TIME, UPDATE_USERD, 
+    UPDATE_TIME, DEPART
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from jenkins_trigger_config
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from jenkins_trigger_config
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.push.model.JenkinsTriggerConfig" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jenkins_trigger_config (SOURCE, JENKINS_FLAVOR, JENKINS_VERSION, 
+      CREATE_USER, CREATE_TIME, UPDATE_USERD, 
+      UPDATE_TIME, DEPART)
+    values (#{source,jdbcType=VARCHAR}, #{jenkinsFlavor,jdbcType=VARCHAR}, #{jenkinsVersion,jdbcType=VARCHAR}, 
+      #{createUser,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateUserd,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{depart,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.push.model.JenkinsTriggerConfig" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jenkins_trigger_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="source != null" >
+        SOURCE,
+      </if>
+      <if test="jenkinsFlavor != null" >
+        JENKINS_FLAVOR,
+      </if>
+      <if test="jenkinsVersion != null" >
+        JENKINS_VERSION,
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateUserd != null" >
+        UPDATE_USERD,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="depart != null" >
+        DEPART,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="jenkinsFlavor != null" >
+        #{jenkinsFlavor,jdbcType=VARCHAR},
+      </if>
+      <if test="jenkinsVersion != null" >
+        #{jenkinsVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserd != null" >
+        #{updateUserd,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="depart != null" >
+        #{depart,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.push.model.JenkinsTriggerConfig" >
+    update jenkins_trigger_config
+    <set >
+      <if test="source != null" >
+        SOURCE = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="jenkinsFlavor != null" >
+        JENKINS_FLAVOR = #{jenkinsFlavor,jdbcType=VARCHAR},
+      </if>
+      <if test="jenkinsVersion != null" >
+        JENKINS_VERSION = #{jenkinsVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null" >
+        CREATE_USER = #{createUser,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserd != null" >
+        UPDATE_USERD = #{updateUserd,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="depart != null" >
+        DEPART = #{depart,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.push.model.JenkinsTriggerConfig" >
+    update jenkins_trigger_config
+    set SOURCE = #{source,jdbcType=VARCHAR},
+      JENKINS_FLAVOR = #{jenkinsFlavor,jdbcType=VARCHAR},
+      JENKINS_VERSION = #{jenkinsVersion,jdbcType=VARCHAR},
+      CREATE_USER = #{createUser,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_USERD = #{updateUserd,jdbcType=INTEGER},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      DEPART = #{depart,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteJenkinsTrigger" parameterType="com.example.push.model.JenkinsTriggerConfig">
+    delete from jenkins_trigger_config
+    <where>
+      ID = #{id,jdbcType=INTEGER}
+      <if test="depart != null and depart !=''">
+        and DEPART = #{depart,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </delete>
+
+
+  <select id="querySource" resultType="com.example.push.model.JenkinsTriggerConfig" parameterType="com.example.push.model.JenkinsTriggerConfig"  >
+    select
+    ID id,SOURCE source
+    from jenkins_trigger_config
+    <where>
+      SOURCE !=''
+      <if test="depart != null and depart !=''">
+        and DEPART = #{depart,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <select id="queryJenkinsFlavor" resultType="com.example.push.model.JenkinsTriggerConfig" parameterType="com.example.push.model.JenkinsTriggerConfig"  >
+    select
+    ID id,JENKINS_FLAVOR jenkinsFlavor
+    from jenkins_trigger_config
+    <where>
+      JENKINS_FLAVOR !=''
+      <if test="depart != null and depart !=''">
+        and DEPART = #{depart,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+  <select id="queryJenkinsVersion" resultType="com.example.push.model.JenkinsTriggerConfig"  parameterType="com.example.push.model.JenkinsTriggerConfig">
+    select
+    ID id,JENKINS_VERSION jenkinsVersion
+    from jenkins_trigger_config
+    <where>
+      JENKINS_VERSION !=''
+      <if test="depart != null and depart !=''">
+        and DEPART = #{depart,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+</mapper>
